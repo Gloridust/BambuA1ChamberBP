@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A1 木框封箱</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+/* Layout: full-bleed 3D stage with a workshop spec-sheet panel (right column on desktop, stacked below on phones) */
+:root{
+  --bg:#E4E9E6; --surface:#F3F6F4; --surface-2:#E9EEEB; --fg:#17201B; --muted:#56655E; --line:#C6CFCA;
+  --accent:#2B6A54; --accent-ink:#FFFFFF; --wood:#A97B42;
+  --good:#2D7849; --warn:#A0650E; --bad:#B03B33;
+  --scene:#DAE1DD; --floor:#CBD3CE;
+  --f-display:"Barlow Condensed","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --f-body:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111613; --surface:#171E1A; --surface-2:#1E2722; --fg:#E1E9E4; --muted:#93A39A; --line:#2B3630;
+    --accent:#72C4A4; --accent-ink:#0D1411; --wood:#D2A86E;
+    --good:#6CCB8E; --warn:#E3AA4E; --bad:#EC7C70;
+    --scene:#0F1512; --floor:#18201C; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111613; --surface:#171E1A; --surface-2:#1E2722; --fg:#E1E9E4; --muted:#93A39A; --line:#2B3630;
+  --accent:#72C4A4; --accent-ink:#0D1411; --wood:#D2A86E;
+  --good:#6CCB8E; --warn:#E3AA4E; --bad:#EC7C70;
+  --scene:#0F1512; --floor:#18201C; color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.app{display:grid;grid-template-columns:minmax(0,1fr) 420px;height:100%}
+.stage{position:relative;overflow:hidden;background:var(--scene);min-height:0}
+#gl{display:block;width:100%;height:100%;touch-action:none}
+.labels{position:absolute;inset:0;pointer-events:none}
+.dim-label{position:absolute;left:0;top:0;transform:translate(-50%,-50%);font:500 11px/1 var(--f-mono);
+  padding:3px 6px;border-radius:3px;background:var(--surface);color:var(--accent);border:1px solid var(--line);white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.ttl{position:absolute;top:14px;left:max(16px,env(safe-area-inset-left,0px));pointer-events:none;max-width:60%}
+.ttl h1{margin:0;font:700 26px/1.05 var(--f-display);letter-spacing:.01em;text-wrap:balance}
+.ttl p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.views{position:absolute;top:12px;right:max(12px,env(safe-area-inset-right,0px));display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;max-width:45%}
+.views button,.chip-btn{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:12px}
+.views button:hover,.chip-btn:hover{border-color:var(--accent)}
+.hint{position:absolute;left:max(16px,env(safe-area-inset-left,0px));bottom:12px;font-size:12px;color:var(--muted);pointer-events:none}
+.card{position:absolute;right:max(12px,env(safe-area-inset-right,0px));bottom:12px;width:min(320px,calc(100% - 24px));
+  background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;box-shadow:0 6px 24px rgba(0,0,0,.14)}
+.card-h{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.card-h b{font:600 18px/1.2 var(--f-display)}
+.card-h button{border:0;background:none;cursor:pointer;font-size:18px;line-height:1;color:var(--muted);padding:0 2px}
+.card .code{font:500 11px var(--f-mono);color:var(--accent)}
+.card dl{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin:8px 0 0;font-size:13px}
+.card dt{color:var(--muted)}
+.card dd{margin:0;min-width:0}
+
+.panel{background:var(--surface);border-left:1px solid var(--line);overflow:auto;min-width:0}
+.tabs{position:sticky;top:0;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border-bottom:1px solid var(--line);
+  padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+.tabs button{border:0;background:none;padding:12px 4px 10px;cursor:pointer;color:var(--muted);font-weight:500;border-bottom:2px solid transparent}
+.tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+.tab{padding-block:16px 32px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:22px}
+.sec{display:grid;gap:10px;min-width:0}
+.sec h2{margin:0;font:600 13px/1.2 var(--f-body);letter-spacing:.08em;color:var(--muted)}
+.sec h3{margin:0;font:600 18px/1.2 var(--f-display)}
+.row{display:flex;align-items:center;gap:10px}
+.row label{flex:0 0 auto;min-width:64px}
+.row input[type=range]{flex:1;min-width:0;accent-color:var(--accent)}
+.val{font:500 12px var(--f-mono);min-width:56px;text-align:right;font-variant-numeric:tabular-nums}
+.btn{border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);border-radius:6px;padding:6px 12px;cursor:pointer;font-weight:500}
+.btn.ghost{background:transparent;color:var(--accent)}
+.toggles{display:flex;flex-wrap:wrap;gap:6px}
+.tg{position:relative}
+.tg input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.tg span{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:13px;background:var(--surface-2);color:var(--muted)}
+.tg input:checked+span{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.tg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.note{font-size:12px;color:var(--muted);margin:0}
+.presets{display:flex;gap:6px;flex-wrap:wrap}
+
+.checks{display:grid;gap:8px}
+.check{display:grid;grid-template-columns:auto 1fr auto;gap:4px 10px;align-items:baseline;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)}
+.check .k{font-weight:500}
+.check .n{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.check .d{grid-column:2/4;font-size:12px;color:var(--muted)}
+.pill{font:600 11px/1 var(--f-body);padding:4px 7px;border-radius:999px;color:var(--accent-ink);white-space:nowrap}
+.pill.good{background:var(--good)} .pill.warn{background:var(--warn)} .pill.bad{background:var(--bad)}
+ol.changes{margin:0;padding-left:20px;display:grid;gap:8px}
+ol.changes b{font-weight:600}
+
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:360px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:500;color:var(--muted);background:var(--surface-2);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.id{font-family:var(--f-mono);color:var(--accent);white-space:nowrap}
+td small{display:block;color:var(--muted);font-size:11px;line-height:1.4}
+.sum{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.sum b{color:var(--fg);font-family:var(--f-mono)}
+.stick{display:flex;height:22px;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--surface-2)}
+.stick i{display:flex;align-items:center;justify-content:center;font:500 10px var(--f-mono);font-style:normal;color:#2b1d0c;background:var(--wood);border-right:2px solid var(--surface);min-width:0;overflow:hidden}
+.stick-row{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:center;font:500 11px var(--f-mono);color:var(--muted)}
+
+.stepper{display:flex;align-items:center;gap:8px}
+.stepper .val{min-width:auto}
+.step-body{border:1px solid var(--line);border-radius:8px;padding:12px 14px;background:var(--surface-2)}
+.step-body h3{margin:0 0 6px}
+.step-body p{margin:0}
+.steps-list{margin:0;padding-left:20px;display:grid;gap:4px;font-size:13px;color:var(--muted)}
+.steps-list li.on{color:var(--fg);font-weight:500}
+.glue{display:grid;gap:8px}
+.glue div{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:baseline}
+.glue p{margin:0;font-size:13px}
+
+@media (max-width:899px){
+  html,body{height:auto}
+  .app{display:block;height:auto}
+  .stage{height:62svh;min-height:380px}
+  .panel{border-left:0;border-top:1px solid var(--line);overflow:visible}
+  .tabs{top:env(safe-area-inset-top,0px)}
+  .ttl h1{font-size:22px}
+  .ttl{max-width:52%}
+}
+@media (prefers-reduced-motion: reduce){ *{scroll-behavior:auto} }
+</style>
+</head>
+<body>
+<div class="app">
+  <section class="stage" id="stage" aria-label="3D 模型">
+    <canvas id="gl"></canvas>
+    <div class="labels" id="labels"></div>
+    <div class="ttl">
+      <h1>A1 木框封箱</h1>
+      <p>拓竹 A1 · 桐木框 + 3 mm 透明板 · 修订版 v2</p>
+    </div>
+    <div class="views" role="group" aria-label="视角">
+      <button type="button" data-view="iso">等轴</button>
+      <button type="button" data-view="front">正面</button>
+      <button type="button" data-view="side">侧面</button>
+      <button type="button" data-view="top">俯视</button>
+    </div>
+    <div class="hint">拖动旋转 · 双指缩放 · 点部件看规格</div>
+    <div class="card" id="card" hidden>
+      <div class="card-h"><div><span class="code" id="cardCode"></span><br><b id="cardName"></b></div><button type="button" id="cardX" aria-label="关闭">×</button></div>
+      <dl id="cardBody"></dl>
+    </div>
+  </section>
+
+  <aside class="panel">
+    <nav class="tabs" role="tablist">
+      <button type="button" role="tab" aria-selected="true" data-tab="ctl">控制</button>
+      <button type="button" role="tab" aria-selected="false" data-tab="chk">检查</button>
+      <button type="button" role="tab" aria-selected="false" data-tab="bom">BOM</button>
+      <button type="button" role="tab" aria-selected="false" data-tab="asm">装配</button>
+    </nav>
+
+    <div class="tab" id="tab-ctl">
+      <div class="sec">
+        <h2>前门</h2>
+        <div class="row"><label for="door">开合角度</label><input id="door" type="range" min="0" max="170" value="0"><span class="val" id="doorV">0°</span></div>
+        <div class="row"><button type="button" class="btn" id="doorBtn">开门</button><p class="note">左侧 3 个平合页，铰轴在左前外角，最大约 180°。</p></div>
+      </div>
+      <div class="sec">
+        <h2>爆炸视图</h2>
+        <div class="row"><label for="explode">拆开程度</label><input id="explode" type="range" min="0" max="100" value="0"><span class="val" id="explodeV">0%</span></div>
+      </div>
+      <div class="sec">
+        <h2>显示</h2>
+        <div class="toggles">
+          <label class="tg"><input type="checkbox" id="ly-wood" checked><span>木框</span></label>
+          <label class="tg"><input type="checkbox" id="ly-panel" checked><span>透明板</span></label>
+          <label class="tg"><input type="checkbox" id="ly-hw" checked><span>五金</span></label>
+          <label class="tg"><input type="checkbox" id="ly-foam" checked><span>密封条</span></label>
+          <label class="tg"><input type="checkbox" id="ly-printer" checked><span>A1 打印机</span></label>
+          <label class="tg"><input type="checkbox" id="ly-env"><span>热床行程包络</span></label>
+          <label class="tg"><input type="checkbox" id="ly-ams"><span>箱外 AMS lite</span></label>
+          <label class="tg"><input type="checkbox" id="ly-dims" checked><span>尺寸</span></label>
+          <label class="tg"><input type="checkbox" id="anim" checked><span>打印运动</span></label>
+        </div>
+      </div>
+      <div class="sec">
+        <h2>框架尺寸（外框，mm）</h2>
+        <div class="row"><label for="pW">宽 W</label><input id="pW" type="range" min="560" max="800" step="10" value="640"><span class="val" id="pWV">640</span></div>
+        <div class="row"><label for="pD">深 D</label><input id="pD" type="range" min="580" max="800" step="10" value="700"><span class="val" id="pDV">700</span></div>
+        <div class="row"><label for="pP">立柱 P</label><input id="pP" type="range" min="480" max="760" step="10" value="600"><span class="val" id="pPV">600</span></div>
+        <div class="presets">
+          <button type="button" class="chip-btn" data-preset="v2">修订方案 640×700×600</button>
+          <button type="button" class="chip-btn" data-preset="v1">原方案深度 640</button>
+        </div>
+        <p class="note">改尺寸后，模型、检查项和 BOM 会一起重算。切到「检查」看余量。</p>
+      </div>
+    </div>
+
+    <div class="tab" id="tab-chk" hidden>
+      <div class="sec">
+        <h2>空间余量（按当前尺寸）</h2>
+        <div class="checks" id="checks"></div>
+        <p class="note">A1 数据：机身 385×410×430 mm；热床 Y 向动态深度约 545 mm（热床最前会伸出底座约 80 mm）。拓竹官方不推荐给 A1 加封箱，打 PLA 时请开排风或留门缝。</p>
+      </div>
+      <div class="sec">
+        <h2>相对原方案的修改</h2>
+        <ol class="changes">
+          <li><b>深度 640 → 700。</b>原内深 580 mm，减去热床行程 545 mm，前后各只剩约 17 mm，还要塞电源线，太紧。</li>
+          <li><b>加一圈底框（4 根）。</b>原方案板材下沿和门底边没有木料可固定，3 mm 板下沿会外翘、漏风。</li>
+          <li><b>高度对齐。</b>30×40 顶框立放后框高 640，原透明板 630 对不上。现在框高 680，侧/后板也是 680。</li>
+          <li><b>门改成木框门。</b>646×683 的 3 mm 单板做门会明显挠曲，合页螺栓孔容易裂；改成 30×40 门框 + 门板，合页、磁铁都吃在木头上。</li>
+          <li><b>板材孔径 4.5 → 6 mm。</b>亚克力/PC 热胀约为木材的 10 倍，留足滑动余量才不会从孔位裂开。</li>
+          <li><b>门吸改为嵌入式磁铁。</b>表面门吸较厚，会顶开门封条；嵌入后门能均匀压住封条。</li>
+          <li><b>加过线孔和可选排风扇。</b>电源线走后板，AMS lite 放箱外右侧，PTFE 管和线缆走顶板。</li>
+        </ol>
+      </div>
+      <div class="sec">
+        <h2>透明板怎么固定、用什么胶</h2>
+        <p class="note">结论：螺丝 + 尼龙垫圈做主固定，泡棉条做密封，胶只用来补缝。不要把板材整面胶死在木框上：板材热胀比木头大得多，胶死后会翘曲或开裂。</p>
+        <div class="glue">
+          <div><span class="pill good">推荐</span><p><b>单面 EVA 泡棉条 3×10 mm</b> 贴在木框上当衬垫，板材压在上面用 ST4×20 + 尼龙垫圈固定。可拆、密封、能吸收热胀。</p></div>
+          <div><span class="pill good">推荐</span><p><b>中性透明硅酮胶（中性玻璃胶）</b>只用于转角缝、底边缝补缝。固化后仍有弹性，对亚克力和 PC 都安全。</p></div>
+          <div><span class="pill warn">可用</span><p><b>MS 改性硅烷胶 / VHB 泡棉双面胶</b>：想少打螺丝时可以用作辅助粘接，但仍保留四角和中间的螺丝。</p></div>
+          <div><span class="pill bad">别用</span><p><b>502 / 瞬干胶</b>会让亚克力、PC 发白和应力开裂；<b>酸性玻璃胶</b>放出醋酸，会让 PC 起银纹；<b>万能胶 / 氯丁胶</b>含溶剂，会咬花板面；<b>环氧硬胶大面积粘</b>太硬，热胀时拉裂板材。</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab" id="tab-bom" hidden>
+      <div class="sec">
+        <div class="row" style="justify-content:space-between"><h3>最终 BOM</h3><button type="button" class="btn ghost" id="copyBom">复制为表格</button></div>
+        <p class="note" id="bomMeta"></p>
+        <textarea id="bomText" hidden readonly style="width:100%;height:120px;font:12px var(--f-mono)"></textarea>
+      </div>
+      <div class="sec"><h2>一、木料（桐木 30×40 方条 + 底板）</h2><div class="tbl-wrap"><table id="tWood"></table></div>
+        <div class="sum"><span>方条合计</span><b id="woodSum"></b></div>
+        <p class="note">四面砂光，切割误差 ±1 mm。按 2 m 长料排料如下（锯缝按 3 mm）：</p>
+        <div id="cutPlan" style="display:grid;gap:6px"></div>
+      </div>
+      <div class="sec"><h2>二、透明板（亚克力或 PC 板店）</h2><div class="tbl-wrap"><table id="tPanel"></table></div>
+        <p class="note">要清晰透明，选浇铸亚克力（cast）或实心 PC 耐力板，不选中空阳光板。边缘抛光，保留保护膜。孔径 Ø6 mm，距边 15 mm，孔距 ≤175 mm，可让商家代钻。</p>
+      </div>
+      <div class="sec"><h2>三、五金</h2><div class="tbl-wrap"><table id="tHw"></table></div></div>
+      <div class="sec"><h2>四、胶与密封</h2><div class="tbl-wrap"><table id="tGlue"></table></div></div>
+      <div class="sec"><h2>五、可选</h2><div class="tbl-wrap"><table id="tOpt"></table></div></div>
+    </div>
+
+    <div class="tab" id="tab-asm" hidden>
+      <div class="sec">
+        <div class="stepper">
+          <button type="button" class="btn ghost" id="stPrev" aria-label="上一步">‹</button>
+          <input id="stRange" type="range" min="1" max="9" value="1" style="flex:1;accent-color:var(--accent)" aria-label="装配步骤">
+          <button type="button" class="btn ghost" id="stNext" aria-label="下一步">›</button>
+          <span class="val" id="stV">1/9</span>
+        </div>
+        <div class="step-body"><h3 id="stTitle"></h3><p id="stText"></p></div>
+        <button type="button" class="chip-btn" id="stAll">退出分步，显示整机</button>
+        <ol class="steps-list" id="stList"></ol>
+      </div>
+      <div class="sec">
+        <h2>施工要点</h2>
+        <ul class="steps-list" style="color:var(--fg)">
+          <li>桐木很软：所有木螺丝先打 Ø2.5 引孔，拧到贴合即停。</li>
+          <li>每个框角都上白乳胶，干透前量两条对角线，相差 ≤2 mm。</li>
+          <li>钻亚克力用阶梯钻或亚克力专用钻头，低速、下面垫木板，带膜钻。</li>
+          <li>板材螺丝从每条边中间往两端拧，最后再统一回拧 1/4 圈留余量。</li>
+          <li>A1 居中摆放，前脚距前框内侧 ≥90 mm，后侧留线缆空间。</li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- parameters ---------- */
+const DEF = { W: 640, D: 700, P: 600 };
+const p = { ...DEF };
+const K = { s: 30, h: 40, t: 3, base: 15, foot: 10 };
+const FY = K.foot + K.base;            // base top
+const A1 = { w: 385, d: 410, h: 430, sweep: 545 };
+const PR_Z = -12.5;                    // printer offset so the bed sweep is centred
+const SWEEP = { front: 285, back: -260 }; // printer-local Z of bed sweep
+
+const state = {
+  door: 0, doorTarget: 0, explode: 0, anim: !reduceMotion, step: 0,
+  layers: { wood: true, panel: true, hw: true, foam: true, printer: true, env: false, ams: false, dims: true },
+  sel: null
+};
+if (reduceMotion) $('#anim').checked = false;
+
+/* ---------- three setup ---------- */
+const stage = $('#stage');
+const renderer = new THREE.WebGLRenderer({ canvas: $('#gl'), antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(35, 1, 5, 30000);
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.dampingFactor = 0.08;
+controls.target.set(0, 360, 0);
+controls.maxPolarAngle = Math.PI * 0.495;
+controls.minDistance = 300; controls.maxDistance = 6000;
+
+scene.add(new THREE.HemisphereLight(0xffffff, 0x80857f, 0.85));
+const sun = new THREE.DirectionalLight(0xffffff, 0.75); sun.position.set(900, 1600, 1100); scene.add(sun);
+const fill = new THREE.DirectionalLight(0xffffff, 0.3); fill.position.set(-1200, 600, -800); scene.add(fill);
+
+const floorMat = new THREE.MeshBasicMaterial({ color: 0xcccccc });
+const floor = new THREE.Mesh(new THREE.CircleGeometry(2600, 64), floorMat);
+floor.rotation.x = -Math.PI / 2; floor.position.y = -0.5; scene.add(floor);
+const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.12, depthWrite: false }));
+shadow.rotation.x = -Math.PI / 2; shadow.position.y = 0.2; scene.add(shadow);
+
+/* ---------- materials ---------- */
+const M = {
+  wood: new THREE.MeshStandardMaterial({ color: 0xdcc096, roughness: 0.85 }),
+  base: new THREE.MeshStandardMaterial({ color: 0xcaa774, roughness: 0.85 }),
+  woodEdge: new THREE.LineBasicMaterial({ color: 0x6d5130, transparent: true, opacity: 0.5 }),
+  acrylic: new THREE.MeshStandardMaterial({ color: 0xbfe6f4, transparent: true, opacity: 0.16, roughness: 0.08, depthWrite: false, side: THREE.DoubleSide }),
+  acrylicEdge: new THREE.LineBasicMaterial({ color: 0x4f9fc2, transparent: true, opacity: 0.85 }),
+  steel: new THREE.MeshStandardMaterial({ color: 0xc2c9ce, metalness: 0.8, roughness: 0.3 }),
+  screw: new THREE.MeshStandardMaterial({ color: 0x8f989e, metalness: 0.7, roughness: 0.35 }),
+  washer: new THREE.MeshStandardMaterial({ color: 0xf1eee2, roughness: 0.6 }),
+  foam: new THREE.MeshStandardMaterial({ color: 0x2a2d2f, roughness: 1 }),
+  magnet: new THREE.MeshStandardMaterial({ color: 0x9aa1aa, metalness: 0.9, roughness: 0.25 }),
+  rubber: new THREE.MeshStandardMaterial({ color: 0x232628, roughness: 0.9 }),
+  pDark: new THREE.MeshStandardMaterial({ color: 0x3a3e43, roughness: 0.6 }),
+  pLight: new THREE.MeshStandardMaterial({ color: 0xdde1e4, roughness: 0.5 }),
+  pBed: new THREE.MeshStandardMaterial({ color: 0x26292c, roughness: 0.5 }),
+  plate: new THREE.MeshStandardMaterial({ color: 0xb79c62, roughness: 0.55, metalness: 0.2 }),
+  screen: new THREE.MeshBasicMaterial({ color: 0x4a90b8 }),
+  filament: new THREE.MeshStandardMaterial({ color: 0x2f9e8c, roughness: 0.5 }),
+  hub: new THREE.MeshStandardMaterial({ color: 0x55595e, roughness: 0.6 }),
+  ptfe: new THREE.MeshStandardMaterial({ color: 0xf4f4f0, transparent: true, opacity: 0.85, roughness: 0.4 }),
+  env: new THREE.MeshBasicMaterial({ color: 0xf0a030, transparent: true, opacity: 0.08, depthWrite: false }),
+  envEdge: new THREE.LineBasicMaterial({ color: 0xe39a2c }),
+  dim: new THREE.LineBasicMaterial({ color: 0x2b6a54, depthTest: false, transparent: true }),
+  hl: new THREE.MeshStandardMaterial({ color: 0xffc23d, emissive: 0x7a4f00, roughness: 0.5 }),
+  hlGlass: new THREE.MeshStandardMaterial({ color: 0xffc23d, emissive: 0x7a4f00, transparent: true, opacity: 0.45, depthWrite: false, side: THREE.DoubleSide }),
+  grommet: new THREE.MeshStandardMaterial({ color: 0x1d1f21, roughness: 0.8 }),
+  fan: new THREE.MeshStandardMaterial({ color: 0x2c2f33, roughness: 0.7 })
+};
+const AMS_COLORS = [0xd9534f, 0xf2f2ee, 0x3a7bd5, 0x2f9e8c];
+
+/* ---------- helpers ---------- */
+function mesh(geom, mat, edgeMat) {
+  const m = new THREE.Mesh(geom, mat);
+  if (edgeMat) {
+    const e = new THREE.LineSegments(new THREE.EdgesGeometry(geom), edgeMat);
+    e.raycast = () => {};
+    m.add(e);
+  }
+  return m;
+}
+function boxR(x0, x1, y0, y1, z0, z1, mat, edgeMat) {
+  const m = mesh(new THREE.BoxGeometry(Math.abs(x1 - x0), Math.abs(y1 - y0), Math.abs(z1 - z0)), mat, edgeMat);
+  m.position.set((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2);
+  return m;
+}
+function cyl(r, h, axis, mat, seg = 20) {
+  const g = new THREE.CylinderGeometry(r, r, h, seg);
+  if (axis === 'x') g.rotateZ(Math.PI / 2);
+  if (axis === 'z') g.rotateX(Math.PI / 2);
+  return new THREE.Mesh(g, mat);
+}
+function spaced(a, b, max) {
+  const n = Math.max(1, Math.ceil((b - a) / max));
+  return Array.from({ length: n + 1 }, (_, i) => a + (b - a) * i / n);
+}
+// holes around a panel rectangle: inset 15 mm, spacing ≤ 175 mm
+function perim(u0, u1, v0, v1, inset = 15, max = 175) {
+  const us = spaced(u0 + inset, u1 - inset, max), vs = spaced(v0 + inset, v1 - inset, max);
+  const out = [];
+  us.forEach(u => { out.push([u, v0 + inset]); out.push([u, v1 - inset]); });
+  vs.slice(1, -1).forEach(v => { out.push([u0 + inset, v]); out.push([u1 - inset, v]); });
+  return out;
+}
+const geoHead = new THREE.CylinderGeometry(4, 4, 2.6, 12);
+const geoWasher = new THREE.CylinderGeometry(6, 6, 1, 16);
+function screws(points, normal) {
+  const n = new THREE.Vector3(...normal).normalize();
+  const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), n);
+  const g = new THREE.Group();
+  const heads = new THREE.InstancedMesh(geoHead, M.screw, points.length);
+  const wash = new THREE.InstancedMesh(geoWasher, M.washer, points.length);
+  const d = new THREE.Object3D();
+  points.forEach((pt, i) => {
+    const base = new THREE.Vector3(...pt);
+    d.quaternion.copy(q);
+    d.position.copy(base).addScaledVector(n, 0.5); d.updateMatrix(); wash.setMatrixAt(i, d.matrix);
+    d.position.copy(base).addScaledVector(n, 2.3); d.updateMatrix(); heads.setMatrixAt(i, d.matrix);
+  });
+  g.add(wash, heads);
+  return g;
+}
+
+/* ---------- registry ---------- */
+let root = new THREE.Group(); scene.add(root);
+let tagged = [], items = [], parts = {}, dimLabels = [];
+let printer = null, door = null, tube = null, fanRotor = null, amsGroup = null;
+function T(obj, part, layer, step) {
+  obj.traverse(o => {
+    o.userData.part = part; o.userData.layer = layer; o.userData.step = step;
+    if (o.isMesh) { (parts[part] = parts[part] || []).push(o); o.userData.mat = o.material; }
+  });
+  tagged.push(obj);
+  return obj;
+}
+function item(obj, ex) {
+  obj.userData.base = obj.position.clone();
+  obj.userData.ex = new THREE.Vector3(...(ex || [0, 0, 0]));
+  items.push(obj); root.add(obj);
+  return obj;
+}
+
+/* ---------- build ---------- */
+function build() {
+  root.traverse(o => { if (o.geometry && o.geometry !== geoHead && o.geometry !== geoWasher) o.geometry.dispose(); });
+  scene.remove(root); root = new THREE.Group(); scene.add(root);
+  tagged = []; items = []; parts = {}; clearHighlight(); state.sel = null; $('#card').hidden = true;
+  dimLabels.forEach(l => l.el.remove()); dimLabels = [];
+
+  const { W, D, P } = p;
+  const F = P + 80, xL = -W / 2, xR = W / 2, zF = D / 2, zB = -D / 2, yT = FY + F;
+  const Wo = W + 6, Hd = F + 3;
+
+  shadow.scale.set(W + 60, D + 120, 1); shadow.position.z = 20;
+
+  // 1 base + feet
+  item(T(boxR(xL - 5, xR + 5, K.foot, FY, zB - 5, zF, M.base, M.woodEdge), 'base', 'wood', 1), [0, -90, 0]);
+  [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sz]) => {
+    const f = cyl(15, K.foot, 'y', M.rubber, 24); f.position.set(sx * (W / 2 - 35), K.foot / 2, sz * (D / 2 - 35) - 2.5);
+    item(T(f, 'foot', 'hw', 1), [0, -110, 0]);
+  });
+
+  // 2 & 4 rings
+  [[FY, 2, -45], [yT - 40, 4, 150]].forEach(([y0, st, ey]) => {
+    item(T(boxR(xL, xR, y0, y0 + 40, zF - 30, zF, M.wood, M.woodEdge), 'railFB', 'wood', st), [0, ey, 90]);
+    item(T(boxR(xL, xR, y0, y0 + 40, zB, zB + 30, M.wood, M.woodEdge), 'railFB', 'wood', st), [0, ey, -90]);
+    item(T(boxR(xL, xL + 30, y0, y0 + 40, zB + 30, zF - 30, M.wood, M.woodEdge), 'railS', 'wood', st), [-90, ey, 0]);
+    item(T(boxR(xR - 30, xR, y0, y0 + 40, zB + 30, zF - 30, M.wood, M.woodEdge), 'railS', 'wood', st), [90, ey, 0]);
+  });
+
+  // 3 posts + brackets
+  [-1, 1].forEach(sx => [-1, 1].forEach(sz => {
+    const x0 = sx < 0 ? xL : xR - 30;
+    const z0 = sz > 0 ? zF - 40 : zB;
+    item(T(boxR(x0, x0 + 30, FY + 40, yT - 40, z0, z0 + 40, M.wood, M.woodEdge), 'post', 'wood', 3), [sx * 70, 60, sz * 70]);
+    const xc = x0 + 15, face = sz > 0 ? zF - 40 : zB + 40, dir = sz > 0 ? -1 : 1;
+    [[FY + 40, 1], [yT - 40, -1]].forEach(([yj, up]) => {
+      const g = new THREE.Group();
+      g.add(boxR(xc - 10, xc + 10, yj, yj + up * 40, face, face + dir * 2, M.steel));
+      g.add(boxR(xc - 10, xc + 10, yj, yj + up * 2, face, face + dir * 40, M.steel));
+      item(T(g, 'bracket', 'hw', 3), [sx * 70, 60, sz * 70]);
+    });
+  }));
+
+  // 5 side panels
+  [-1, 1].forEach(sx => {
+    const g = new THREE.Group();
+    const xo = sx < 0 ? xL - 3 : xR;
+    T(g.add(boxR(xo, xo + 3, FY, yT, zB, zF, M.acrylic, M.acrylicEdge)) && g, 'sidePanel', 'panel', 5);
+    const xs = sx < 0 ? xL - 3 : xR + 3;
+    g.add(T(screws(perim(zB, zF, FY, yT).map(([u, v]) => [xs, v, u]), [sx, 0, 0]), 'screw', 'hw', 5));
+    item(g, [sx * 230, 0, 0]);
+  });
+  // back panel + power grommet
+  {
+    const g = new THREE.Group();
+    T(g.add(boxR(xL - 3, xR + 3, FY, yT, zB - 3, zB, M.acrylic, M.acrylicEdge)) && g, 'backPanel', 'panel', 5);
+    g.add(T(screws(perim(xL - 3, xR + 3, FY, yT).map(([u, v]) => [u, v, zB - 3]), [0, 0, -1]), 'screw', 'hw', 5));
+    const gr = new THREE.Mesh(new THREE.TorusGeometry(25, 4, 10, 32), M.grommet);
+    gr.position.set(xR - 110, FY + 95, zB - 2); g.add(T(gr, 'grommet', 'hw', 9));
+    item(g, [0, 0, -230]);
+  }
+  // 6 top panel + PTFE grommet (back-right, AMS lite sits on the right)
+  {
+    const g = new THREE.Group();
+    T(g.add(boxR(xL - 3, xR + 3, yT, yT + 3, zB - 3, zF, M.acrylic, M.acrylicEdge)) && g, 'topPanel', 'panel', 6);
+    g.add(T(screws(perim(xL - 3, xR + 3, zB - 3, zF).map(([u, v]) => [u, yT + 3, v]), [0, 1, 0]), 'screw', 'hw', 6));
+    const gr = new THREE.Mesh(new THREE.TorusGeometry(25, 4, 10, 32), M.grommet);
+    gr.rotation.x = Math.PI / 2; gr.position.set(xR - 100, yT + 3, zB + 110); g.add(T(gr, 'grommet', 'hw', 9));
+    item(g, [0, 320, 0]);
+  }
+  // optional exhaust fan (back, upper left, inside)
+  {
+    const g = new THREE.Group(); g.position.set(xL + 115, yT - 115, zB + 13);
+    const s = 120, t = 25, b = 8;
+    g.add(boxR(-s / 2, s / 2, s / 2 - b, s / 2, -t / 2, t / 2, M.fan), boxR(-s / 2, s / 2, -s / 2, -s / 2 + b, -t / 2, t / 2, M.fan),
+          boxR(-s / 2, -s / 2 + b, -s / 2, s / 2, -t / 2, t / 2, M.fan), boxR(s / 2 - b, s / 2, -s / 2, s / 2, -t / 2, t / 2, M.fan));
+    const rotor = new THREE.Group();
+    rotor.add(cyl(19, 14, 'z', M.fan));
+    for (let i = 0; i < 7; i++) {
+      const bl = boxR(18, 54, -9, 9, -1, 1, M.fan); const holder = new THREE.Group();
+      bl.rotation.x = 0.5; holder.add(bl); holder.rotation.z = i * Math.PI * 2 / 7; rotor.add(holder);
+    }
+    g.add(rotor); fanRotor = rotor;
+    item(T(g, 'fan', 'hw', 9), [0, 0, -230]);
+  }
+
+  // 7–8 door (pivot on the hinge axis: left-front outer corner)
+  door = new THREE.Group(); door.position.set(xL - 3, 0, zF + 3);
+  door.add(T(boxR(0, 40, FY, FY + Hd, 0, 30, M.wood, M.woodEdge), 'doorStile', 'wood', 7));
+  door.add(T(boxR(Wo - 40, Wo, FY, FY + Hd, 0, 30, M.wood, M.woodEdge), 'doorStile', 'wood', 7));
+  door.add(T(boxR(40, Wo - 40, FY, FY + 40, 0, 30, M.wood, M.woodEdge), 'doorRail', 'wood', 7));
+  door.add(T(boxR(40, Wo - 40, FY + Hd - 40, FY + Hd, 0, 30, M.wood, M.woodEdge), 'doorRail', 'wood', 7));
+  door.add(T(boxR(0, Wo, FY, FY + Hd, 30, 33, M.acrylic, M.acrylicEdge), 'doorPanel', 'panel', 7));
+  door.add(T(screws(perim(0, Wo, FY, FY + Hd).map(([u, v]) => [u, v, 33]), [0, 0, 1]), 'screw', 'hw', 7));
+  const hingeY = [FY + 90, FY + Hd / 2, FY + Hd - 90];
+  hingeY.forEach(yc => {
+    const g = new THREE.Group();
+    g.add(boxR(-1.5, 0, yc - 25, yc + 25, 2, 19, M.steel));
+    const k = cyl(3, 50, 'y', M.steel, 12); k.position.set(-1.5, yc, 0); g.add(k);
+    door.add(T(g, 'hinge', 'hw', 8));
+    // static leaf on the side panel over the front-left post
+    item(T(boxR(xL - 4.5, xL - 3, yc - 25, yc + 25, zF - 16, zF + 1, M.steel), 'hinge', 'hw', 8), [-230, 0, 0]);
+  });
+  { // handle
+    const g = new THREE.Group(); const hx = Wo - 22, hy = FY + Hd / 2;
+    const bar = cyl(5, 150, 'y', M.steel, 14); bar.position.set(hx, hy, 58); g.add(bar);
+    [-48, 48].forEach(dy => { const s = cyl(4, 24, 'z', M.steel, 12); s.position.set(hx, hy + dy, 45); g.add(s); });
+    door.add(T(g, 'handle', 'hw', 8));
+  }
+  const magY = [0.12, 0.37, 0.63, 0.88].map(f => FY + 40 + P * f);
+  const magXg = xR - 24;
+  magY.forEach(y => {
+    const m = cyl(5, 1.6, 'z', M.magnet, 16); m.position.set(magXg - (xL - 3), y, -0.6); door.add(T(m, 'magnet', 'hw', 8));
+    const c = cyl(5, 1.6, 'z', M.magnet, 16); c.position.set(magXg, y, zF + 0.6); item(T(c, 'magnet', 'hw', 8), [0, 0, 130]);
+  });
+  item(door, [0, 0, 280]);
+
+  // door seal foam on the carcass front face
+  [
+    [xL + 2, xL + 12, FY, yT], [xR - 12, xR - 2, FY, yT],
+    [xL + 12, xR - 12, FY + 15, FY + 25], [xL + 12, xR - 12, yT - 25, yT - 15]
+  ].forEach(([x0, x1, y0, y1]) => item(T(boxR(x0, x1, y0, y1, zF, zF + 3, M.foam), 'foam', 'foam', 8), [0, 0, 130]));
+
+  // 9 printer, envelope, AMS lite, PTFE
+  buildPrinter();
+  buildAms(xR + 3);
+  buildDims(W, D, F);
+  if (tube) { scene.remove(tube); tube.geometry.dispose(); tube = null; }
+  applyVisibility(); applyExplode(); updateDoor(true);
+  renderChecks(); renderBOM();
+}
+
+function buildPrinter() {
+  const g = new THREE.Group(); g.position.set(0, FY, PR_Z);
+  const body = new THREE.Group();
+  body.add(boxR(-55, 55, 0, 62, -205, 205, M.pDark));
+  body.add(boxR(-150, 150, 0, 20, 172, 205, M.pDark));
+  body.add(boxR(-150, 150, 0, 20, -205, -172, M.pDark));
+  const scr = boxR(70, 150, 20, 72, 188, 203, M.pDark); body.add(scr);
+  body.add(boxR(78, 142, 28, 64, 203, 204.5, M.screen));
+  body.add(boxR(-192, -152, 0, 430, -80, -40, M.pLight));
+  body.add(boxR(152, 192, 0, 430, -80, -40, M.pLight));
+  body.add(boxR(-192, 192, 395, 430, -80, -40, M.pLight));
+  body.add(boxR(-192, 192, 0, 45, -80, -40, M.pDark));
+  // spool holder + spool (hidden when AMS lite is used)
+  const spool = new THREE.Group();
+  spool.add(boxR(192, 270, 322, 338, -68, -52, M.pDark));
+  const sp = cyl(100, 66, 'x', M.filament, 40); sp.position.set(232, 330, -60); spool.add(sp);
+  const sh = cyl(30, 68, 'x', M.hub, 20); sh.position.set(232, 330, -60); spool.add(sh);
+  body.add(spool);
+  const bed = new THREE.Group();
+  bed.add(boxR(-135, 135, 62, 80, -135, 135, M.pBed));
+  bed.add(boxR(-128, 128, 80, 84, -128, 128, M.plate));
+  const xbeam = new THREE.Group();
+  xbeam.add(boxR(-152, 152, 50, 82, -40, -12, M.pDark));
+  const head = new THREE.Group();
+  head.add(boxR(-28, 28, 10, 95, -14, 40, M.pLight));
+  head.add(boxR(-20, 20, 30, 80, 40, 41.5, M.pDark));
+  const nz = new THREE.Mesh(new THREE.ConeGeometry(5, 12, 12), M.steel); nz.rotation.x = Math.PI; nz.position.set(0, 6, 12); head.add(nz);
+  xbeam.add(head);
+  g.add(body, bed, xbeam);
+  T(g, 'printer', 'printer', 9);
+  // motion envelope (bed sweep)
+  const env = boxR(-A1.w / 2, A1.w / 2, 0, A1.h, SWEEP.back, SWEEP.front, M.env, M.envEdge);
+  env.raycast = () => {};
+  g.add(T(env, 'env', 'env', 9));
+  root.add(g);
+  printer = { g, bed, xbeam, head, spool };
+}
+
+function buildAms(xSide) {
+  const g = new THREE.Group(); g.position.set(xSide + 275, 0, -40);
+  g.add(boxR(-200, 200, 0, 30, -110, 110, M.pDark));
+  g.add(boxR(-30, 30, 30, 330, -30, 30, M.pLight));
+  g.add(boxR(-45, 45, 330, 352, -45, 45, M.pDark));
+  [[-105, 75], [105, 75], [-105, -75], [105, -75]].forEach(([x, z], i) => {
+    const s = cyl(100, 66, 'z', new THREE.MeshStandardMaterial({ color: AMS_COLORS[i], roughness: 0.5 }), 36); s.position.set(x, 160, z); g.add(s);
+    const h = cyl(28, 68, 'z', M.hub, 16); h.position.set(x, 160, z); g.add(h);
+  });
+  T(g, 'ams', 'ams', 9); root.add(g);
+  amsGroup = g;
+}
+
+function buildDims(W, D, F) {
+  const g = new THREE.Group(); root.add(g); T(g, 'dims', 'dims', 0);
+  const add = (a, b, tick, text) => {
+    const A = new THREE.Vector3(...a), B = new THREE.Vector3(...b), t = new THREE.Vector3(...tick);
+    const pts = [A, B, A.clone().add(t), A.clone().sub(t), B.clone().add(t), B.clone().sub(t)];
+    const geom = new THREE.BufferGeometry().setFromPoints([pts[0], pts[1], pts[2], pts[3], pts[4], pts[5]]);
+    const ls = new THREE.LineSegments(geom, M.dim); ls.renderOrder = 10; ls.raycast = () => {}; g.add(ls);
+    const el = document.createElement('div'); el.className = 'dim-label'; el.textContent = text; $('#labels').appendChild(el);
+    dimLabels.push({ el, pos: A.clone().add(B).multiplyScalar(0.5) });
+  };
+  const yTop = FY + F + 3;
+  add([-W / 2 - 3, 2, D / 2 + 130], [W / 2 + 3, 2, D / 2 + 130], [0, 0, 14], `外宽 ${W + 6}`);
+  add([W / 2 + 130, 2, -D / 2 - 3], [W / 2 + 130, 2, D / 2 + 36], [14, 0, 0], `深 ${D + 39}（含门）`);
+  add([-W / 2 - 110, 0, D / 2 + 36], [-W / 2 - 110, yTop, D / 2 + 36], [14, 0, 0], `总高 ${yTop}`);
+  add([-W / 2 + 70, FY, -D / 2 + 70], [-W / 2 + 70, FY + 40 + p.P, -D / 2 + 70], [12, 0, 0], `内高 ${p.P + 40}`);
+  add([-W / 2 + 30, FY + 6, 0], [W / 2 - 30, FY + 6, 0], [0, 0, 12], `内宽 ${W - 60}`);
+}
+
+/* ---------- state application ---------- */
+function applyVisibility() {
+  tagged.forEach(o => {
+    const L = o.userData.layer, st = o.userData.step;
+    let v = state.layers[L] !== false;
+    if (state.step && st && st > state.step) v = false;
+    o.visible = v;
+  });
+  if (printer) printer.spool.visible = !state.layers.ams;
+  if (tube) tube.visible = state.layers.printer && (!state.step || state.step >= 9);
+  dimLabels.forEach(l => l.el.hidden = !state.layers.dims);
+  fitStepHighlight();
+}
+function applyExplode() {
+  const e = state.explode;
+  items.forEach(o => o.position.copy(o.userData.base).addScaledVector(o.userData.ex, e));
+}
+function updateDoor(force) {
+  if (!door) return;
+  const a = state.door * Math.PI / 180;
+  door.rotation.y = -a;
+}
+
+/* highlight */
+let hlList = [];
+function clearHighlight() { hlList.forEach(m => { m.material = m.userData.mat; }); hlList = []; }
+function highlight(list) {
+  clearHighlight();
+  list.forEach(m => { if (m.isInstancedMesh) return; m.material = m.userData.mat && m.userData.mat.transparent ? M.hlGlass : M.hl; hlList.push(m); });
+}
+function fitStepHighlight() {
+  if (!state.step || state.sel) return;
+  const list = [];
+  tagged.forEach(o => o.traverse(m => { if (m.isMesh && m.userData.step === state.step && m.userData.layer !== 'printer' && m.userData.layer !== 'env') list.push(m); }));
+  if (state.step < 9) highlight(list); else clearHighlight();
+}
+
+/* ---------- PTFE tube ---------- */
+const tmpV = new THREE.Vector3();
+function updateTube() {
+  if (!printer) return;
+  printer.head.getWorldPosition(tmpV);
+  const headTop = tmpV.clone().add(new THREE.Vector3(0, 95, 12));
+  let pts;
+  const yT = FY + p.P + 80;
+  if (state.layers.ams) {
+    const gx = p.W / 2 - 100, gz = -p.D / 2 + 110;
+    const hub = amsGroup.position.clone().add(new THREE.Vector3(0, 352, 0));
+    pts = [hub, hub.clone().add(new THREE.Vector3(-40, 120, 0)), new THREE.Vector3(gx + 60, yT + 120, gz), new THREE.Vector3(gx, yT + 3, gz),
+           new THREE.Vector3(gx - 20, yT - 80, gz + 40), headTop.clone().add(new THREE.Vector3(0, 110, -20)), headTop];
+  } else {
+    const s = printer.g.position.clone().add(new THREE.Vector3(232, 430, -60));
+    pts = [s, s.clone().add(new THREE.Vector3(-30, 80, 20)), headTop.clone().add(new THREE.Vector3(40, 150, -10)), headTop];
+  }
+  const curve = new THREE.CatmullRomCurve3(pts);
+  const geom = new THREE.TubeGeometry(curve, 48, 2.2, 8, false);
+  if (!tube) { tube = new THREE.Mesh(geom, M.ptfe); tube.raycast = () => {}; scene.add(tube); }
+  else { tube.geometry.dispose(); tube.geometry = geom; }
+  tube.visible = state.layers.printer && (!state.step || state.step >= 9);
+}
+
+/* ---------- camera views ---------- */
+const VIEWS = { iso: [1, 0.72, 1.3], front: [0, 0.12, 1], side: [1, 0.12, 0], top: [0, 1, 0.0001] };
+function fitView(name, instant) {
+  const dir = new THREE.Vector3(...VIEWS[name]).normalize();
+  const H = FY + p.P + 83;
+  const ext = 0.5 * Math.hypot(p.W + (state.layers.ams ? 700 : 260), H, p.D + 260);
+  const vf = camera.fov * Math.PI / 180;
+  const hf = 2 * Math.atan(Math.tan(vf / 2) * camera.aspect);
+  const d = ext / Math.sin(Math.min(vf, hf) / 2) * 0.95;
+  const tx = state.layers.ams ? 260 : 0;
+  const target = new THREE.Vector3(tx, H * 0.45, 20);
+  const pos = target.clone().addScaledVector(dir, d);
+  if (instant || reduceMotion) { controls.target.copy(target); camera.position.copy(pos); controls.update(); return; }
+  camTween = { t: 0, fromP: camera.position.clone(), fromT: controls.target.clone(), toP: pos, toT: target };
+}
+let camTween = null;
+
+/* ---------- picking ---------- */
+const ray = new THREE.Raycaster(); const ndc = new THREE.Vector2();
+let downAt = null;
+renderer.domElement.addEventListener('pointerdown', e => { downAt = [e.clientX, e.clientY]; });
+renderer.domElement.addEventListener('pointerup', e => {
+  if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) return;
+  const r = renderer.domElement.getBoundingClientRect();
+  ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(ndc, camera);
+  const hits = ray.intersectObjects(root.children, true).filter(h => h.object.visible && isShown(h.object) && h.object.userData.part && h.object.userData.part !== 'dims');
+  if (!hits.length) { select(null); return; }
+  const solid = hits.find(h => !(h.object.userData.mat && h.object.userData.mat.transparent));
+  select((solid || hits[0]).object.userData.part);
+});
+function isShown(o) { while (o) { if (!o.visible) return false; o = o.parent; } return true; }
+
+/* ---------- part info ---------- */
+let BOM = null;
+function partInfo(id) {
+  const find = code => BOM.all.find(r => r.id === code);
+  const map = { post: 'A', railFB: 'B', railS: 'C', doorStile: 'D', doorRail: 'E', base: 'F', sidePanel: 'P1', backPanel: 'P2', topPanel: 'P3', doorPanel: 'P4',
+    hinge: 'H1', screw: 'H3', bracket: 'H8', magnet: 'H9', handle: 'H10', foot: 'H11', grommet: 'H12', foam: 'G1', fan: 'O1' };
+  if (map[id]) { const r = find(map[id]); return { code: r.id, name: r.name, rows: [['规格', r.spec], ['数量', r.qty], ['说明', r.note]] }; }
+  if (id === 'printer') return { code: 'A1', name: '拓竹 A1（示意）', rows: [['机身', '385 × 410 × 430 mm'], ['热床行程', 'Y 向动态深度约 545 mm'], ['摆放', '居中，前脚距前框内侧 ≥90 mm']] };
+  if (id === 'ams') return { code: 'AMS', name: 'AMS lite（放箱外右侧）', rows: [['原因', '箱内放不下，顶板 3 mm 承重不够'], ['走线', 'PTFE 管与线缆经顶板 Ø50 过线孔进箱']] };
+  return null;
+}
+function select(id) {
+  state.sel = id; clearHighlight();
+  const card = $('#card');
+  if (!id) { card.hidden = true; fitStepHighlight(); return; }
+  const info = partInfo(id); if (!info) { card.hidden = true; return; }
+  highlight(parts[id] || []);
+  $('#cardCode').textContent = info.code; $('#cardName').textContent = info.name;
+  $('#cardBody').innerHTML = info.rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
+  card.hidden = false;
+}
+$('#cardX').onclick = () => select(null);
+
+/* ---------- BOM ---------- */
+function computeBOM() {
+  const { W, D, P } = p; const F = P + 80, Wo = W + 6, Hd = F + 3, Dt = D + 3;
+  const cnt = (a, b) => perim(0, a, 0, b).length;
+  const holes = 2 * cnt(D, F) + cnt(Wo, F) + cnt(Wo, Dt) + cnt(Wo, Hd);
+  const r10 = n => Math.ceil(n / 10) * 10;
+  const seal = 2 * F + 2 * (W - 60);
+  const gasket = 2 * 2 * (D + F) + 2 * (Wo + F) + 2 * (Wo + Dt) + 2 * (Wo + Hd);
+  const foamM = Math.ceil((seal + gasket) * 1.1 / 1000 / 5) * 5;
+  const wood = [
+    { id: 'A', name: '立柱', spec: '桐木方条 30×40', len: P, qty: 4, note: '30 面朝前后，站在底框上' },
+    { id: 'B', name: '顶/底框 前后梁', spec: '桐木方条 30×40', len: W, qty: 4, note: '通长，40 高立放' },
+    { id: 'C', name: '顶/底框 侧梁', spec: '桐木方条 30×40', len: D - 60, qty: 4, note: '夹在前后梁之间' },
+    { id: 'D', name: '门框 竖梃', spec: '桐木方条 30×40', len: Hd, qty: 2, note: '40 面朝前，通长' },
+    { id: 'E', name: '门框 横档', spec: '桐木方条 30×40', len: Wo - 80, qty: 2, note: '夹在竖梃之间' }
+  ];
+  wood.forEach(r => { r.spec = `${r.spec}×${r.len}`; });
+  const base = { id: 'F', name: '底板', spec: `桐木拼板 ${W + 10}×${D + 5}×15`, qty: 1, note: '底框从下方用 4×40 木螺丝固定' };
+  const panels = [
+    { id: 'P1', name: '侧板（左/右）', spec: `3 mm 透明板 ${D}×${F}`, qty: 2, note: `${cnt(D, F)} 孔/块` },
+    { id: 'P2', name: '后板', spec: `3 mm 透明板 ${Wo}×${F}`, qty: 1, note: `${cnt(Wo, F)} 孔 + Ø50 过线孔；可选 Ø116 风扇孔` },
+    { id: 'P3', name: '顶板', spec: `3 mm 透明板 ${Wo}×${Dt}`, qty: 1, note: `${cnt(Wo, Dt)} 孔 + Ø50 过线孔（右后）` },
+    { id: 'P4', name: '门板', spec: `3 mm 透明板 ${Wo}×${Hd}`, qty: 1, note: `${cnt(Wo, Hd)} 孔；拉手孔等拿到拉手再开` }
+  ];
+  const hw = [
+    { id: 'H1', name: '不锈钢平合页', spec: '2 寸（50 mm）', qty: 3, note: '左侧，铰轴在左前外角' },
+    { id: 'H2', name: '沉头木螺丝（合页）', spec: '3.5×30', qty: 20, note: '穿过侧板吃进立柱' },
+    { id: 'H3', name: '盘头自攻木螺丝（板材）', spec: 'ST4×20', qty: r10(holes * 1.15), note: `板材共 ${holes} 孔，含余量` },
+    { id: 'H4', name: '尼龙平垫圈', spec: 'M4：4.3×12×1', qty: r10(holes * 1.15), note: '外径 12 才能盖住 Ø6 孔' },
+    { id: 'H5', name: '木螺丝（框角）', spec: '4×50', qty: 20, note: '顶/底框 8 个角，每角 2 颗' },
+    { id: 'H6', name: '木螺丝（立柱、门框）', spec: '4×60', qty: 30, note: '穿 40 厚木料再吃进 20 mm' },
+    { id: 'H7', name: '木螺丝（底板→底框）', spec: '4×40', qty: 16, note: '从底板下方打，每边 3–4 颗' },
+    { id: 'H8', name: 'L 型角码', spec: '40×40，配 4×16 螺丝', qty: 8, note: '立柱与顶/底框的内侧' },
+    { id: 'H9', name: '钕铁硼圆磁铁', spec: 'Ø10×3 N52', qty: 8, note: '4 对，嵌入右立柱和门框背面' },
+    { id: 'H10', name: '拉手', spec: '孔距 96，配 M4×40', qty: 1, note: '从门框背面沉孔穿螺丝' },
+    { id: 'H11', name: '橡胶脚垫', spec: 'Ø30', qty: 4, note: '' },
+    { id: 'H12', name: '毛刷过线孔', spec: 'Ø50', qty: 2, note: '后板走电源线，顶板走 PTFE 管和线缆' }
+  ];
+  const glue = [
+    { id: 'G1', name: 'EVA 单面泡棉胶条', spec: '3×10 mm', qty: `${foamM} m`, note: `门封 ${(seal / 1000).toFixed(1)} m + 板材衬垫 ${(gasket / 1000).toFixed(1)} m` },
+    { id: 'G2', name: '中性透明硅酮胶', spec: '300 ml + 胶枪', qty: 1, note: '只补转角缝和底边缝' },
+    { id: 'G3', name: '木工白乳胶', spec: '小瓶', qty: 1, note: '所有木-木接缝' },
+    { id: 'G4', name: '环氧 AB 胶', spec: '5 分钟型', qty: 1, note: '粘磁铁' }
+  ];
+  const opt = [
+    { id: 'O1', name: '12 cm 排风扇 + 防护网', spec: '5 V USB 调速', qty: 1, note: '装后板左上；打 PLA 时开' },
+    { id: 'O2', name: '温湿度计', spec: '电子', qty: 1, note: '箱内温度 >35 °C 时开风扇或开门' },
+    { id: 'O3', name: '活性炭滤棉', spec: '120×120', qty: 1, note: '贴风扇出风口' },
+    { id: 'O4', name: 'LED 灯带', spec: '5 V，1 m', qty: 1, note: '贴顶框内侧' }
+  ];
+  const strips = wood.flatMap(r => Array(r.qty).fill(r.len));
+  const total = strips.reduce((a, b) => a + b, 0);
+  // first-fit decreasing on 2000 mm stock, 3 mm kerf
+  const plan = [];
+  [...strips].sort((a, b) => b - a).forEach(L => {
+    const s = plan.find(s => s.used + L + 3 <= 2000);
+    if (s) { s.cuts.push(L); s.used += L + 3; } else plan.push({ cuts: [L], used: L + 3 });
+  });
+  return { wood, base, panels, hw, glue, opt, total, plan, holes, all: [...wood, base, ...panels, ...hw, ...glue, ...opt] };
+}
+function rowsHTML(list, withLen) {
+  const head = `<tr><th>#</th><th>名称</th><th>规格</th><th>数量</th></tr>`;
+  return head + list.map(r => `<tr><td class="id">${r.id}</td><td>${r.name}${r.note ? `<small>${r.note}</small>` : ''}</td><td class="num">${r.spec}</td><td class="num">${r.qty}</td></tr>`).join('');
+}
+function renderBOM() {
+  BOM = computeBOM();
+  $('#tWood').innerHTML = rowsHTML([...BOM.wood, BOM.base]);
+  $('#tPanel').innerHTML = rowsHTML(BOM.panels);
+  $('#tHw').innerHTML = rowsHTML(BOM.hw);
+  $('#tGlue').innerHTML = rowsHTML(BOM.glue);
+  $('#tOpt').innerHTML = rowsHTML(BOM.opt);
+  $('#woodSum').textContent = `${(BOM.total / 1000).toFixed(2)} m，买 ${BOM.plan.length} 根 2 m`;
+  $('#bomMeta').textContent = `外框 ${p.W}×${p.D}，立柱 ${p.P}，成品约 ${p.W + 10}×${p.D + 5 + 36} mm（含门），高 ${FY + p.P + 83} mm。`;
+  $('#cutPlan').innerHTML = BOM.plan.map((s, i) =>
+    `<div class="stick-row"><span>#${i + 1}</span><div class="stick">${s.cuts.map(c => `<i style="flex:0 0 ${c / 20}%">${c}</i>`).join('')}</div></div>`).join('');
+}
+function bomTSV() {
+  const lines = ['编号\t名称\t规格\t数量\t说明'];
+  const sec = (t, list) => { lines.push(t); list.forEach(r => lines.push([r.id, r.name, r.spec, r.qty, r.note || ''].join('\t'))); };
+  sec('一、木料', [...BOM.wood, BOM.base]); sec('二、透明板', BOM.panels); sec('三、五金', BOM.hw); sec('四、胶与密封', BOM.glue); sec('五、可选', BOM.opt);
+  return lines.join('\n');
+}
+$('#copyBom').onclick = () => {
+  const txt = bomTSV(); const ta = $('#bomText');
+  const fallback = () => { ta.value = txt; ta.hidden = false; ta.select(); $('#copyBom').textContent = '已展开，手动复制'; };
+  try {
+    navigator.clipboard.writeText(txt).then(() => { $('#copyBom').textContent = '已复制'; setTimeout(() => $('#copyBom').textContent = '复制为表格', 1600); }, fallback);
+  } catch (e) { fallback(); }
+};
+
+/* ---------- checks ---------- */
+function grade(v, good, warn) { return v >= good ? 'good' : v >= warn ? 'warn' : 'bad'; }
+const GTXT = { good: '充足', warn: '偏紧', bad: '不够' };
+function renderChecks() {
+  const { W, D, P } = p;
+  const iW = W - 60, iD = D - 60, iH = P + 40;
+  const mW = (iW - A1.w) / 2, mD = (iD - A1.sweep) / 2, mH = iH - A1.h;
+  const mSpool = (iW - 465) / 2;   // A1 with its own spool holder is about 465 wide
+  const L = Math.max(D, W + 6, P + 83);
+  const grow = 7e-5 * L * 30;
+  const rows = [
+    ['内宽', `${iW} mm`, `机身 385 每侧余 ${mW.toFixed(0)} mm；用机身自带料架（含料架约 465 宽）时把 A1 往左挪 40 mm，两侧各余 ${mSpool.toFixed(0)} mm`, grade(mSpool, 50, 25)],
+    ['内深', `${iD} mm`, `热床行程 545 mm，前后各余 ${mD.toFixed(1)} mm（后侧要放电源线）`, grade(mD, 40, 20)],
+    ['内高', `${iH} mm`, `机身 430 mm 以上余 ${mH} mm，供 PTFE 管弯曲（建议 ≥150）`, grade(mH, 150, 90)],
+    ['前门槛', `${FY + 40} mm`, '底框前梁顶面离桌面高度；热床底面更高，A1 不会碰到', 'good'],
+    ['板材热胀', `${grow.toFixed(1)} mm`, `最长板 ${L} mm 温升 30 °C 的伸长量；Ø6 孔给 ST4 留 ±1 mm，够用`, grow / 2 <= 1 ? 'good' : 'warn'],
+    ['前门', '3 合页', `门约 ${(((W + 6) * (P + 83) * 3 * 1.19e-6) + 0.9).toFixed(1)} kg；全开需左侧或正前方约 ${W + 10} mm 空间`, 'good']
+  ];
+  $('#checks').innerHTML = rows.map(([k, n, d, g]) =>
+    `<div class="check"><span class="pill ${g}">${GTXT[g]}</span><span class="k">${k}</span><span class="n">${n}</span><span class="d">${d}</span></div>`).join('');
+}
+
+/* ---------- assembly steps ---------- */
+const STEPS = [
+  ['底板', '650×705 桐木拼板，底面四角装橡胶脚垫。底板就是整个箱子的地面，A1 直接放在上面。'],
+  ['底框', '4 根方条围成矩形：前后梁通长，侧梁夹在中间。每角白乳胶 + 2 颗 4×50（先打 Ø2.5 引孔）。再从底板下方用 4×40 把底框固定在底板上。'],
+  ['立柱', '4 根立柱站在底框四角，30 面朝前后。从底框下方打 4×60 进立柱端面，内侧再加 L 角码。'],
+  ['顶框', '同底框的做法拼好后压在立柱顶上，4×60 向下固定。拧紧前量两条对角线，相差 ≤2 mm。'],
+  ['侧板与后板', '木框外表面贴一圈 3 mm 泡棉条。板材孔 Ø6、距边 15 mm，ST4×20 + 尼龙垫圈，从每条边中间往两端拧，不要拧死。后板压住侧板后沿。'],
+  ['顶板', '同样方法固定，顶板盖住侧板和后板的上沿。转角缝用中性透明硅酮胶补缝。'],
+  ['门', '门框竖梃通长、横档夹中间，白乳胶 + 4×60 拼好并量对角线。门板用 ST4×20 + 垫圈固定在门框正面，它同时让门框保持方正。'],
+  ['合页、磁铁、门封', '左侧装 3 个平合页，两片合页在门关闭时处在同一平面（左侧面）。右立柱正面和门框背面各钻 4 个 Ø10×3 沉孔，用 AB 胶嵌磁铁，注意极性。前框贴门封条，装拉手。'],
+  ['放入 A1 并走线', 'A1 居中放置，前脚距前框内侧 ≥90 mm。电源线走后板过线孔；AMS lite 放箱外右侧，PTFE 管和线缆走顶板过线孔。']
+];
+$('#stList').innerHTML = STEPS.map(s => `<li>${s[0]}</li>`).join('');
+function setStep(n) {
+  state.step = n; select(null);
+  if (n) {
+    $('#stRange').value = n; $('#stV').textContent = `${n}/9`;
+    $('#stTitle').textContent = `${n}. ${STEPS[n - 1][0]}`; $('#stText').textContent = STEPS[n - 1][1];
+    [...$('#stList').children].forEach((li, i) => li.classList.toggle('on', i === n - 1));
+    if (n < 7) { state.doorTarget = 0; }
+  } else {
+    clearHighlight(); [...$('#stList').children].forEach(li => li.classList.remove('on'));
+    $('#stTitle').textContent = '整机'; $('#stText').textContent = '拖动滑块或点上一步/下一步，逐步查看装配顺序。';
+  }
+  applyVisibility();
+}
+$('#stRange').oninput = e => setStep(+e.target.value);
+$('#stPrev').onclick = () => setStep(Math.max(1, (state.step || 1) - 1));
+$('#stNext').onclick = () => setStep(Math.min(9, (state.step || 0) + 1));
+$('#stAll').onclick = () => setStep(0);
+
+/* ---------- UI wiring ---------- */
+document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-selected', x === b));
+  ['ctl', 'chk', 'bom', 'asm'].forEach(t => $('#tab-' + t).hidden = t !== b.dataset.tab);
+  if (b.dataset.tab === 'asm' && !state.step) setStep(1);
+  if (b.dataset.tab !== 'asm' && state.step) setStep(0);
+});
+const doorEl = $('#door');
+doorEl.oninput = () => { state.doorTarget = +doorEl.value; };
+$('#doorBtn').onclick = () => { state.doorTarget = state.doorTarget > 5 ? 0 : 105; };
+$('#explode').oninput = e => { state.explode = e.target.value / 100; $('#explodeV').textContent = e.target.value + '%'; applyExplode(); };
+Object.keys(state.layers).forEach(k => {
+  const el = $('#ly-' + k); if (!el) return;
+  el.checked = state.layers[k];
+  el.onchange = () => { state.layers[k] = el.checked; applyVisibility(); if (k === 'ams') { updateTube(); fitView('iso'); } };
+});
+$('#anim').onchange = e => { state.anim = e.target.checked; };
+['W', 'D', 'P'].forEach(k => {
+  const el = $('#p' + k);
+  el.oninput = () => { p[k] = +el.value; $('#p' + k + 'V').textContent = el.value; scheduleBuild(); };
+});
+let buildTimer = 0;
+function scheduleBuild() { clearTimeout(buildTimer); buildTimer = setTimeout(() => { build(); updateTube(); }, 60); }
+document.querySelectorAll('[data-preset]').forEach(b => b.onclick = () => {
+  Object.assign(p, b.dataset.preset === 'v1' ? { W: 640, D: 640, P: 600 } : DEF);
+  ['W', 'D', 'P'].forEach(k => { $('#p' + k).value = p[k]; $('#p' + k + 'V').textContent = p[k]; });
+  build(); updateTube();
+  document.querySelector('.tabs [data-tab="chk"]').click();
+});
+document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => fitView(b.dataset.view));
+
+/* ---------- theme ---------- */
+function applyTheme() {
+  const cs = getComputedStyle(document.documentElement);
+  const c = n => new THREE.Color(cs.getPropertyValue(n).trim() || '#888');
+  scene.background = c('--scene');
+  floorMat.color = c('--floor');
+  M.dim.color = c('--accent');
+}
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+new MutationObserver(applyTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+/* ---------- resize & loop ---------- */
+function resize() {
+  const w = stage.clientWidth, h = stage.clientHeight;
+  if (!w || !h) return;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h; camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(stage);
+
+const clock = new THREE.Clock(); let t = 0;
+const proj = new THREE.Vector3();
+function loop() {
+  requestAnimationFrame(loop);
+  const dt = Math.min(clock.getDelta(), 0.05);
+  // door easing
+  if (Math.abs(state.door - state.doorTarget) > 0.1) {
+    state.door += (state.doorTarget - state.door) * (reduceMotion ? 1 : Math.min(1, dt * 5));
+    updateDoor();
+    doorEl.value = Math.round(state.door); $('#doorV').textContent = Math.round(state.door) + '°';
+    $('#doorBtn').textContent = state.doorTarget > 5 ? '关门' : '开门';
+  }
+  if (camTween) {
+    camTween.t = Math.min(1, camTween.t + dt * 2.2);
+    const k = 1 - Math.pow(1 - camTween.t, 3);
+    camera.position.lerpVectors(camTween.fromP, camTween.toP, k);
+    controls.target.lerpVectors(camTween.fromT, camTween.toT, k);
+    if (camTween.t >= 1) camTween = null;
+  }
+  if (state.anim && printer) {
+    t += dt;
+    printer.bed.position.z = 12.5 + 137.5 * Math.sin(t * 0.8);
+    printer.head.position.x = 120 * Math.sin(t * 1.9);
+    printer.xbeam.position.y = 84 + 40 + 60 * (0.5 + 0.5 * Math.sin(t * 0.15));
+    if (fanRotor) fanRotor.rotation.z -= dt * 12;
+    updateTube();
+  } else if (printer && printer.xbeam.position.y === 0) {
+    printer.xbeam.position.y = 124; updateTube();
+  }
+  controls.update();
+  renderer.render(scene, camera);
+  if (state.layers.dims) {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    dimLabels.forEach(l => {
+      proj.copy(l.pos).project(camera);
+      if (proj.z > 1) { l.el.style.visibility = 'hidden'; return; }
+      l.el.style.visibility = '';
+      l.el.style.transform = `translate(${(proj.x + 1) / 2 * w}px, ${(1 - proj.y) / 2 * h}px) translate(-50%,-50%)`;
+    });
+  }
+}
+
+applyTheme();
+build();
+resize();
+fitView('iso', true);
+updateTube();
+setStep(0);
+loop();
+})();
+</script>
+</body>
+</html>
