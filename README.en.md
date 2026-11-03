@@ -42,7 +42,41 @@ Two more recommendations:
 | A1 clearance | about 98 each side (385 body), about 47 front and back (545 bed travel), about 210 on top |
 | Door swing | 646 wide; fully open it needs about 650 to the left or in front |
 
-Placement: centre the A1 with its front feet at least 90 mm from the inside of the front frame. If you use the A1's built-in spool holder, shift the printer about 40 mm left to make room for the spool on the right.
+Placement: centre the A1 with its front feet at least 90 mm from the inside of the front frame.
+
+### Options: filament feed and power entry
+
+Switch these at the top of the Controls tab in the 3D model; the model, checks and BOM update together.
+
+**Filament feed**
+
+| Option | Posts | Inner height | Total height | Notes |
+|---|---|---|---|---|
+| AMS lite outside (default) | 600 | 640 | 708 | AMS lite on the right outside; PTFE tube and cable through a Ø50 grommet in the top |
+| Stock spool on top | **680** | 720 | 788 | The stock holder sits on top of the printer, making it about 630 mm tall (430 body + ~200 spool). With 600 mm posts the inside is only 640 mm tall, leaving about 10 mm above the spool, too little to lift it off. No top grommet needed |
+| Spool stand outside | 600 | 640 | 708 | Desktop spool stand to the right; PTFE tube through the top grommet; change spools without opening the door |
+
+For the stock-spool-on-top option, change only these lines of the default BOM:
+
+| # | Part | Change to | Qty |
+|---|---|---|---|
+| A | Post | 30×40×**680** | 4 |
+| D | Door stile | 30×40×**763** | 2 |
+| P1 | Side panel | 700×**760** | 2 |
+| P2 | Back panel | 646×**760** | 1 |
+| P4 | Door panel | 646×**763** | 1 |
+| P3 | Top panel | 646×703, **no grommet hole** | 1 |
+| H3 / H4 | Panel screws / washers | 88 holes, buy **110** of each | |
+| H12 | Brush grommet | Back panel only | 1 |
+
+Strips total about 10.5 m, still six 2 m lengths: `763+763` · `680+680+566` ×2 · `640+640+640` ×2 · `640+640`.
+
+**Power entry** (both at the back right, near the A1's power socket)
+
+| Option | How | Best for |
+|---|---|---|
+| Hole in back panel (default) | Ø50 hole in the lower right of the back panel with a brush grommet, centre about 120 mm above the desk | Have the panel supplier cut it; no woodwork |
+| Notch in bottom rail | Cut a 60×25 mm notch under the bottom back rail (two saw cuts, chisel out the middle) and a matching notch in the back panel edge; seal with a brush strip. Unplug the cable at the A1 end to thread it through | Easier if you're cutting the wood yourself; no round hole in the panel |
 
 ---
 

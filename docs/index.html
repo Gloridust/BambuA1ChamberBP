@@ -52,6 +52,11 @@ button,input{font:inherit;color:inherit}
 .ttl h1{margin:0;font:700 26px/1.05 var(--f-display);letter-spacing:.01em;text-wrap:balance}
 .ttl p{margin:4px 0 0;color:var(--muted);font-size:12px}
 .views{position:absolute;top:12px;right:max(12px,env(safe-area-inset-right,0px));display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;max-width:45%}
+.seg{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface-2)}
+.seg button{border:0;border-right:1px solid var(--line);background:none;padding:8px 6px;cursor:pointer;font-size:13px;color:var(--muted);line-height:1.3}
+.seg button:last-child{border-right:0}
+.seg button[aria-checked="true"]{background:var(--accent);color:var(--accent-ink);font-weight:500}
+.seg-l{font-size:13px;font-weight:500}
 .views .lang{font-weight:600;color:var(--accent)}
 .views button,.chip-btn{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:12px}
 .views button:hover,.chip-btn:hover{border-color:var(--accent)}
@@ -170,6 +175,22 @@ td small{display:block;color:var(--muted);font-size:11px;line-height:1.4}
 
     <div class="tab" id="tab-ctl">
       <div class="sec">
+        <h2 data-i18n="scheme_h">方案</h2>
+        <span class="seg-l" data-i18n="feed_l">供料方式</span>
+        <div class="seg" role="radiogroup" id="feedSeg" data-i18n-aria="feed_l" aria-label="供料方式">
+          <button type="button" role="radio" data-feed="ams" data-i18n="feed_ams">箱外 AMS lite</button>
+          <button type="button" role="radio" data-feed="top" data-i18n="feed_top">机顶原装料盘</button>
+          <button type="button" role="radio" data-feed="side" data-i18n="feed_side">箱外单料盘架</button>
+        </div>
+        <p class="note" id="feedNote"></p>
+        <span class="seg-l" data-i18n="power_l">电源线口</span>
+        <div class="seg" role="radiogroup" id="powerSeg" data-i18n-aria="power_l" aria-label="电源线口">
+          <button type="button" role="radio" data-power="panel" data-i18n="power_panel">后板开孔</button>
+          <button type="button" role="radio" data-power="notch" data-i18n="power_notch">底框后梁开槽</button>
+        </div>
+        <p class="note" id="powerNote"></p>
+      </div>
+      <div class="sec">
         <h2 data-i18n="door_h">前门</h2>
         <div class="row"><label for="door" data-i18n="door_l">开合角度</label><input id="door" type="range" min="0" max="170" value="0"><span class="val" id="doorV">0°</span></div>
         <div class="row"><button type="button" class="btn" id="doorBtn">开门</button><p class="note" data-i18n="door_note">左侧 3 个平合页，铰轴在左前外角，最大约 180°。</p></div>
@@ -187,7 +208,6 @@ td small{display:block;color:var(--muted);font-size:11px;line-height:1.4}
           <label class="tg"><input type="checkbox" id="ly-foam" checked><span data-i18n="ly_foam">密封条</span></label>
           <label class="tg"><input type="checkbox" id="ly-printer" checked><span data-i18n="ly_printer">A1 打印机</span></label>
           <label class="tg"><input type="checkbox" id="ly-env"><span data-i18n="ly_env">热床行程包络</span></label>
-          <label class="tg"><input type="checkbox" id="ly-ams"><span data-i18n="ly_ams">箱外 AMS lite</span></label>
           <label class="tg"><input type="checkbox" id="ly-dims" checked><span data-i18n="ly_dims">尺寸</span></label>
           <label class="tg"><input type="checkbox" id="anim" checked><span data-i18n="anim">打印运动</span></label>
         </div>
@@ -198,7 +218,7 @@ td small{display:block;color:var(--muted);font-size:11px;line-height:1.4}
         <div class="row"><label for="pD" data-i18n="pD">深 D</label><input id="pD" type="range" min="580" max="800" step="10" value="700"><span class="val" id="pDV">700</span></div>
         <div class="row"><label for="pP" data-i18n="pP">立柱 P</label><input id="pP" type="range" min="480" max="760" step="10" value="600"><span class="val" id="pPV">600</span></div>
         <div class="presets">
-          <button type="button" class="chip-btn" data-preset="v2" data-i18n="pre_v2">修订方案 640×700×600</button>
+          <button type="button" class="chip-btn" data-preset="v2" data-i18n="pre_v2">修订方案默认尺寸</button>
           <button type="button" class="chip-btn" data-preset="v1" data-i18n="pre_v1">原方案深度 640</button>
         </div>
         <p class="note" data-i18n="size_note">改尺寸后，模型、检查项和 BOM 会一起重算。切到「检查」看余量。</p>
@@ -281,9 +301,11 @@ const I18N = {
     door_h: '前门', door_l: '开合角度', door_open: '开门', door_close: '关门', door_note: '左侧 3 个平合页，铰轴在左前外角，最大约 180°。',
     explode_h: '爆炸视图', explode_l: '拆开程度',
     show_h: '显示', ly_wood: '木框', ly_panel: '透明板', ly_hw: '五金', ly_foam: '密封条', ly_printer: 'A1 打印机',
-    ly_env: '热床行程包络', ly_ams: '箱外 AMS lite', ly_dims: '尺寸', anim: '打印运动',
+    ly_env: '热床行程包络', ly_dims: '尺寸', anim: '打印运动',
+    scheme_h: '方案', feed_l: '供料方式', feed_ams: '箱外 AMS lite', feed_top: '机顶原装料盘', feed_side: '箱外单料盘架',
+    power_l: '电源线口', power_panel: '后板开孔', power_notch: '底框后梁开槽',
     size_h: '框架尺寸（外框，mm）', pW: '宽 W', pD: '深 D', pP: '立柱 P',
-    pre_v2: '修订方案 640×700×600', pre_v1: '原方案深度 640',
+    pre_v2: '修订方案默认尺寸', pre_v1: '原方案深度 640',
     size_note: '改尺寸后，模型、检查项和 BOM 会一起重算。切到「检查」看余量。',
     chk_h: '空间余量（按当前尺寸）',
     chk_note: 'A1 数据：机身 385×410×430 mm；热床 Y 向动态深度约 545 mm（热床最前会伸出底座约 80 mm）。拓竹官方不推荐给 A1 加封箱，打 PLA 时请开排风或留门缝。',
@@ -326,9 +348,11 @@ const I18N = {
     door_h: 'Front door', door_l: 'Angle', door_open: 'Open door', door_close: 'Close door', door_note: 'Three butt hinges on the left; the pin sits on the front-left outer corner, so the door opens to about 180°.',
     explode_h: 'Exploded view', explode_l: 'Spread',
     show_h: 'Show', ly_wood: 'Frame', ly_panel: 'Panels', ly_hw: 'Hardware', ly_foam: 'Seals', ly_printer: 'A1 printer',
-    ly_env: 'Bed travel envelope', ly_ams: 'AMS lite (outside)', ly_dims: 'Dimensions', anim: 'Print motion',
+    ly_env: 'Bed travel envelope', ly_dims: 'Dimensions', anim: 'Print motion',
+    scheme_h: 'Configuration', feed_l: 'Filament feed', feed_ams: 'AMS lite outside', feed_top: 'Stock spool on top', feed_side: 'Spool stand outside',
+    power_l: 'Power cable entry', power_panel: 'Hole in back panel', power_notch: 'Notch in bottom rail',
     size_h: 'Frame size (outer, mm)', pW: 'Width W', pD: 'Depth D', pP: 'Post P',
-    pre_v2: 'Revised 640×700×600', pre_v1: 'Original depth 640',
+    pre_v2: 'Revised default size', pre_v1: 'Original depth 640',
     size_note: 'Changing a size rebuilds the model, the checks and the BOM. Open Checks to see the clearances.',
     chk_h: 'Clearances (current size)',
     chk_note: 'A1 data: body 385×410×430 mm; the bed sweeps about 545 mm front to back (it reaches about 80 mm past the front of the base). Bambu Lab does not recommend enclosing the A1. For PLA, run the exhaust fan or leave the door ajar.',
@@ -387,10 +411,14 @@ const FY = K.foot + K.base;            // base top
 const A1 = { w: 385, d: 410, h: 430, sweep: 545 };
 const PR_Z = -12.5;                    // printer offset so the bed sweep is centred
 const SWEEP = { front: 285, back: -260 }; // printer-local Z of bed sweep
+const SPOOL_TOP = 630;                 // A1 with the stock top spool holder: ~430 body + ~200 spool
+const FEED_P = { ams: 600, top: 680, side: 600 };
+const NOTCH = { w: 60, h: 25 };
 
 const state = {
   door: 0, doorTarget: 0, explode: 0, anim: !reduceMotion, step: 0,
-  layers: { wood: true, panel: true, hw: true, foam: true, printer: true, env: false, ams: false, dims: true },
+  feed: 'ams', power: 'panel',
+  layers: { wood: true, panel: true, hw: true, foam: true, printer: true, env: false, dims: true },
   sel: null
 };
 if (reduceMotion) $('#anim').checked = false;
@@ -540,9 +568,20 @@ function build() {
   });
 
   // 2 & 4 rings
+  const nx = xR - 110;  // power entry position (back, right)
   [[FY, 2, -45], [yT - 40, 4, 150]].forEach(([y0, st, ey]) => {
     item(T(boxR(xL, xR, y0, y0 + 40, zF - 30, zF, M.wood, M.woodEdge), 'railFB', 'wood', st), [0, ey, 90]);
-    item(T(boxR(xL, xR, y0, y0 + 40, zB, zB + 30, M.wood, M.woodEdge), 'railFB', 'wood', st), [0, ey, -90]);
+    if (y0 === FY && state.power === 'notch') {
+      const g = new THREE.Group();
+      g.add(boxR(xL, nx - NOTCH.w / 2, y0, y0 + 40, zB, zB + 30, M.wood, M.woodEdge));
+      g.add(boxR(nx + NOTCH.w / 2, xR, y0, y0 + 40, zB, zB + 30, M.wood, M.woodEdge));
+      g.add(boxR(nx - NOTCH.w / 2, nx + NOTCH.w / 2, y0 + NOTCH.h, y0 + 40, zB, zB + 30, M.wood, M.woodEdge));
+      item(T(g, 'railFB', 'wood', st), [0, ey, -90]);
+      const brush = boxR(nx - NOTCH.w / 2, nx + NOTCH.w / 2, y0 + NOTCH.h - 6, y0 + NOTCH.h, zB + 2, zB + 28, M.grommet);
+      item(T(brush, 'notch', 'hw', 9), [0, ey, -90]);
+    } else {
+      item(T(boxR(xL, xR, y0, y0 + 40, zB, zB + 30, M.wood, M.woodEdge), 'railFB', 'wood', st), [0, ey, -90]);
+    }
     item(T(boxR(xL, xL + 30, y0, y0 + 40, zB + 30, zF - 30, M.wood, M.woodEdge), 'railS', 'wood', st), [-90, ey, 0]);
     item(T(boxR(xR - 30, xR, y0, y0 + 40, zB + 30, zF - 30, M.wood, M.woodEdge), 'railS', 'wood', st), [90, ey, 0]);
   });
@@ -573,10 +612,17 @@ function build() {
   // back panel + power grommet
   {
     const g = new THREE.Group();
-    T(g.add(boxR(xL - 3, xR + 3, FY, yT, zB - 3, zB, M.acrylic, M.acrylicEdge)) && g, 'backPanel', 'panel', 5);
+    if (state.power === 'notch') {
+      g.add(boxR(xL - 3, nx - NOTCH.w / 2, FY, yT, zB - 3, zB, M.acrylic, M.acrylicEdge));
+      g.add(boxR(nx + NOTCH.w / 2, xR + 3, FY, yT, zB - 3, zB, M.acrylic, M.acrylicEdge));
+      g.add(boxR(nx - NOTCH.w / 2, nx + NOTCH.w / 2, FY + NOTCH.h, yT, zB - 3, zB, M.acrylic, M.acrylicEdge));
+      T(g, 'backPanel', 'panel', 5);
+    } else {
+      T(g.add(boxR(xL - 3, xR + 3, FY, yT, zB - 3, zB, M.acrylic, M.acrylicEdge)) && g, 'backPanel', 'panel', 5);
+      const gr = new THREE.Mesh(new THREE.TorusGeometry(25, 4, 10, 32), M.grommet);
+      gr.position.set(nx, FY + 95, zB - 2); g.add(T(gr, 'grommet', 'hw', 9));
+    }
     g.add(T(screws(perim(xL - 3, xR + 3, FY, yT).map(([u, v]) => [u, v, zB - 3]), [0, 0, -1]), 'screw', 'hw', 5));
-    const gr = new THREE.Mesh(new THREE.TorusGeometry(25, 4, 10, 32), M.grommet);
-    gr.position.set(xR - 110, FY + 95, zB - 2); g.add(T(gr, 'grommet', 'hw', 9));
     item(g, [0, 0, -230]);
   }
   // 6 top panel + PTFE grommet (back-right, AMS lite sits on the right)
@@ -584,8 +630,10 @@ function build() {
     const g = new THREE.Group();
     T(g.add(boxR(xL - 3, xR + 3, yT, yT + 3, zB - 3, zF, M.acrylic, M.acrylicEdge)) && g, 'topPanel', 'panel', 6);
     g.add(T(screws(perim(xL - 3, xR + 3, zB - 3, zF).map(([u, v]) => [u, yT + 3, v]), [0, 1, 0]), 'screw', 'hw', 6));
-    const gr = new THREE.Mesh(new THREE.TorusGeometry(25, 4, 10, 32), M.grommet);
-    gr.rotation.x = Math.PI / 2; gr.position.set(xR - 100, yT + 3, zB + 110); g.add(T(gr, 'grommet', 'hw', 9));
+    if (state.feed !== 'top') {
+      const gr = new THREE.Mesh(new THREE.TorusGeometry(25, 4, 10, 32), M.grommet);
+      gr.rotation.x = Math.PI / 2; gr.position.set(xR - 100, yT + 3, zB + 110); g.add(T(gr, 'grommet', 'hw', 9));
+    }
     item(g, [0, 320, 0]);
   }
   // optional exhaust fan (back, upper left, inside)
@@ -643,7 +691,9 @@ function build() {
 
   // 9 printer, envelope, AMS lite, PTFE
   buildPrinter();
-  buildAms(xR + 3);
+  amsGroup = null;
+  if (state.feed === 'ams') buildAms(xR + 3);
+  if (state.feed === 'side') buildStand(xR + 3);
   buildDims(W, D, F);
   if (tube) { scene.remove(tube); tube.geometry.dispose(); tube = null; }
   applyVisibility(); applyExplode(); updateDoor(true);
@@ -662,12 +712,17 @@ function buildPrinter() {
   body.add(boxR(152, 192, 0, 430, -80, -40, M.pLight));
   body.add(boxR(-192, 192, 395, 430, -80, -40, M.pLight));
   body.add(boxR(-192, 192, 0, 45, -80, -40, M.pDark));
-  // spool holder + spool (hidden when AMS lite is used)
-  const spool = new THREE.Group();
-  spool.add(boxR(192, 270, 322, 338, -68, -52, M.pDark));
-  const sp = cyl(100, 66, 'x', M.filament, 40); sp.position.set(232, 330, -60); spool.add(sp);
-  const sh = cyl(30, 68, 'x', M.hub, 20); sh.position.set(232, 330, -60); spool.add(sh);
-  body.add(spool);
+  // stock spool holder on top of the gantry (only for the "top" feed)
+  let spool = null;
+  if (state.feed === 'top') {
+    spool = new THREE.Group();
+    spool.add(boxR(70, 90, 430, 540, -70, -50, M.pDark));
+    spool.add(boxR(150, 170, 430, 540, -70, -50, M.pDark));
+    const ax = cyl(8, 110, 'x', M.pDark, 12); ax.position.set(120, SPOOL_TOP - 100, -60); spool.add(ax);
+    const sp = cyl(100, 66, 'x', M.filament, 40); sp.position.set(120, SPOOL_TOP - 100, -60); spool.add(sp);
+    const sh = cyl(30, 68, 'x', M.hub, 20); sh.position.set(120, SPOOL_TOP - 100, -60); spool.add(sh);
+    body.add(spool);
+  }
   const bed = new THREE.Group();
   bed.add(boxR(-135, 135, 62, 80, -135, 135, M.pBed));
   bed.add(boxR(-128, 128, 80, 84, -128, 128, M.plate));
@@ -697,7 +752,18 @@ function buildAms(xSide) {
     const s = cyl(100, 66, 'z', new THREE.MeshStandardMaterial({ color: AMS_COLORS[i], roughness: 0.5 }), 36); s.position.set(x, 160, z); g.add(s);
     const h = cyl(28, 68, 'z', M.hub, 16); h.position.set(x, 160, z); g.add(h);
   });
-  T(g, 'ams', 'ams', 9); root.add(g);
+  T(g, 'ams', 'printer', 9); root.add(g);
+  amsGroup = g;
+}
+
+function buildStand(xSide) {
+  const g = new THREE.Group(); g.position.set(xSide + 170, 0, -60);
+  g.add(boxR(-90, 90, 0, 12, -80, 80, M.pDark));
+  g.add(boxR(-70, -55, 12, 315, -10, 10, M.pDark));
+  const ax = cyl(8, 110, 'x', M.pDark, 12); ax.position.set(-5, 300, 0); g.add(ax);
+  const sp = cyl(100, 66, 'x', M.filament, 40); sp.position.set(0, 300, 0); g.add(sp);
+  const sh = cyl(30, 68, 'x', M.hub, 20); sh.position.set(0, 300, 0); g.add(sh);
+  T(g, 'stand', 'printer', 9); root.add(g);
   amsGroup = g;
 }
 
@@ -727,7 +793,6 @@ function applyVisibility() {
     if (state.step && st && st > state.step) v = false;
     o.visible = v;
   });
-  if (printer) printer.spool.visible = !state.layers.ams;
   if (tube) tube.visible = state.layers.printer && (!state.step || state.step >= 9);
   dimLabels.forEach(l => l.el.hidden = !state.layers.dims);
   fitStepHighlight();
@@ -764,14 +829,14 @@ function updateTube() {
   const headTop = tmpV.clone().add(new THREE.Vector3(0, 95, 12));
   let pts;
   const yT = FY + p.P + 80;
-  if (state.layers.ams) {
+  if (state.feed !== 'top' && amsGroup) {
     const gx = p.W / 2 - 100, gz = -p.D / 2 + 110;
-    const hub = amsGroup.position.clone().add(new THREE.Vector3(0, 352, 0));
+    const hub = amsGroup.position.clone().add(new THREE.Vector3(0, state.feed === 'ams' ? 352 : 400, 0));
     pts = [hub, hub.clone().add(new THREE.Vector3(-40, 120, 0)), new THREE.Vector3(gx + 60, yT + 120, gz), new THREE.Vector3(gx, yT + 3, gz),
            new THREE.Vector3(gx - 20, yT - 80, gz + 40), headTop.clone().add(new THREE.Vector3(0, 110, -20)), headTop];
   } else {
-    const s = printer.g.position.clone().add(new THREE.Vector3(232, 430, -60));
-    pts = [s, s.clone().add(new THREE.Vector3(-30, 80, 20)), headTop.clone().add(new THREE.Vector3(40, 150, -10)), headTop];
+    const s = printer.g.position.clone().add(new THREE.Vector3(120, SPOOL_TOP - 100, 0));
+    pts = [s, s.clone().add(new THREE.Vector3(-40, -40, 40)), headTop.clone().add(new THREE.Vector3(30, 140, 0)), headTop];
   }
   const curve = new THREE.CatmullRomCurve3(pts);
   const geom = new THREE.TubeGeometry(curve, 48, 2.2, 8, false);
@@ -785,11 +850,12 @@ const VIEWS = { iso: [1, 0.72, 1.3], front: [0, 0.12, 1], side: [1, 0.12, 0], to
 function fitView(name, instant) {
   const dir = new THREE.Vector3(...VIEWS[name]).normalize();
   const H = FY + p.P + 83;
-  const ext = 0.5 * Math.hypot(p.W + (state.layers.ams ? 700 : 260), H, p.D + 260);
+  const extra = { ams: 700, side: 520, top: 260 }[state.feed];
+  const ext = 0.5 * Math.hypot(p.W + extra, H, p.D + 260);
   const vf = camera.fov * Math.PI / 180;
   const hf = 2 * Math.atan(Math.tan(vf / 2) * camera.aspect);
   const d = ext / Math.sin(Math.min(vf, hf) / 2) * 0.95;
-  const tx = state.layers.ams ? 260 : 0;
+  const tx = (extra - 260) / 2;
   const target = new THREE.Vector3(tx, H * 0.45, 20);
   const pos = target.clone().addScaledVector(dir, d);
   if (instant || reduceMotion) { controls.target.copy(target); camera.position.copy(pos); controls.update(); return; }
@@ -824,6 +890,13 @@ function partInfo(id) {
     [L('机身', 'Body'), '385 × 410 × 430 mm'],
     [L('热床行程', 'Bed travel'), L('Y 向动态深度约 545 mm', 'About 545 mm front to back')],
     [L('摆放', 'Placement'), L('居中，前脚距前框内侧 ≥90 mm', 'Centred, front feet ≥90 mm from the inside of the front frame')]] };
+  if (id === 'stand') return { code: 'O5', name: L('箱外单料盘架', 'Spool stand (outside)'), rows: [
+    [L('位置', 'Where'), L('箱外右侧桌面', 'On the desk, right of the enclosure')],
+    [L('走线', 'Routing'), L('PTFE 管经顶板 Ø50 过线孔进箱', 'PTFE tube enters through the Ø50 grommet in the top panel')]] };
+  if (id === 'notch') return { code: 'B', name: L('底框后梁出线槽', 'Cable notch, bottom back rail'), rows: [
+    [L('尺寸', 'Size'), `${NOTCH.w}×${NOTCH.h} mm`],
+    [L('做法', 'How'), L('锯两刀再凿掉中间；后板下沿开同样缺口', 'Two saw cuts, chisel out the middle; matching notch in the back panel edge')],
+    [L('封口', 'Seal'), L('毛刷条或泡棉条', 'Brush strip or foam tape')]] };
   if (id === 'ams') return { code: 'AMS', name: L('AMS lite（放箱外右侧）', 'AMS lite (outside, right)'), rows: [
     [L('原因', 'Why outside'), L('箱内放不下，顶板 3 mm 承重不够', 'No room inside, and a 3 mm top panel cannot carry it')],
     [L('走线', 'Routing'), L('PTFE 管与线缆经顶板 Ø50 过线孔进箱', 'PTFE tube and cable enter through the Ø50 grommet in the top panel')]] };
@@ -855,7 +928,8 @@ function computeBOM() {
   const holesTxt = n => L(`${n} 孔`, `${n} holes`);
   const wood = [
     { id: 'A', name: L('立柱', 'Post'), len: P, qty: 4, note: L('30 面朝前后，站在底框上', '30 mm face to front/back; stands on the bottom frame') },
-    { id: 'B', name: L('顶/底框 前后梁', 'Top/bottom frame, front & back rail'), len: W, qty: 4, note: L('通长，40 高立放', 'Full length, 40 mm on edge') },
+    { id: 'B', name: L('顶/底框 前后梁', 'Top/bottom frame, front & back rail'), len: W, qty: 4, note: L('通长，40 高立放', 'Full length, 40 mm on edge') +
+      (state.power === 'notch' ? L(`；底框后梁下沿开 ${NOTCH.w}×${NOTCH.h} 出线槽`, `; cut a ${NOTCH.w}×${NOTCH.h} cable notch in the bottom back rail`) : '') },
     { id: 'C', name: L('顶/底框 侧梁', 'Top/bottom frame, side rail'), len: D - 60, qty: 4, note: L('夹在前后梁之间', 'Fits between the front and back rails') },
     { id: 'D', name: L('门框 竖梃', 'Door stile'), len: Hd, qty: 2, note: L('40 面朝前，通长', '40 mm face to the front, full height') },
     { id: 'E', name: L('门框 横档', 'Door rail'), len: Wo - 80, qty: 2, note: L('夹在竖梃之间', 'Fits between the stiles') }
@@ -865,8 +939,10 @@ function computeBOM() {
     note: L('底框从下方用 4×40 木螺丝固定', 'Bottom frame screwed on from below with 4×40 screws') };
   const panels = [
     { id: 'P1', name: L('侧板（左/右）', 'Side panel (L/R)'), spec: `${sheet} ${D}×${F}`, qty: 2, note: L(`${cnt(D, F)} 孔/块`, `${cnt(D, F)} holes each`) },
-    { id: 'P2', name: L('后板', 'Back panel'), spec: `${sheet} ${Wo}×${F}`, qty: 1, note: holesTxt(cnt(Wo, F)) + L(' + Ø50 过线孔；可选 Ø116 风扇孔', ' + Ø50 grommet; optional Ø116 fan hole') },
-    { id: 'P3', name: L('顶板', 'Top panel'), spec: `${sheet} ${Wo}×${Dt}`, qty: 1, note: holesTxt(cnt(Wo, Dt)) + L(' + Ø50 过线孔（右后）', ' + Ø50 grommet (back right)') },
+    { id: 'P2', name: L('后板', 'Back panel'), spec: `${sheet} ${Wo}×${F}`, qty: 1, note: holesTxt(cnt(Wo, F)) + (state.power === 'notch'
+      ? L(` + 下沿 ${NOTCH.w}×${NOTCH.h} 缺口（右下）`, ` + ${NOTCH.w}×${NOTCH.h} notch in the bottom edge (right)`)
+      : L(' + Ø50 过线孔（右下）', ' + Ø50 grommet (lower right)')) + L('；可选 Ø116 风扇孔', '; optional Ø116 fan hole') },
+    { id: 'P3', name: L('顶板', 'Top panel'), spec: `${sheet} ${Wo}×${Dt}`, qty: 1, note: holesTxt(cnt(Wo, Dt)) + (state.feed === 'top' ? '' : L(' + Ø50 过线孔（右后）', ' + Ø50 grommet (back right)')) },
     { id: 'P4', name: L('门板', 'Door panel'), spec: `${sheet} ${Wo}×${Hd}`, qty: 1, note: holesTxt(cnt(Wo, Hd)) + L('；拉手孔等拿到拉手再开', '; drill the handle holes once you have the handle') }
   ];
   const hw = [
@@ -881,8 +957,10 @@ function computeBOM() {
     { id: 'H9', name: L('钕铁硼圆磁铁', 'Neodymium disc magnet'), spec: 'Ø10×3 N52', qty: 8, note: L('4 对，嵌入右立柱和门框背面', '4 pairs, set into the right post and the back of the door') },
     { id: 'H10', name: L('拉手', 'Handle'), spec: L('孔距 96，配 M4×40', '96 mm centres, M4×40 screws'), qty: 1, note: L('从门框背面沉孔穿螺丝', 'Screws from counterbores on the back of the stile') },
     { id: 'H11', name: L('橡胶脚垫', 'Rubber foot'), spec: 'Ø30', qty: 4, note: '' },
-    { id: 'H12', name: L('毛刷过线孔', 'Brush grommet'), spec: 'Ø50', qty: 2, note: L('后板走电源线，顶板走 PTFE 管和线缆', 'Back: power cable. Top: PTFE tube and cable') }
-  ];
+    { id: 'H12', name: L('毛刷过线孔', 'Brush grommet'), spec: 'Ø50', qty: (state.power === 'panel' ? 1 : 0) + (state.feed === 'top' ? 0 : 1),
+      note: [state.power === 'panel' ? L('后板走电源线', 'back panel: power cable') : '', state.feed === 'top' ? '' : L('顶板走 PTFE 管', 'top panel: PTFE tube')].filter(Boolean).join(L('；', '; ')) },
+    ...(state.power === 'notch' ? [{ id: 'H13', name: L('毛刷密封条', 'Brush seal strip'), spec: L('毛高 15 mm', '15 mm bristles'), qty: '0.1 m', note: L('封底框出线槽', 'Seals the cable notch') }] : [])
+  ].filter(r => r.qty !== 0);
   const glue = [
     { id: 'G1', name: L('EVA 单面泡棉胶条', 'Single-sided EVA foam tape'), spec: '3×10 mm', qty: `${foamM} m`,
       note: L(`门封 ${(seal / 1000).toFixed(1)} m + 板材衬垫 ${(gasket / 1000).toFixed(1)} m`, `Door seal ${(seal / 1000).toFixed(1)} m + panel gaskets ${(gasket / 1000).toFixed(1)} m`) },
@@ -894,7 +972,8 @@ function computeBOM() {
     { id: 'O1', name: L('12 cm 排风扇 + 防护网', '120 mm fan + guard'), spec: L('5 V USB 调速', '5 V USB, speed control'), qty: 1, note: L('装后板左上；打 PLA 时开', 'Back panel, upper left; run it for PLA') },
     { id: 'O2', name: L('温湿度计', 'Thermo-hygrometer'), spec: L('电子', 'Digital'), qty: 1, note: L('箱内温度 >35 °C 时开风扇或开门', 'Above 35 °C inside, run the fan or open the door') },
     { id: 'O3', name: L('活性炭滤棉', 'Activated carbon filter'), spec: '120×120', qty: 1, note: L('贴风扇出风口', 'On the fan outlet') },
-    { id: 'O4', name: L('LED 灯带', 'LED strip'), spec: L('5 V，1 m', '5 V, 1 m'), qty: 1, note: L('贴顶框内侧', 'Inside the top frame') }
+    { id: 'O4', name: L('LED 灯带', 'LED strip'), spec: L('5 V，1 m', '5 V, 1 m'), qty: 1, note: L('贴顶框内侧', 'Inside the top frame') },
+    ...(state.feed === 'side' ? [{ id: 'O5', name: L('台式单料盘架', 'Desktop spool stand'), spec: L('带轴承', 'With bearings'), qty: 1, note: L('放箱外右侧，供料方式为「箱外单料盘架」时需要', 'Right of the enclosure; needed for the spool-stand feed') }] : [])
   ];
   const strips = wood.flatMap(r => Array(r.qty).fill(r.len));
   const total = strips.reduce((a, b) => a + b, 0);
@@ -946,21 +1025,31 @@ function renderChecks() {
   const { W, D, P } = p;
   const iW = W - 60, iD = D - 60, iH = P + 40;
   const mW = (iW - A1.w) / 2, mD = (iD - A1.sweep) / 2, mH = iH - A1.h;
-  const mSpool = (iW - 465) / 2;   // A1 with its own spool holder is about 465 wide
+  const topFeed = state.feed === 'top';
+  const mTop = iH - SPOOL_TOP;
   const Lmax = Math.max(D, W + 6, P + 83);
   const grow = 7e-5 * Lmax * 30;
   const doorKg = (((W + 6) * (P + 83) * 3 * 1.19e-6) + 0.9).toFixed(1);
   const rows = [
     [L('内宽', 'Inner width'), `${iW} mm`,
-      L(`机身 385 每侧余 ${mW.toFixed(0)} mm；用机身自带料架（含料架约 465 宽）时把 A1 往左挪 40 mm，两侧各余 ${mSpool.toFixed(0)} mm`,
-        `${mW.toFixed(0)} mm each side of the 385 mm body. With the built-in spool holder (about 465 mm wide), shift the A1 40 mm left for ${mSpool.toFixed(0)} mm each side`),
-      grade(mSpool, 50, 25)],
+      L(`机身 385 每侧余 ${mW.toFixed(0)} mm`, `${mW.toFixed(0)} mm each side of the 385 mm body`),
+      grade(mW, 60, 30)],
     [L('内深', 'Inner depth'), `${iD} mm`,
       L(`热床行程 545 mm，前后各余 ${mD.toFixed(1)} mm（后侧要放电源线）`, `545 mm bed travel leaves ${mD.toFixed(1)} mm front and back (the power cable needs room at the back)`),
       grade(mD, 40, 20)],
-    [L('内高', 'Inner height'), `${iH} mm`,
-      L(`机身 430 mm 以上余 ${mH} mm，供 PTFE 管弯曲（建议 ≥150）`, `${mH} mm above the 430 mm body for the PTFE tube to bend (aim for ≥150)`),
-      grade(mH, 150, 90)],
+    topFeed
+      ? [L('内高', 'Inner height'), `${iH} mm`,
+        L(`机顶料盘最高约 ${SPOOL_TOP} mm，上方余 ${mTop} mm 取放料盘（建议 ≥80，立柱至少 ${SPOOL_TOP + 80 - 40} mm）`,
+          `The top spool reaches about ${SPOOL_TOP} mm, leaving ${mTop} mm to lift it off (aim for ≥80, so posts of at least ${SPOOL_TOP + 80 - 40} mm)`),
+        grade(mTop, 80, 40)]
+      : [L('内高', 'Inner height'), `${iH} mm`,
+        L(`机身 430 mm 以上余 ${mH} mm，供 PTFE 管弯曲（建议 ≥150）`, `${mH} mm above the 430 mm body for the PTFE tube to bend (aim for ≥150)`),
+        grade(mH, 150, 90)],
+    [L('电源线口', 'Power entry'), state.power === 'notch' ? `${NOTCH.w}×${NOTCH.h}` : 'Ø50',
+      state.power === 'notch'
+        ? L('底框后梁下沿开槽，离桌面 10–35 mm；拔下 A1 端插头后穿线', 'Notch under the bottom back rail, 10–35 mm above the desk. Unplug the cable at the A1 end to thread it')
+        : L('后板右下 Ø50 毛刷孔，中心离桌面约 120 mm，板材店代开', 'Ø50 brush grommet in the lower right of the back panel, centre about 120 mm above the desk; the supplier can cut it'),
+      'good'],
     [L('前门槛', 'Front sill'), `${FY + 40} mm`,
       L('底框前梁顶面离桌面高度；热床底面更高，A1 不会碰到', 'Top of the bottom front rail above the desk. The bed sits higher, so the A1 clears it'), 'good'],
     [L('板材热胀', 'Panel expansion'), `${grow.toFixed(1)} mm`,
@@ -998,6 +1087,30 @@ const STEPS = {
     ['Place the A1 and route cables', 'Centre the A1 with its front feet at least 90 mm from the inside of the front frame. Run the power cable through the back grommet. Keep the AMS lite outside on the right and bring its PTFE tube and cable in through the top grommet.']
   ]
 };
+function step9Text() {
+  const a = L('A1 居中放置，前脚距前框内侧 ≥90 mm。', 'Centre the A1 with its front feet at least 90 mm from the inside of the front frame. ');
+  const b = state.power === 'notch'
+    ? L('拔下 A1 端的电源插头，从底框后梁的出线槽穿进来再插回去。', 'Unplug the power cable at the A1, thread it through the notch in the bottom back rail and plug it back in. ')
+    : L('电源线走后板 Ø50 过线孔。', 'Run the power cable through the Ø50 grommet in the back panel. ');
+  const c = { ams: L('AMS lite 放箱外右侧，PTFE 管和线缆走顶板过线孔。', 'Keep the AMS lite outside on the right; bring its PTFE tube and cable in through the top grommet.'),
+    top: L('原装料架装在机顶，放料盘时从正门伸手，料盘上方留够取放空间。', 'Fit the stock spool holder on top of the printer; load spools through the front door.'),
+    side: L('料盘架放箱外右侧，PTFE 管走顶板过线孔。', 'Put the spool stand outside on the right and bring the PTFE tube in through the top grommet.') }[state.feed];
+  return a + b + c;
+}
+function renderScheme() {
+  document.querySelectorAll('[data-feed]').forEach(b => b.setAttribute('aria-checked', b.dataset.feed === state.feed));
+  document.querySelectorAll('[data-power]').forEach(b => b.setAttribute('aria-checked', b.dataset.power === state.power));
+  $('#feedNote').textContent = {
+    ams: L('AMS lite 放箱外右侧，PTFE 管和线缆走顶板过线孔。立柱 600 即可。', 'The AMS lite sits outside on the right; its PTFE tube and cable come in through the top. 600 mm posts are enough.'),
+    top: L(`原装料架在机顶，机器总高约 ${SPOOL_TOP} mm（机身 430 + 料盘约 200）。立柱加长到 680，内高 720，料盘上方留约 90 mm 取放空间。不需要顶板过线孔。`,
+      `The stock holder sits on top, making the printer about ${SPOOL_TOP} mm tall (430 body + ~200 spool). Posts grow to 680 for 720 mm inside, leaving about 90 mm above the spool to lift it off. No top grommet needed.`),
+    side: L('料盘架放箱外右侧桌面，PTFE 管走顶板过线孔。立柱 600 即可，换料不用开门。', 'A spool stand sits on the desk to the right; the PTFE tube comes in through the top. 600 mm posts are enough, and you can change spools without opening the door.')
+  }[state.feed];
+  $('#powerNote').textContent = state.power === 'notch'
+    ? L(`底框后梁下沿开 ${NOTCH.w}×${NOTCH.h} mm 槽，后板下沿开同样缺口，用毛刷条封口。锯两刀再凿掉中间即可，不用找板材店开孔。`,
+        `Cut a ${NOTCH.w}×${NOTCH.h} mm notch under the bottom back rail and a matching notch in the back panel edge, sealed with a brush strip. Two saw cuts and a chisel; no panel hole needed.`)
+    : L('后板右下开 Ø50 孔，装毛刷过线孔，中心离桌面约 120 mm。可以让板材店一起开好。', 'A Ø50 hole in the lower right of the back panel with a brush grommet, centre about 120 mm above the desk. The panel supplier can cut it.');
+}
 function renderStepList() {
   $('#stList').innerHTML = STEPS[lang].map((s, i) => `<li${i === state.step - 1 ? ' class="on"' : ''}>${s[0]}</li>`).join('');
 }
@@ -1006,7 +1119,7 @@ function setStep(n) {
   renderStepList();
   if (n) {
     $('#stRange').value = n; $('#stV').textContent = `${n}/9`;
-    $('#stTitle').textContent = `${n}. ${STEPS[lang][n - 1][0]}`; $('#stText').textContent = STEPS[lang][n - 1][1];
+    $('#stTitle').textContent = `${n}. ${STEPS[lang][n - 1][0]}`; $('#stText').textContent = n === 9 ? step9Text() : STEPS[lang][n - 1][1];
     if (n < 7) { state.doorTarget = 0; }
   } else {
     clearHighlight();
@@ -1023,7 +1136,7 @@ $('#stAll').onclick = () => setStep(0);
 function setLang(l) {
   lang = l;
   try { localStorage.setItem('a1-lang', l); } catch (e) {}
-  applyStatic();
+  applyStatic(); renderScheme();
   build(); updateTube(); setStep(state.step);
 }
 $('#langBtn').onclick = () => setLang(lang === 'zh' ? 'en' : 'zh');
@@ -1041,7 +1154,7 @@ $('#explode').oninput = e => { state.explode = e.target.value / 100; $('#explode
 Object.keys(state.layers).forEach(k => {
   const el = $('#ly-' + k); if (!el) return;
   el.checked = state.layers[k];
-  el.onchange = () => { state.layers[k] = el.checked; applyVisibility(); if (k === 'ams') { updateTube(); fitView('iso'); } };
+  el.onchange = () => { state.layers[k] = el.checked; applyVisibility(); };
 });
 $('#anim').onchange = e => { state.anim = e.target.checked; };
 ['W', 'D', 'P'].forEach(k => {
@@ -1051,12 +1164,20 @@ $('#anim').onchange = e => { state.anim = e.target.checked; };
 let buildTimer = 0;
 function scheduleBuild() { clearTimeout(buildTimer); buildTimer = setTimeout(() => { build(); updateTube(); }, 60); }
 document.querySelectorAll('[data-preset]').forEach(b => b.onclick = () => {
-  Object.assign(p, b.dataset.preset === 'v1' ? { W: 640, D: 640, P: 600 } : DEF);
+  Object.assign(p, b.dataset.preset === 'v1' ? { W: 640, D: 640, P: 600 } : { ...DEF, P: FEED_P[state.feed] });
   ['W', 'D', 'P'].forEach(k => { $('#p' + k).value = p[k]; $('#p' + k + 'V').textContent = p[k]; });
   build(); updateTube();
   document.querySelector('.tabs [data-tab="chk"]').click();
 });
 document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => fitView(b.dataset.view));
+document.querySelectorAll('[data-feed]').forEach(b => b.onclick = () => {
+  state.feed = b.dataset.feed; p.P = FEED_P[state.feed];
+  $('#pP').value = p.P; $('#pPV').textContent = p.P;
+  renderScheme(); build(); updateTube(); fitView('iso'); if (state.step) setStep(state.step);
+});
+document.querySelectorAll('[data-power]').forEach(b => b.onclick = () => {
+  state.power = b.dataset.power; renderScheme(); build(); updateTube(); if (state.step) setStep(state.step);
+});
 
 /* ---------- theme ---------- */
 function applyTheme() {
@@ -1122,6 +1243,7 @@ function loop() {
 
 applyTheme();
 applyStatic();
+renderScheme();
 build();
 resize();
 fitView('iso', true);
