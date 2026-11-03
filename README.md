@@ -1,9 +1,11 @@
 # BambuA1ChamberBP · 拓竹 A1 木框封箱最佳实践
 
+**中文** | [English](README.en.md)
+
 用桐木方条做骨架、底面一块平板、其余五面装 3 mm 透明板、正面合页门，给拓竹 A1（非 mini）做一个封箱。
 
-- **3D 交互模型**：[`docs/index.html`](docs/index.html)。直接用浏览器打开，或在仓库设置里把 GitHub Pages 指向 `main` 分支的 `/docs` 目录。可以开关门、爆炸视图、分步装配、点部件看规格；改尺寸后 BOM 和空间检查会一起重算。
-- **采购清单**：[`bom.csv`](bom.csv)（可直接用 Excel 或 Numbers 打开）。
+- **3D 交互模型**：[`docs/index.html`](docs/index.html)。直接用浏览器打开，或在仓库设置里把 GitHub Pages 指向 `main` 分支的 `/docs` 目录。可以开关门、爆炸视图、分步装配、点部件看规格；改尺寸后 BOM 和空间检查会一起重算。页面右上角可切换中文 / EN。
+- **采购清单**：[`bom.csv`](bom.csv)（中文）/ [`bom.en.csv`](bom.en.csv)（英文），可直接用 Excel 或 Numbers 打开。
 
 > 拓竹官方不推荐给 A1 加封箱。这个箱子主要用来防尘、降噪、挡风、防宠物。打 PLA 时箱内温度要控制在 35 °C 以下，可以开排风扇或留一条门缝。A1 本身不适合打 ABS/ASA。
 
@@ -166,5 +168,6 @@
 
 | 文件 | 内容 |
 |---|---|
-| `docs/index.html` | three.js 交互 3D 模型（参数化：外框宽、深、立柱高） |
-| `bom.csv` | 最终 BOM（默认尺寸 640×700×600） |
+| `docs/index.html` | three.js 交互 3D 模型，中英双语（参数化：外框宽、深、立柱高） |
+| `bom.csv` / `bom.en.csv` | 最终 BOM，中文 / 英文（默认尺寸 640×700×600） |
+| `README.en.md` | 英文说明 |

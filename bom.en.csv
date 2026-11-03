@@ -1,0 +1,31 @@
+Category,ID,Part,Spec,Qty,Unit,Notes
+Wood,A,Post,Paulownia strip 30×40×600,4,pcs,30 mm face to front/back; stands on the bottom frame
+Wood,B,Top/bottom frame front & back rail,Paulownia strip 30×40×640,4,pcs,Full length; 40 mm on edge
+Wood,C,Top/bottom frame side rail,Paulownia strip 30×40×640,4,pcs,Fits between front and back rails
+Wood,D,Door stile,Paulownia strip 30×40×683,2,pcs,40 mm face to the front; full height
+Wood,E,Door rail,Paulownia strip 30×40×566,2,pcs,Fits between the stiles
+Wood,F,Base board,Paulownia panel 650×705×15,1,pcs,Bottom frame screwed on from below with 4×40
+Panels,P1,Side panel (L/R),3 mm cast acrylic or solid PC 700×680,2,pcs,16 holes each; Ø6; 15 mm from edge
+Panels,P2,Back panel,3 mm cast acrylic or solid PC 646×680,1,pcs,16 holes + Ø50 grommet; optional Ø116 fan hole
+Panels,P3,Top panel,3 mm cast acrylic or solid PC 646×703,1,pcs,16 holes + Ø50 grommet (back right)
+Panels,P4,Door panel,3 mm cast acrylic or solid PC 646×683,1,pcs,16 holes; handle holes drilled later
+Hardware,H1,Stainless butt hinge,2 in (50 mm),3,pcs,Door left side; pin on front-left outer corner
+Hardware,H2,Countersunk wood screw,3.5×30,20,pcs,Hinges
+Hardware,H3,Pan-head wood screw,ST4×20,100,pcs,Panels (80 holes + spares)
+Hardware,H4,Nylon flat washer,M4 4.3×12×1,100,pcs,12 mm OD covers the Ø6 hole
+Hardware,H5,Wood screw,4×50,20,pcs,Frame corners
+Hardware,H6,Wood screw,4×60,30,pcs,Posts and door frame
+Hardware,H7,Wood screw,4×40,16,pcs,Base → bottom frame
+Hardware,H8,L bracket,40×40 with 4×16 screws,8,pcs,Inside of post-to-frame joints
+Hardware,H9,Neodymium disc magnet,Ø10×3 N52,8,pcs,4 pairs; set into right post and door
+Hardware,H10,Handle,96 mm centres with M4×40,1,pcs,
+Hardware,H11,Rubber foot,Ø30,4,pcs,
+Hardware,H12,Brush grommet,Ø50,2,pcs,Back: power cable / Top: PTFE tube
+Adhesives & seals,G1,Single-sided EVA foam tape,3×10 mm,20,m,Door seal + panel gaskets
+Adhesives & seals,G2,Neutral-cure clear silicone,300 ml + gun,1,pcs,Gap filling only
+Adhesives & seals,G3,PVA wood glue,Small bottle,1,pcs,Wood-to-wood joints
+Adhesives & seals,G4,Two-part epoxy,5-minute,1,pcs,For the magnets
+Optional,O1,120 mm fan + guard,5 V USB with speed control,1,set,Run it for PLA
+Optional,O2,Thermo-hygrometer,Digital,1,pcs,
+Optional,O3,Activated carbon filter,120×120,1,pcs,
+Optional,O4,LED strip,5 V 1 m,1,pcs,

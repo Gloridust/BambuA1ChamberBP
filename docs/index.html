@@ -52,6 +52,7 @@ button,input{font:inherit;color:inherit}
 .ttl h1{margin:0;font:700 26px/1.05 var(--f-display);letter-spacing:.01em;text-wrap:balance}
 .ttl p{margin:4px 0 0;color:var(--muted);font-size:12px}
 .views{position:absolute;top:12px;right:max(12px,env(safe-area-inset-right,0px));display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;max-width:45%}
+.views .lang{font-weight:600;color:var(--accent)}
 .views button,.chip-btn{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:12px}
 .views button:hover,.chip-btn:hover{border-color:var(--accent)}
 .hint{position:absolute;left:max(16px,env(safe-area-inset-left,0px));bottom:12px;font-size:12px;color:var(--muted);pointer-events:none}
@@ -138,141 +139,123 @@ td small{display:block;color:var(--muted);font-size:11px;line-height:1.4}
 </head>
 <body>
 <div class="app">
-  <section class="stage" id="stage" aria-label="3D 模型">
+  <section class="stage" id="stage" data-i18n-aria="stage_aria" aria-label="3D 模型">
     <canvas id="gl"></canvas>
     <div class="labels" id="labels"></div>
     <div class="ttl">
-      <h1>A1 木框封箱</h1>
-      <p>拓竹 A1 · 桐木框 + 3 mm 透明板 · 修订版 v2</p>
+      <h1 data-i18n="h1">A1 木框封箱</h1>
+      <p data-i18n="sub">拓竹 A1 · 桐木框 + 3 mm 透明板 · 修订版 v2</p>
     </div>
-    <div class="views" role="group" aria-label="视角">
-      <button type="button" data-view="iso">等轴</button>
-      <button type="button" data-view="front">正面</button>
-      <button type="button" data-view="side">侧面</button>
-      <button type="button" data-view="top">俯视</button>
+    <div class="views" role="group" data-i18n-aria="views_aria" aria-label="视角">
+      <button type="button" id="langBtn" class="lang" aria-label="Switch language">EN</button>
+      <button type="button" data-view="iso" data-i18n="v_iso">等轴</button>
+      <button type="button" data-view="front" data-i18n="v_front">正面</button>
+      <button type="button" data-view="side" data-i18n="v_side">侧面</button>
+      <button type="button" data-view="top" data-i18n="v_top">俯视</button>
     </div>
-    <div class="hint">拖动旋转 · 双指缩放 · 点部件看规格</div>
+    <div class="hint" data-i18n="hint">拖动旋转 · 双指缩放 · 点部件看规格</div>
     <div class="card" id="card" hidden>
-      <div class="card-h"><div><span class="code" id="cardCode"></span><br><b id="cardName"></b></div><button type="button" id="cardX" aria-label="关闭">×</button></div>
+      <div class="card-h"><div><span class="code" id="cardCode"></span><br><b id="cardName"></b></div><button type="button" id="cardX" data-i18n-aria="close" aria-label="关闭">×</button></div>
       <dl id="cardBody"></dl>
     </div>
   </section>
 
   <aside class="panel">
     <nav class="tabs" role="tablist">
-      <button type="button" role="tab" aria-selected="true" data-tab="ctl">控制</button>
-      <button type="button" role="tab" aria-selected="false" data-tab="chk">检查</button>
-      <button type="button" role="tab" aria-selected="false" data-tab="bom">BOM</button>
-      <button type="button" role="tab" aria-selected="false" data-tab="asm">装配</button>
+      <button type="button" role="tab" aria-selected="true" data-tab="ctl" data-i18n="tab_ctl">控制</button>
+      <button type="button" role="tab" aria-selected="false" data-tab="chk" data-i18n="tab_chk">检查</button>
+      <button type="button" role="tab" aria-selected="false" data-tab="bom" data-i18n="tab_bom">BOM</button>
+      <button type="button" role="tab" aria-selected="false" data-tab="asm" data-i18n="tab_asm">装配</button>
     </nav>
 
     <div class="tab" id="tab-ctl">
       <div class="sec">
-        <h2>前门</h2>
-        <div class="row"><label for="door">开合角度</label><input id="door" type="range" min="0" max="170" value="0"><span class="val" id="doorV">0°</span></div>
-        <div class="row"><button type="button" class="btn" id="doorBtn">开门</button><p class="note">左侧 3 个平合页，铰轴在左前外角，最大约 180°。</p></div>
+        <h2 data-i18n="door_h">前门</h2>
+        <div class="row"><label for="door" data-i18n="door_l">开合角度</label><input id="door" type="range" min="0" max="170" value="0"><span class="val" id="doorV">0°</span></div>
+        <div class="row"><button type="button" class="btn" id="doorBtn">开门</button><p class="note" data-i18n="door_note">左侧 3 个平合页，铰轴在左前外角，最大约 180°。</p></div>
       </div>
       <div class="sec">
-        <h2>爆炸视图</h2>
-        <div class="row"><label for="explode">拆开程度</label><input id="explode" type="range" min="0" max="100" value="0"><span class="val" id="explodeV">0%</span></div>
+        <h2 data-i18n="explode_h">爆炸视图</h2>
+        <div class="row"><label for="explode" data-i18n="explode_l">拆开程度</label><input id="explode" type="range" min="0" max="100" value="0"><span class="val" id="explodeV">0%</span></div>
       </div>
       <div class="sec">
-        <h2>显示</h2>
+        <h2 data-i18n="show_h">显示</h2>
         <div class="toggles">
-          <label class="tg"><input type="checkbox" id="ly-wood" checked><span>木框</span></label>
-          <label class="tg"><input type="checkbox" id="ly-panel" checked><span>透明板</span></label>
-          <label class="tg"><input type="checkbox" id="ly-hw" checked><span>五金</span></label>
-          <label class="tg"><input type="checkbox" id="ly-foam" checked><span>密封条</span></label>
-          <label class="tg"><input type="checkbox" id="ly-printer" checked><span>A1 打印机</span></label>
-          <label class="tg"><input type="checkbox" id="ly-env"><span>热床行程包络</span></label>
-          <label class="tg"><input type="checkbox" id="ly-ams"><span>箱外 AMS lite</span></label>
-          <label class="tg"><input type="checkbox" id="ly-dims" checked><span>尺寸</span></label>
-          <label class="tg"><input type="checkbox" id="anim" checked><span>打印运动</span></label>
+          <label class="tg"><input type="checkbox" id="ly-wood" checked><span data-i18n="ly_wood">木框</span></label>
+          <label class="tg"><input type="checkbox" id="ly-panel" checked><span data-i18n="ly_panel">透明板</span></label>
+          <label class="tg"><input type="checkbox" id="ly-hw" checked><span data-i18n="ly_hw">五金</span></label>
+          <label class="tg"><input type="checkbox" id="ly-foam" checked><span data-i18n="ly_foam">密封条</span></label>
+          <label class="tg"><input type="checkbox" id="ly-printer" checked><span data-i18n="ly_printer">A1 打印机</span></label>
+          <label class="tg"><input type="checkbox" id="ly-env"><span data-i18n="ly_env">热床行程包络</span></label>
+          <label class="tg"><input type="checkbox" id="ly-ams"><span data-i18n="ly_ams">箱外 AMS lite</span></label>
+          <label class="tg"><input type="checkbox" id="ly-dims" checked><span data-i18n="ly_dims">尺寸</span></label>
+          <label class="tg"><input type="checkbox" id="anim" checked><span data-i18n="anim">打印运动</span></label>
         </div>
       </div>
       <div class="sec">
-        <h2>框架尺寸（外框，mm）</h2>
-        <div class="row"><label for="pW">宽 W</label><input id="pW" type="range" min="560" max="800" step="10" value="640"><span class="val" id="pWV">640</span></div>
-        <div class="row"><label for="pD">深 D</label><input id="pD" type="range" min="580" max="800" step="10" value="700"><span class="val" id="pDV">700</span></div>
-        <div class="row"><label for="pP">立柱 P</label><input id="pP" type="range" min="480" max="760" step="10" value="600"><span class="val" id="pPV">600</span></div>
+        <h2 data-i18n="size_h">框架尺寸（外框，mm）</h2>
+        <div class="row"><label for="pW" data-i18n="pW">宽 W</label><input id="pW" type="range" min="560" max="800" step="10" value="640"><span class="val" id="pWV">640</span></div>
+        <div class="row"><label for="pD" data-i18n="pD">深 D</label><input id="pD" type="range" min="580" max="800" step="10" value="700"><span class="val" id="pDV">700</span></div>
+        <div class="row"><label for="pP" data-i18n="pP">立柱 P</label><input id="pP" type="range" min="480" max="760" step="10" value="600"><span class="val" id="pPV">600</span></div>
         <div class="presets">
-          <button type="button" class="chip-btn" data-preset="v2">修订方案 640×700×600</button>
-          <button type="button" class="chip-btn" data-preset="v1">原方案深度 640</button>
+          <button type="button" class="chip-btn" data-preset="v2" data-i18n="pre_v2">修订方案 640×700×600</button>
+          <button type="button" class="chip-btn" data-preset="v1" data-i18n="pre_v1">原方案深度 640</button>
         </div>
-        <p class="note">改尺寸后，模型、检查项和 BOM 会一起重算。切到「检查」看余量。</p>
+        <p class="note" data-i18n="size_note">改尺寸后，模型、检查项和 BOM 会一起重算。切到「检查」看余量。</p>
       </div>
     </div>
 
     <div class="tab" id="tab-chk" hidden>
       <div class="sec">
-        <h2>空间余量（按当前尺寸）</h2>
+        <h2 data-i18n="chk_h">空间余量（按当前尺寸）</h2>
         <div class="checks" id="checks"></div>
-        <p class="note">A1 数据：机身 385×410×430 mm；热床 Y 向动态深度约 545 mm（热床最前会伸出底座约 80 mm）。拓竹官方不推荐给 A1 加封箱，打 PLA 时请开排风或留门缝。</p>
+        <p class="note" data-i18n="chk_note"></p>
       </div>
       <div class="sec">
-        <h2>相对原方案的修改</h2>
-        <ol class="changes">
-          <li><b>深度 640 → 700。</b>原内深 580 mm，减去热床行程 545 mm，前后各只剩约 17 mm，还要塞电源线，太紧。</li>
-          <li><b>加一圈底框（4 根）。</b>原方案板材下沿和门底边没有木料可固定，3 mm 板下沿会外翘、漏风。</li>
-          <li><b>高度对齐。</b>30×40 顶框立放后框高 640，原透明板 630 对不上。现在框高 680，侧/后板也是 680。</li>
-          <li><b>门改成木框门。</b>646×683 的 3 mm 单板做门会明显挠曲，合页螺栓孔容易裂；改成 30×40 门框 + 门板，合页、磁铁都吃在木头上。</li>
-          <li><b>板材孔径 4.5 → 6 mm。</b>亚克力/PC 热胀约为木材的 10 倍，留足滑动余量才不会从孔位裂开。</li>
-          <li><b>门吸改为嵌入式磁铁。</b>表面门吸较厚，会顶开门封条；嵌入后门能均匀压住封条。</li>
-          <li><b>加过线孔和可选排风扇。</b>电源线走后板，AMS lite 放箱外右侧，PTFE 管和线缆走顶板。</li>
-        </ol>
+        <h2 data-i18n="changes_h">相对原方案的修改</h2>
+        <ol class="changes" data-i18n-html="changes"></ol>
       </div>
       <div class="sec">
-        <h2>透明板怎么固定、用什么胶</h2>
-        <p class="note">结论：螺丝 + 尼龙垫圈做主固定，泡棉条做密封，胶只用来补缝。不要把板材整面胶死在木框上：板材热胀比木头大得多，胶死后会翘曲或开裂。</p>
-        <div class="glue">
-          <div><span class="pill good">推荐</span><p><b>单面 EVA 泡棉条 3×10 mm</b> 贴在木框上当衬垫，板材压在上面用 ST4×20 + 尼龙垫圈固定。可拆、密封、能吸收热胀。</p></div>
-          <div><span class="pill good">推荐</span><p><b>中性透明硅酮胶（中性玻璃胶）</b>只用于转角缝、底边缝补缝。固化后仍有弹性，对亚克力和 PC 都安全。</p></div>
-          <div><span class="pill warn">可用</span><p><b>MS 改性硅烷胶 / VHB 泡棉双面胶</b>：想少打螺丝时可以用作辅助粘接，但仍保留四角和中间的螺丝。</p></div>
-          <div><span class="pill bad">别用</span><p><b>502 / 瞬干胶</b>会让亚克力、PC 发白和应力开裂；<b>酸性玻璃胶</b>放出醋酸，会让 PC 起银纹；<b>万能胶 / 氯丁胶</b>含溶剂，会咬花板面；<b>环氧硬胶大面积粘</b>太硬，热胀时拉裂板材。</p></div>
-        </div>
+        <h2 data-i18n="glue_h">透明板怎么固定、用什么胶</h2>
+        <p class="note" data-i18n="glue_note"></p>
+        <div class="glue" data-i18n-html="glue"></div>
       </div>
     </div>
 
     <div class="tab" id="tab-bom" hidden>
       <div class="sec">
-        <div class="row" style="justify-content:space-between"><h3>最终 BOM</h3><button type="button" class="btn ghost" id="copyBom">复制为表格</button></div>
+        <div class="row" style="justify-content:space-between"><h3 data-i18n="bom_h">最终 BOM</h3><button type="button" class="btn ghost" id="copyBom" data-i18n="copy">复制为表格</button></div>
         <p class="note" id="bomMeta"></p>
         <textarea id="bomText" hidden readonly style="width:100%;height:120px;font:12px var(--f-mono)"></textarea>
       </div>
-      <div class="sec"><h2>一、木料（桐木 30×40 方条 + 底板）</h2><div class="tbl-wrap"><table id="tWood"></table></div>
-        <div class="sum"><span>方条合计</span><b id="woodSum"></b></div>
-        <p class="note">四面砂光，切割误差 ±1 mm。按 2 m 长料排料如下（锯缝按 3 mm）：</p>
+      <div class="sec"><h2 data-i18n="bom_wood_h">一、木料（桐木 30×40 方条 + 底板）</h2><div class="tbl-wrap"><table id="tWood"></table></div>
+        <div class="sum"><span data-i18n="wood_sum">方条合计</span><b id="woodSum"></b></div>
+        <p class="note" data-i18n="cut_note">四面砂光，切割误差 ±1 mm。按 2 m 长料排料如下（锯缝按 3 mm）：</p>
         <div id="cutPlan" style="display:grid;gap:6px"></div>
       </div>
-      <div class="sec"><h2>二、透明板（亚克力或 PC 板店）</h2><div class="tbl-wrap"><table id="tPanel"></table></div>
-        <p class="note">要清晰透明，选浇铸亚克力（cast）或实心 PC 耐力板，不选中空阳光板。边缘抛光，保留保护膜。孔径 Ø6 mm，距边 15 mm，孔距 ≤175 mm，可让商家代钻。</p>
+      <div class="sec"><h2 data-i18n="bom_panel_h">二、透明板（亚克力或 PC 板店）</h2><div class="tbl-wrap"><table id="tPanel"></table></div>
+        <p class="note" data-i18n="panel_note"></p>
       </div>
-      <div class="sec"><h2>三、五金</h2><div class="tbl-wrap"><table id="tHw"></table></div></div>
-      <div class="sec"><h2>四、胶与密封</h2><div class="tbl-wrap"><table id="tGlue"></table></div></div>
-      <div class="sec"><h2>五、可选</h2><div class="tbl-wrap"><table id="tOpt"></table></div></div>
+      <div class="sec"><h2 data-i18n="bom_hw_h">三、五金</h2><div class="tbl-wrap"><table id="tHw"></table></div></div>
+      <div class="sec"><h2 data-i18n="bom_glue_h">四、胶与密封</h2><div class="tbl-wrap"><table id="tGlue"></table></div></div>
+      <div class="sec"><h2 data-i18n="bom_opt_h">五、可选</h2><div class="tbl-wrap"><table id="tOpt"></table></div></div>
     </div>
 
     <div class="tab" id="tab-asm" hidden>
       <div class="sec">
         <div class="stepper">
-          <button type="button" class="btn ghost" id="stPrev" aria-label="上一步">‹</button>
-          <input id="stRange" type="range" min="1" max="9" value="1" style="flex:1;accent-color:var(--accent)" aria-label="装配步骤">
-          <button type="button" class="btn ghost" id="stNext" aria-label="下一步">›</button>
+          <button type="button" class="btn ghost" id="stPrev" data-i18n-aria="prev" aria-label="上一步">‹</button>
+          <input id="stRange" type="range" min="1" max="9" value="1" style="flex:1;accent-color:var(--accent)" data-i18n-aria="step_aria" aria-label="装配步骤">
+          <button type="button" class="btn ghost" id="stNext" data-i18n-aria="next" aria-label="下一步">›</button>
           <span class="val" id="stV">1/9</span>
         </div>
         <div class="step-body"><h3 id="stTitle"></h3><p id="stText"></p></div>
-        <button type="button" class="chip-btn" id="stAll">退出分步，显示整机</button>
+        <button type="button" class="chip-btn" id="stAll" data-i18n="stAll">退出分步，显示整机</button>
         <ol class="steps-list" id="stList"></ol>
       </div>
       <div class="sec">
-        <h2>施工要点</h2>
-        <ul class="steps-list" style="color:var(--fg)">
-          <li>桐木很软：所有木螺丝先打 Ø2.5 引孔，拧到贴合即停。</li>
-          <li>每个框角都上白乳胶，干透前量两条对角线，相差 ≤2 mm。</li>
-          <li>钻亚克力用阶梯钻或亚克力专用钻头，低速、下面垫木板，带膜钻。</li>
-          <li>板材螺丝从每条边中间往两端拧，最后再统一回拧 1/4 圈留余量。</li>
-          <li>A1 居中摆放，前脚距前框内侧 ≥90 mm，后侧留线缆空间。</li>
-        </ul>
+        <h2 data-i18n="tips_h">施工要点</h2>
+        <ul class="steps-list" style="color:var(--fg)" data-i18n-html="tips"></ul>
       </div>
     </div>
   </aside>
@@ -285,6 +268,116 @@ td small{display:block;color:var(--muted);font-size:11px;line-height:1.4}
 'use strict';
 const $ = s => document.querySelector(s);
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+
+/* ---------- i18n ---------- */
+const I18N = {
+  zh: {
+    title: 'A1 木框封箱', h1: 'A1 木框封箱', sub: '拓竹 A1 · 桐木框 + 3 mm 透明板 · 修订版 v2',
+    stage_aria: '3D 模型', views_aria: '视角', close: '关闭', prev: '上一步', next: '下一步', step_aria: '装配步骤',
+    v_iso: '等轴', v_front: '正面', v_side: '侧面', v_top: '俯视',
+    hint: '拖动旋转 · 双指缩放 · 点部件看规格',
+    tab_ctl: '控制', tab_chk: '检查', tab_bom: 'BOM', tab_asm: '装配',
+    door_h: '前门', door_l: '开合角度', door_open: '开门', door_close: '关门', door_note: '左侧 3 个平合页，铰轴在左前外角，最大约 180°。',
+    explode_h: '爆炸视图', explode_l: '拆开程度',
+    show_h: '显示', ly_wood: '木框', ly_panel: '透明板', ly_hw: '五金', ly_foam: '密封条', ly_printer: 'A1 打印机',
+    ly_env: '热床行程包络', ly_ams: '箱外 AMS lite', ly_dims: '尺寸', anim: '打印运动',
+    size_h: '框架尺寸（外框，mm）', pW: '宽 W', pD: '深 D', pP: '立柱 P',
+    pre_v2: '修订方案 640×700×600', pre_v1: '原方案深度 640',
+    size_note: '改尺寸后，模型、检查项和 BOM 会一起重算。切到「检查」看余量。',
+    chk_h: '空间余量（按当前尺寸）',
+    chk_note: 'A1 数据：机身 385×410×430 mm；热床 Y 向动态深度约 545 mm（热床最前会伸出底座约 80 mm）。拓竹官方不推荐给 A1 加封箱，打 PLA 时请开排风或留门缝。',
+    changes_h: '相对原方案的修改',
+    changes: `<li><b>深度 640 → 700。</b>原内深 580 mm，减去热床行程 545 mm，前后各只剩约 17 mm，还要塞电源线，太紧。</li>
+<li><b>加一圈底框（4 根）。</b>原方案板材下沿和门底边没有木料可固定，3 mm 板下沿会外翘、漏风。</li>
+<li><b>高度对齐。</b>30×40 顶框立放后框高 640，原透明板 630 对不上。现在框高 680，侧/后板也是 680。</li>
+<li><b>门改成木框门。</b>646×683 的 3 mm 单板做门会明显挠曲，合页螺栓孔容易裂；改成 30×40 门框 + 门板，合页、磁铁都吃在木头上。</li>
+<li><b>板材孔径 4.5 → 6 mm。</b>亚克力/PC 热胀约为木材的 10 倍，留足滑动余量才不会从孔位裂开。</li>
+<li><b>门吸改为嵌入式磁铁。</b>表面门吸较厚，会顶开门封条；嵌入后门能均匀压住封条。</li>
+<li><b>加过线孔和可选排风扇。</b>电源线走后板，AMS lite 放箱外右侧，PTFE 管和线缆走顶板。</li>`,
+    glue_h: '透明板怎么固定、用什么胶',
+    glue_note: '结论：螺丝 + 尼龙垫圈做主固定，泡棉条做密封，胶只用来补缝。不要把板材整面胶死在木框上：板材热胀比木头大得多，胶死后会翘曲或开裂。',
+    glue: `<div><span class="pill good">推荐</span><p><b>单面 EVA 泡棉条 3×10 mm</b> 贴在木框上当衬垫，板材压在上面用 ST4×20 + 尼龙垫圈固定。可拆、密封、能吸收热胀。</p></div>
+<div><span class="pill good">推荐</span><p><b>中性透明硅酮胶（中性玻璃胶）</b>只用于转角缝、底边缝补缝。固化后仍有弹性，对亚克力和 PC 都安全。</p></div>
+<div><span class="pill warn">可用</span><p><b>MS 改性硅烷胶 / VHB 泡棉双面胶</b>：想少打螺丝时可以用作辅助粘接，但仍保留四角和中间的螺丝。</p></div>
+<div><span class="pill bad">别用</span><p><b>502 / 瞬干胶</b>会让亚克力、PC 发白和应力开裂；<b>酸性玻璃胶</b>放出醋酸，会让 PC 起银纹；<b>万能胶 / 氯丁胶</b>含溶剂，会咬花板面；<b>环氧硬胶大面积粘</b>太硬，热胀时拉裂板材。</p></div>`,
+    bom_h: '最终 BOM', copy: '复制为表格', copied: '已复制', copy_fb: '已展开，手动复制',
+    bom_wood_h: '一、木料（桐木 30×40 方条 + 底板）', wood_sum: '方条合计',
+    cut_note: '四面砂光，切割误差 ±1 mm。按 2 m 长料排料如下（锯缝按 3 mm）：',
+    bom_panel_h: '二、透明板（亚克力或 PC 板店）',
+    panel_note: '要清晰透明，选浇铸亚克力（cast）或实心 PC 耐力板，不选中空阳光板。边缘抛光，保留保护膜。孔径 Ø6 mm，距边 15 mm，孔距 ≤175 mm，可让商家代钻。',
+    bom_hw_h: '三、五金', bom_glue_h: '四、胶与密封', bom_opt_h: '五、可选',
+    th: ['#', '名称', '规格', '数量'], tsv_head: '编号\t名称\t规格\t数量\t说明',
+    stAll: '退出分步，显示整机', tips_h: '施工要点',
+    tips: `<li>桐木很软：所有木螺丝先打 Ø2.5 引孔，拧到贴合即停。</li>
+<li>每个框角都上白乳胶，干透前量两条对角线，相差 ≤2 mm。</li>
+<li>钻亚克力用阶梯钻或亚克力专用钻头，低速、下面垫木板，带膜钻。</li>
+<li>板材螺丝从每条边中间往两端拧，最后再统一回拧 1/4 圈留余量。</li>
+<li>A1 居中摆放，前脚距前框内侧 ≥90 mm，后侧留线缆空间。</li>`,
+    whole: '整机', whole_text: '拖动滑块或点上一步/下一步，逐步查看装配顺序。',
+    good: '充足', warn: '偏紧', bad: '不够'
+  },
+  en: {
+    title: 'A1 Wooden Enclosure', h1: 'A1 Wooden Enclosure', sub: 'Bambu Lab A1 · paulownia frame + 3 mm clear panels · rev. v2',
+    stage_aria: '3D model', views_aria: 'Camera views', close: 'Close', prev: 'Previous step', next: 'Next step', step_aria: 'Assembly step',
+    v_iso: 'Iso', v_front: 'Front', v_side: 'Side', v_top: 'Top',
+    hint: 'Drag to orbit · pinch to zoom · tap a part for specs',
+    tab_ctl: 'Controls', tab_chk: 'Checks', tab_bom: 'BOM', tab_asm: 'Assembly',
+    door_h: 'Front door', door_l: 'Angle', door_open: 'Open door', door_close: 'Close door', door_note: 'Three butt hinges on the left; the pin sits on the front-left outer corner, so the door opens to about 180°.',
+    explode_h: 'Exploded view', explode_l: 'Spread',
+    show_h: 'Show', ly_wood: 'Frame', ly_panel: 'Panels', ly_hw: 'Hardware', ly_foam: 'Seals', ly_printer: 'A1 printer',
+    ly_env: 'Bed travel envelope', ly_ams: 'AMS lite (outside)', ly_dims: 'Dimensions', anim: 'Print motion',
+    size_h: 'Frame size (outer, mm)', pW: 'Width W', pD: 'Depth D', pP: 'Post P',
+    pre_v2: 'Revised 640×700×600', pre_v1: 'Original depth 640',
+    size_note: 'Changing a size rebuilds the model, the checks and the BOM. Open Checks to see the clearances.',
+    chk_h: 'Clearances (current size)',
+    chk_note: 'A1 data: body 385×410×430 mm; the bed sweeps about 545 mm front to back (it reaches about 80 mm past the front of the base). Bambu Lab does not recommend enclosing the A1. For PLA, run the exhaust fan or leave the door ajar.',
+    changes_h: 'Changes from the original plan',
+    changes: `<li><b>Depth 640 → 700.</b> The original inner depth was 580 mm. With 545 mm of bed travel that left about 17 mm front and back, with no room for the power cable.</li>
+<li><b>Added a bottom frame (4 strips).</b> The original had no wood behind the bottom edges of the panels or the door, so the 3 mm sheets would bow out and leak air.</li>
+<li><b>Heights now match.</b> With the 30×40 top frame on edge the frame was 640 tall, but the panels were 630. The frame is now 680 and the side/back panels are 680.</li>
+<li><b>Framed door.</b> A single 646×683 sheet of 3 mm acrylic sags, and the hinge bolt holes crack. The door is now a 30×40 frame with the panel on it, so hinges and magnets screw into wood.</li>
+<li><b>Panel holes 4.5 → 6 mm.</b> Acrylic and PC expand about 10× more than wood. The panels need room to slide or they crack at the holes.</li>
+<li><b>Embedded magnets instead of a surface catch.</b> A surface catch is thick enough to hold the door off the seal. Flush magnets let the door press the seal evenly.</li>
+<li><b>Cable grommets and an optional exhaust fan.</b> Power enters through the back panel. The AMS lite sits outside on the right; its PTFE tube and cable come in through the top.</li>`,
+    glue_h: 'Mounting the panels and choosing glue',
+    glue_note: 'Use screws with nylon washers to hold the panels and foam tape to seal them. Use glue only to fill gaps. Do not glue a panel flat onto the frame: plastic expands much more than wood, so a glued panel warps or cracks.',
+    glue: `<div><span class="pill good">Use</span><p><b>Single-sided EVA foam tape, 3×10 mm,</b> on the frame as a gasket. Press the panel onto it and fix with ST4×20 screws and nylon washers. Removable, sealed, and it absorbs expansion.</p></div>
+<div><span class="pill good">Use</span><p><b>Neutral-cure clear silicone</b> only to fill corner and bottom-edge gaps. It stays flexible and is safe on acrylic and PC.</p></div>
+<div><span class="pill warn">OK</span><p><b>MS polymer adhesive or VHB foam tape</b> can help if you want fewer screws, but keep the screws at the corners and mid-edges.</p></div>
+<div><span class="pill bad">Avoid</span><p><b>Cyanoacrylate (super glue)</b> fogs and stress-cracks acrylic and PC. <b>Acetoxy (acid-cure) silicone</b> releases acetic acid that crazes PC. <b>Solvent contact cement</b> etches the surface. <b>Rigid epoxy over large areas</b> cracks the panel as it expands.</p></div>`,
+    bom_h: 'Final BOM', copy: 'Copy as table', copied: 'Copied', copy_fb: 'Shown below, copy it manually',
+    bom_wood_h: '1. Wood (paulownia 30×40 strips + base)', wood_sum: 'Strip total',
+    cut_note: 'Sanded on four sides, cut to ±1 mm. Cutting plan on 2 m stock (3 mm kerf):',
+    bom_panel_h: '2. Clear panels (acrylic or PC supplier)',
+    panel_note: 'For a clear view, use cast acrylic or solid polycarbonate, not twin-wall PC. Polish the edges and keep the protective film on. Holes Ø6 mm, 15 mm from the edge, ≤175 mm apart; the supplier can drill them.',
+    bom_hw_h: '3. Hardware', bom_glue_h: '4. Adhesives and seals', bom_opt_h: '5. Optional',
+    th: ['#', 'Part', 'Spec', 'Qty'], tsv_head: 'ID\tPart\tSpec\tQty\tNotes',
+    stAll: 'Exit steps, show full build', tips_h: 'Build tips',
+    tips: `<li>Paulownia is soft: pre-drill Ø2.5 pilot holes for every wood screw and stop as soon as the parts pull tight.</li>
+<li>Glue every frame joint and check that the two diagonals differ by no more than 2 mm before the glue sets.</li>
+<li>Drill acrylic with a step bit or an acrylic bit, at low speed, with scrap wood underneath and the film still on.</li>
+<li>Drive panel screws from the middle of each edge outward, then back each one off about a quarter turn.</li>
+<li>Centre the A1 with its front feet at least 90 mm from the inside of the front frame, and leave room behind it for cables.</li>`,
+    whole: 'Full build', whole_text: 'Drag the slider or use the arrows to step through the assembly.',
+    good: 'OK', warn: 'Tight', bad: 'Too small'
+  }
+};
+let lang = 'zh';
+try { const s = localStorage.getItem('a1-lang'); lang = s || (/^zh/i.test(navigator.language || '') ? 'zh' : 'en'); } catch (e) { lang = /^zh/i.test(navigator.language || '') ? 'zh' : 'en'; }
+if (!I18N[lang]) lang = 'zh';
+const tr = k => (I18N[lang][k] !== undefined ? I18N[lang][k] : I18N.zh[k]);
+const L = (zh, en) => (lang === 'zh' ? zh : en);
+function applyStatic() {
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.title = tr('title');
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = tr(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => { el.innerHTML = tr(el.dataset.i18nHtml); });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', tr(el.dataset.i18nAria)); });
+  $('#langBtn').textContent = lang === 'zh' ? 'EN' : '中文';
+  $('#langBtn').setAttribute('aria-label', lang === 'zh' ? 'Switch to English' : '切换到中文');
+  $('#doorBtn').textContent = state.doorTarget > 5 ? tr('door_close') : tr('door_open');
+}
 
 /* ---------- parameters ---------- */
 const DEF = { W: 640, D: 700, P: 600 };
@@ -619,11 +712,11 @@ function buildDims(W, D, F) {
     dimLabels.push({ el, pos: A.clone().add(B).multiplyScalar(0.5) });
   };
   const yTop = FY + F + 3;
-  add([-W / 2 - 3, 2, D / 2 + 130], [W / 2 + 3, 2, D / 2 + 130], [0, 0, 14], `外宽 ${W + 6}`);
-  add([W / 2 + 130, 2, -D / 2 - 3], [W / 2 + 130, 2, D / 2 + 36], [14, 0, 0], `深 ${D + 39}（含门）`);
-  add([-W / 2 - 110, 0, D / 2 + 36], [-W / 2 - 110, yTop, D / 2 + 36], [14, 0, 0], `总高 ${yTop}`);
-  add([-W / 2 + 70, FY, -D / 2 + 70], [-W / 2 + 70, FY + 40 + p.P, -D / 2 + 70], [12, 0, 0], `内高 ${p.P + 40}`);
-  add([-W / 2 + 30, FY + 6, 0], [W / 2 - 30, FY + 6, 0], [0, 0, 12], `内宽 ${W - 60}`);
+  add([-W / 2 - 3, 2, D / 2 + 130], [W / 2 + 3, 2, D / 2 + 130], [0, 0, 14], L(`外宽 ${W + 6}`, `Outer W ${W + 6}`));
+  add([W / 2 + 130, 2, -D / 2 - 3], [W / 2 + 130, 2, D / 2 + 36], [14, 0, 0], L(`深 ${D + 39}（含门）`, `Depth ${D + 39} (with door)`));
+  add([-W / 2 - 110, 0, D / 2 + 36], [-W / 2 - 110, yTop, D / 2 + 36], [14, 0, 0], L(`总高 ${yTop}`, `Height ${yTop}`));
+  add([-W / 2 + 70, FY, -D / 2 + 70], [-W / 2 + 70, FY + 40 + p.P, -D / 2 + 70], [12, 0, 0], L(`内高 ${p.P + 40}`, `Inner H ${p.P + 40}`));
+  add([-W / 2 + 30, FY + 6, 0], [W / 2 - 30, FY + 6, 0], [0, 0, 12], L(`内宽 ${W - 60}`, `Inner W ${W - 60}`));
 }
 
 /* ---------- state application ---------- */
@@ -726,9 +819,14 @@ function partInfo(id) {
   const find = code => BOM.all.find(r => r.id === code);
   const map = { post: 'A', railFB: 'B', railS: 'C', doorStile: 'D', doorRail: 'E', base: 'F', sidePanel: 'P1', backPanel: 'P2', topPanel: 'P3', doorPanel: 'P4',
     hinge: 'H1', screw: 'H3', bracket: 'H8', magnet: 'H9', handle: 'H10', foot: 'H11', grommet: 'H12', foam: 'G1', fan: 'O1' };
-  if (map[id]) { const r = find(map[id]); return { code: r.id, name: r.name, rows: [['规格', r.spec], ['数量', r.qty], ['说明', r.note]] }; }
-  if (id === 'printer') return { code: 'A1', name: '拓竹 A1（示意）', rows: [['机身', '385 × 410 × 430 mm'], ['热床行程', 'Y 向动态深度约 545 mm'], ['摆放', '居中，前脚距前框内侧 ≥90 mm']] };
-  if (id === 'ams') return { code: 'AMS', name: 'AMS lite（放箱外右侧）', rows: [['原因', '箱内放不下，顶板 3 mm 承重不够'], ['走线', 'PTFE 管与线缆经顶板 Ø50 过线孔进箱']] };
+  if (map[id]) { const r = find(map[id]); return { code: r.id, name: r.name, rows: [[L('规格', 'Spec'), r.spec], [L('数量', 'Qty'), r.qty], [L('说明', 'Notes'), r.note]] }; }
+  if (id === 'printer') return { code: 'A1', name: L('拓竹 A1（示意）', 'Bambu Lab A1 (simplified)'), rows: [
+    [L('机身', 'Body'), '385 × 410 × 430 mm'],
+    [L('热床行程', 'Bed travel'), L('Y 向动态深度约 545 mm', 'About 545 mm front to back')],
+    [L('摆放', 'Placement'), L('居中，前脚距前框内侧 ≥90 mm', 'Centred, front feet ≥90 mm from the inside of the front frame')]] };
+  if (id === 'ams') return { code: 'AMS', name: L('AMS lite（放箱外右侧）', 'AMS lite (outside, right)'), rows: [
+    [L('原因', 'Why outside'), L('箱内放不下，顶板 3 mm 承重不够', 'No room inside, and a 3 mm top panel cannot carry it')],
+    [L('走线', 'Routing'), L('PTFE 管与线缆经顶板 Ø50 过线孔进箱', 'PTFE tube and cable enter through the Ø50 grommet in the top panel')]] };
   return null;
 }
 function select(id) {
@@ -752,59 +850,65 @@ function computeBOM() {
   const seal = 2 * F + 2 * (W - 60);
   const gasket = 2 * 2 * (D + F) + 2 * (Wo + F) + 2 * (Wo + Dt) + 2 * (Wo + Hd);
   const foamM = Math.ceil((seal + gasket) * 1.1 / 1000 / 5) * 5;
+  const strip = L('桐木方条 30×40', 'Paulownia strip 30×40');
+  const sheet = L('3 mm 透明板', '3 mm clear sheet');
+  const holesTxt = n => L(`${n} 孔`, `${n} holes`);
   const wood = [
-    { id: 'A', name: '立柱', spec: '桐木方条 30×40', len: P, qty: 4, note: '30 面朝前后，站在底框上' },
-    { id: 'B', name: '顶/底框 前后梁', spec: '桐木方条 30×40', len: W, qty: 4, note: '通长，40 高立放' },
-    { id: 'C', name: '顶/底框 侧梁', spec: '桐木方条 30×40', len: D - 60, qty: 4, note: '夹在前后梁之间' },
-    { id: 'D', name: '门框 竖梃', spec: '桐木方条 30×40', len: Hd, qty: 2, note: '40 面朝前，通长' },
-    { id: 'E', name: '门框 横档', spec: '桐木方条 30×40', len: Wo - 80, qty: 2, note: '夹在竖梃之间' }
+    { id: 'A', name: L('立柱', 'Post'), len: P, qty: 4, note: L('30 面朝前后，站在底框上', '30 mm face to front/back; stands on the bottom frame') },
+    { id: 'B', name: L('顶/底框 前后梁', 'Top/bottom frame, front & back rail'), len: W, qty: 4, note: L('通长，40 高立放', 'Full length, 40 mm on edge') },
+    { id: 'C', name: L('顶/底框 侧梁', 'Top/bottom frame, side rail'), len: D - 60, qty: 4, note: L('夹在前后梁之间', 'Fits between the front and back rails') },
+    { id: 'D', name: L('门框 竖梃', 'Door stile'), len: Hd, qty: 2, note: L('40 面朝前，通长', '40 mm face to the front, full height') },
+    { id: 'E', name: L('门框 横档', 'Door rail'), len: Wo - 80, qty: 2, note: L('夹在竖梃之间', 'Fits between the stiles') }
   ];
-  wood.forEach(r => { r.spec = `${r.spec}×${r.len}`; });
-  const base = { id: 'F', name: '底板', spec: `桐木拼板 ${W + 10}×${D + 5}×15`, qty: 1, note: '底框从下方用 4×40 木螺丝固定' };
+  wood.forEach(r => { r.spec = `${strip}×${r.len}`; });
+  const base = { id: 'F', name: L('底板', 'Base board'), spec: L(`桐木拼板 ${W + 10}×${D + 5}×15`, `Paulownia panel ${W + 10}×${D + 5}×15`), qty: 1,
+    note: L('底框从下方用 4×40 木螺丝固定', 'Bottom frame screwed on from below with 4×40 screws') };
   const panels = [
-    { id: 'P1', name: '侧板（左/右）', spec: `3 mm 透明板 ${D}×${F}`, qty: 2, note: `${cnt(D, F)} 孔/块` },
-    { id: 'P2', name: '后板', spec: `3 mm 透明板 ${Wo}×${F}`, qty: 1, note: `${cnt(Wo, F)} 孔 + Ø50 过线孔；可选 Ø116 风扇孔` },
-    { id: 'P3', name: '顶板', spec: `3 mm 透明板 ${Wo}×${Dt}`, qty: 1, note: `${cnt(Wo, Dt)} 孔 + Ø50 过线孔（右后）` },
-    { id: 'P4', name: '门板', spec: `3 mm 透明板 ${Wo}×${Hd}`, qty: 1, note: `${cnt(Wo, Hd)} 孔；拉手孔等拿到拉手再开` }
+    { id: 'P1', name: L('侧板（左/右）', 'Side panel (L/R)'), spec: `${sheet} ${D}×${F}`, qty: 2, note: L(`${cnt(D, F)} 孔/块`, `${cnt(D, F)} holes each`) },
+    { id: 'P2', name: L('后板', 'Back panel'), spec: `${sheet} ${Wo}×${F}`, qty: 1, note: holesTxt(cnt(Wo, F)) + L(' + Ø50 过线孔；可选 Ø116 风扇孔', ' + Ø50 grommet; optional Ø116 fan hole') },
+    { id: 'P3', name: L('顶板', 'Top panel'), spec: `${sheet} ${Wo}×${Dt}`, qty: 1, note: holesTxt(cnt(Wo, Dt)) + L(' + Ø50 过线孔（右后）', ' + Ø50 grommet (back right)') },
+    { id: 'P4', name: L('门板', 'Door panel'), spec: `${sheet} ${Wo}×${Hd}`, qty: 1, note: holesTxt(cnt(Wo, Hd)) + L('；拉手孔等拿到拉手再开', '; drill the handle holes once you have the handle') }
   ];
   const hw = [
-    { id: 'H1', name: '不锈钢平合页', spec: '2 寸（50 mm）', qty: 3, note: '左侧，铰轴在左前外角' },
-    { id: 'H2', name: '沉头木螺丝（合页）', spec: '3.5×30', qty: 20, note: '穿过侧板吃进立柱' },
-    { id: 'H3', name: '盘头自攻木螺丝（板材）', spec: 'ST4×20', qty: r10(holes * 1.15), note: `板材共 ${holes} 孔，含余量` },
-    { id: 'H4', name: '尼龙平垫圈', spec: 'M4：4.3×12×1', qty: r10(holes * 1.15), note: '外径 12 才能盖住 Ø6 孔' },
-    { id: 'H5', name: '木螺丝（框角）', spec: '4×50', qty: 20, note: '顶/底框 8 个角，每角 2 颗' },
-    { id: 'H6', name: '木螺丝（立柱、门框）', spec: '4×60', qty: 30, note: '穿 40 厚木料再吃进 20 mm' },
-    { id: 'H7', name: '木螺丝（底板→底框）', spec: '4×40', qty: 16, note: '从底板下方打，每边 3–4 颗' },
-    { id: 'H8', name: 'L 型角码', spec: '40×40，配 4×16 螺丝', qty: 8, note: '立柱与顶/底框的内侧' },
-    { id: 'H9', name: '钕铁硼圆磁铁', spec: 'Ø10×3 N52', qty: 8, note: '4 对，嵌入右立柱和门框背面' },
-    { id: 'H10', name: '拉手', spec: '孔距 96，配 M4×40', qty: 1, note: '从门框背面沉孔穿螺丝' },
-    { id: 'H11', name: '橡胶脚垫', spec: 'Ø30', qty: 4, note: '' },
-    { id: 'H12', name: '毛刷过线孔', spec: 'Ø50', qty: 2, note: '后板走电源线，顶板走 PTFE 管和线缆' }
+    { id: 'H1', name: L('不锈钢平合页', 'Stainless butt hinge'), spec: L('2 寸（50 mm）', '2 in (50 mm)'), qty: 3, note: L('左侧，铰轴在左前外角', 'Left side, pin on the front-left outer corner') },
+    { id: 'H2', name: L('沉头木螺丝（合页）', 'Countersunk wood screw (hinges)'), spec: '3.5×30', qty: 20, note: L('穿过侧板吃进立柱', 'Through the side panel into the post') },
+    { id: 'H3', name: L('盘头自攻木螺丝（板材）', 'Pan-head wood screw (panels)'), spec: 'ST4×20', qty: r10(holes * 1.15), note: L(`板材共 ${holes} 孔，含余量`, `${holes} panel holes, plus spares`) },
+    { id: 'H4', name: L('尼龙平垫圈', 'Nylon flat washer'), spec: 'M4：4.3×12×1', qty: r10(holes * 1.15), note: L('外径 12 才能盖住 Ø6 孔', '12 mm OD covers the Ø6 hole') },
+    { id: 'H5', name: L('木螺丝（框角）', 'Wood screw (frame corners)'), spec: '4×50', qty: 20, note: L('顶/底框 8 个角，每角 2 颗', '8 frame corners, 2 per corner') },
+    { id: 'H6', name: L('木螺丝（立柱、门框）', 'Wood screw (posts, door frame)'), spec: '4×60', qty: 30, note: L('穿 40 厚木料再吃进 20 mm', 'Through 40 mm of wood with 20 mm of bite') },
+    { id: 'H7', name: L('木螺丝（底板→底框）', 'Wood screw (base → bottom frame)'), spec: '4×40', qty: 16, note: L('从底板下方打，每边 3–4 颗', 'From below, 3–4 per side') },
+    { id: 'H8', name: L('L 型角码', 'L bracket'), spec: L('40×40，配 4×16 螺丝', '40×40 with 4×16 screws'), qty: 8, note: L('立柱与顶/底框的内侧', 'Inside of each post-to-frame joint') },
+    { id: 'H9', name: L('钕铁硼圆磁铁', 'Neodymium disc magnet'), spec: 'Ø10×3 N52', qty: 8, note: L('4 对，嵌入右立柱和门框背面', '4 pairs, set into the right post and the back of the door') },
+    { id: 'H10', name: L('拉手', 'Handle'), spec: L('孔距 96，配 M4×40', '96 mm centres, M4×40 screws'), qty: 1, note: L('从门框背面沉孔穿螺丝', 'Screws from counterbores on the back of the stile') },
+    { id: 'H11', name: L('橡胶脚垫', 'Rubber foot'), spec: 'Ø30', qty: 4, note: '' },
+    { id: 'H12', name: L('毛刷过线孔', 'Brush grommet'), spec: 'Ø50', qty: 2, note: L('后板走电源线，顶板走 PTFE 管和线缆', 'Back: power cable. Top: PTFE tube and cable') }
   ];
   const glue = [
-    { id: 'G1', name: 'EVA 单面泡棉胶条', spec: '3×10 mm', qty: `${foamM} m`, note: `门封 ${(seal / 1000).toFixed(1)} m + 板材衬垫 ${(gasket / 1000).toFixed(1)} m` },
-    { id: 'G2', name: '中性透明硅酮胶', spec: '300 ml + 胶枪', qty: 1, note: '只补转角缝和底边缝' },
-    { id: 'G3', name: '木工白乳胶', spec: '小瓶', qty: 1, note: '所有木-木接缝' },
-    { id: 'G4', name: '环氧 AB 胶', spec: '5 分钟型', qty: 1, note: '粘磁铁' }
+    { id: 'G1', name: L('EVA 单面泡棉胶条', 'Single-sided EVA foam tape'), spec: '3×10 mm', qty: `${foamM} m`,
+      note: L(`门封 ${(seal / 1000).toFixed(1)} m + 板材衬垫 ${(gasket / 1000).toFixed(1)} m`, `Door seal ${(seal / 1000).toFixed(1)} m + panel gaskets ${(gasket / 1000).toFixed(1)} m`) },
+    { id: 'G2', name: L('中性透明硅酮胶', 'Neutral-cure clear silicone'), spec: L('300 ml + 胶枪', '300 ml + gun'), qty: 1, note: L('只补转角缝和底边缝', 'Only for corner and bottom-edge gaps') },
+    { id: 'G3', name: L('木工白乳胶', 'PVA wood glue'), spec: L('小瓶', 'Small bottle'), qty: 1, note: L('所有木-木接缝', 'All wood-to-wood joints') },
+    { id: 'G4', name: L('环氧 AB 胶', 'Two-part epoxy'), spec: L('5 分钟型', '5-minute'), qty: 1, note: L('粘磁铁', 'For the magnets') }
   ];
   const opt = [
-    { id: 'O1', name: '12 cm 排风扇 + 防护网', spec: '5 V USB 调速', qty: 1, note: '装后板左上；打 PLA 时开' },
-    { id: 'O2', name: '温湿度计', spec: '电子', qty: 1, note: '箱内温度 >35 °C 时开风扇或开门' },
-    { id: 'O3', name: '活性炭滤棉', spec: '120×120', qty: 1, note: '贴风扇出风口' },
-    { id: 'O4', name: 'LED 灯带', spec: '5 V，1 m', qty: 1, note: '贴顶框内侧' }
+    { id: 'O1', name: L('12 cm 排风扇 + 防护网', '120 mm fan + guard'), spec: L('5 V USB 调速', '5 V USB, speed control'), qty: 1, note: L('装后板左上；打 PLA 时开', 'Back panel, upper left; run it for PLA') },
+    { id: 'O2', name: L('温湿度计', 'Thermo-hygrometer'), spec: L('电子', 'Digital'), qty: 1, note: L('箱内温度 >35 °C 时开风扇或开门', 'Above 35 °C inside, run the fan or open the door') },
+    { id: 'O3', name: L('活性炭滤棉', 'Activated carbon filter'), spec: '120×120', qty: 1, note: L('贴风扇出风口', 'On the fan outlet') },
+    { id: 'O4', name: L('LED 灯带', 'LED strip'), spec: L('5 V，1 m', '5 V, 1 m'), qty: 1, note: L('贴顶框内侧', 'Inside the top frame') }
   ];
   const strips = wood.flatMap(r => Array(r.qty).fill(r.len));
   const total = strips.reduce((a, b) => a + b, 0);
   // first-fit decreasing on 2000 mm stock, 3 mm kerf
   const plan = [];
-  [...strips].sort((a, b) => b - a).forEach(L => {
-    const s = plan.find(s => s.used + L + 3 <= 2000);
-    if (s) { s.cuts.push(L); s.used += L + 3; } else plan.push({ cuts: [L], used: L + 3 });
+  [...strips].sort((a, b) => b - a).forEach(len => {
+    const s = plan.find(s => s.used + len + 3 <= 2000);
+    if (s) { s.cuts.push(len); s.used += len + 3; } else plan.push({ cuts: [len], used: len + 3 });
   });
   return { wood, base, panels, hw, glue, opt, total, plan, holes, all: [...wood, base, ...panels, ...hw, ...glue, ...opt] };
 }
-function rowsHTML(list, withLen) {
-  const head = `<tr><th>#</th><th>名称</th><th>规格</th><th>数量</th></tr>`;
+function rowsHTML(list) {
+  const th = tr('th');
+  const head = `<tr><th>${th[0]}</th><th>${th[1]}</th><th>${th[2]}</th><th>${th[3]}</th></tr>`;
   return head + list.map(r => `<tr><td class="id">${r.id}</td><td>${r.name}${r.note ? `<small>${r.note}</small>` : ''}</td><td class="num">${r.spec}</td><td class="num">${r.qty}</td></tr>`).join('');
 }
 function renderBOM() {
@@ -814,70 +918,99 @@ function renderBOM() {
   $('#tHw').innerHTML = rowsHTML(BOM.hw);
   $('#tGlue').innerHTML = rowsHTML(BOM.glue);
   $('#tOpt').innerHTML = rowsHTML(BOM.opt);
-  $('#woodSum').textContent = `${(BOM.total / 1000).toFixed(2)} m，买 ${BOM.plan.length} 根 2 m`;
-  $('#bomMeta').textContent = `外框 ${p.W}×${p.D}，立柱 ${p.P}，成品约 ${p.W + 10}×${p.D + 5 + 36} mm（含门），高 ${FY + p.P + 83} mm。`;
+  const m = (BOM.total / 1000).toFixed(2);
+  $('#woodSum').textContent = L(`${m} m，买 ${BOM.plan.length} 根 2 m`, `${m} m — buy ${BOM.plan.length} × 2 m`);
+  const outD = p.D + 5 + 36, H = FY + p.P + 83;
+  $('#bomMeta').textContent = L(`外框 ${p.W}×${p.D}，立柱 ${p.P}，成品约 ${p.W + 10}×${outD} mm（含门），高 ${H} mm。`,
+    `Frame ${p.W}×${p.D}, posts ${p.P}. Finished size about ${p.W + 10}×${outD} mm (with door), ${H} mm tall.`);
   $('#cutPlan').innerHTML = BOM.plan.map((s, i) =>
     `<div class="stick-row"><span>#${i + 1}</span><div class="stick">${s.cuts.map(c => `<i style="flex:0 0 ${c / 20}%">${c}</i>`).join('')}</div></div>`).join('');
 }
 function bomTSV() {
-  const lines = ['编号\t名称\t规格\t数量\t说明'];
+  const lines = [tr('tsv_head')];
   const sec = (t, list) => { lines.push(t); list.forEach(r => lines.push([r.id, r.name, r.spec, r.qty, r.note || ''].join('\t'))); };
-  sec('一、木料', [...BOM.wood, BOM.base]); sec('二、透明板', BOM.panels); sec('三、五金', BOM.hw); sec('四、胶与密封', BOM.glue); sec('五、可选', BOM.opt);
+  sec(tr('bom_wood_h'), [...BOM.wood, BOM.base]); sec(tr('bom_panel_h'), BOM.panels); sec(tr('bom_hw_h'), BOM.hw); sec(tr('bom_glue_h'), BOM.glue); sec(tr('bom_opt_h'), BOM.opt);
   return lines.join('\n');
 }
 $('#copyBom').onclick = () => {
-  const txt = bomTSV(); const ta = $('#bomText');
-  const fallback = () => { ta.value = txt; ta.hidden = false; ta.select(); $('#copyBom').textContent = '已展开，手动复制'; };
+  const txt = bomTSV(); const ta = $('#bomText'); const btn = $('#copyBom');
+  const fallback = () => { ta.value = txt; ta.hidden = false; ta.select(); btn.textContent = tr('copy_fb'); };
   try {
-    navigator.clipboard.writeText(txt).then(() => { $('#copyBom').textContent = '已复制'; setTimeout(() => $('#copyBom').textContent = '复制为表格', 1600); }, fallback);
+    navigator.clipboard.writeText(txt).then(() => { btn.textContent = tr('copied'); setTimeout(() => btn.textContent = tr('copy'), 1600); }, fallback);
   } catch (e) { fallback(); }
 };
 
 /* ---------- checks ---------- */
 function grade(v, good, warn) { return v >= good ? 'good' : v >= warn ? 'warn' : 'bad'; }
-const GTXT = { good: '充足', warn: '偏紧', bad: '不够' };
 function renderChecks() {
   const { W, D, P } = p;
   const iW = W - 60, iD = D - 60, iH = P + 40;
   const mW = (iW - A1.w) / 2, mD = (iD - A1.sweep) / 2, mH = iH - A1.h;
   const mSpool = (iW - 465) / 2;   // A1 with its own spool holder is about 465 wide
-  const L = Math.max(D, W + 6, P + 83);
-  const grow = 7e-5 * L * 30;
+  const Lmax = Math.max(D, W + 6, P + 83);
+  const grow = 7e-5 * Lmax * 30;
+  const doorKg = (((W + 6) * (P + 83) * 3 * 1.19e-6) + 0.9).toFixed(1);
   const rows = [
-    ['内宽', `${iW} mm`, `机身 385 每侧余 ${mW.toFixed(0)} mm；用机身自带料架（含料架约 465 宽）时把 A1 往左挪 40 mm，两侧各余 ${mSpool.toFixed(0)} mm`, grade(mSpool, 50, 25)],
-    ['内深', `${iD} mm`, `热床行程 545 mm，前后各余 ${mD.toFixed(1)} mm（后侧要放电源线）`, grade(mD, 40, 20)],
-    ['内高', `${iH} mm`, `机身 430 mm 以上余 ${mH} mm，供 PTFE 管弯曲（建议 ≥150）`, grade(mH, 150, 90)],
-    ['前门槛', `${FY + 40} mm`, '底框前梁顶面离桌面高度；热床底面更高，A1 不会碰到', 'good'],
-    ['板材热胀', `${grow.toFixed(1)} mm`, `最长板 ${L} mm 温升 30 °C 的伸长量；Ø6 孔给 ST4 留 ±1 mm，够用`, grow / 2 <= 1 ? 'good' : 'warn'],
-    ['前门', '3 合页', `门约 ${(((W + 6) * (P + 83) * 3 * 1.19e-6) + 0.9).toFixed(1)} kg；全开需左侧或正前方约 ${W + 10} mm 空间`, 'good']
+    [L('内宽', 'Inner width'), `${iW} mm`,
+      L(`机身 385 每侧余 ${mW.toFixed(0)} mm；用机身自带料架（含料架约 465 宽）时把 A1 往左挪 40 mm，两侧各余 ${mSpool.toFixed(0)} mm`,
+        `${mW.toFixed(0)} mm each side of the 385 mm body. With the built-in spool holder (about 465 mm wide), shift the A1 40 mm left for ${mSpool.toFixed(0)} mm each side`),
+      grade(mSpool, 50, 25)],
+    [L('内深', 'Inner depth'), `${iD} mm`,
+      L(`热床行程 545 mm，前后各余 ${mD.toFixed(1)} mm（后侧要放电源线）`, `545 mm bed travel leaves ${mD.toFixed(1)} mm front and back (the power cable needs room at the back)`),
+      grade(mD, 40, 20)],
+    [L('内高', 'Inner height'), `${iH} mm`,
+      L(`机身 430 mm 以上余 ${mH} mm，供 PTFE 管弯曲（建议 ≥150）`, `${mH} mm above the 430 mm body for the PTFE tube to bend (aim for ≥150)`),
+      grade(mH, 150, 90)],
+    [L('前门槛', 'Front sill'), `${FY + 40} mm`,
+      L('底框前梁顶面离桌面高度；热床底面更高，A1 不会碰到', 'Top of the bottom front rail above the desk. The bed sits higher, so the A1 clears it'), 'good'],
+    [L('板材热胀', 'Panel expansion'), `${grow.toFixed(1)} mm`,
+      L(`最长板 ${Lmax} mm 温升 30 °C 的伸长量；Ø6 孔给 ST4 留 ±1 mm，够用`, `Growth of the longest ${Lmax} mm panel over a 30 °C rise. Ø6 holes give an ST4 screw ±1 mm, which is enough`),
+      grow / 2 <= 1 ? 'good' : 'warn'],
+    [L('前门', 'Front door'), L('3 合页', '3 hinges'),
+      L(`门约 ${doorKg} kg；全开需左侧或正前方约 ${W + 10} mm 空间`, `The door weighs about ${doorKg} kg. Opening it fully needs about ${W + 10} mm clear to the left or in front`), 'good']
   ];
   $('#checks').innerHTML = rows.map(([k, n, d, g]) =>
-    `<div class="check"><span class="pill ${g}">${GTXT[g]}</span><span class="k">${k}</span><span class="n">${n}</span><span class="d">${d}</span></div>`).join('');
+    `<div class="check"><span class="pill ${g}">${tr(g)}</span><span class="k">${k}</span><span class="n">${n}</span><span class="d">${d}</span></div>`).join('');
 }
 
 /* ---------- assembly steps ---------- */
-const STEPS = [
-  ['底板', '650×705 桐木拼板，底面四角装橡胶脚垫。底板就是整个箱子的地面，A1 直接放在上面。'],
-  ['底框', '4 根方条围成矩形：前后梁通长，侧梁夹在中间。每角白乳胶 + 2 颗 4×50（先打 Ø2.5 引孔）。再从底板下方用 4×40 把底框固定在底板上。'],
-  ['立柱', '4 根立柱站在底框四角，30 面朝前后。从底框下方打 4×60 进立柱端面，内侧再加 L 角码。'],
-  ['顶框', '同底框的做法拼好后压在立柱顶上，4×60 向下固定。拧紧前量两条对角线，相差 ≤2 mm。'],
-  ['侧板与后板', '木框外表面贴一圈 3 mm 泡棉条。板材孔 Ø6、距边 15 mm，ST4×20 + 尼龙垫圈，从每条边中间往两端拧，不要拧死。后板压住侧板后沿。'],
-  ['顶板', '同样方法固定，顶板盖住侧板和后板的上沿。转角缝用中性透明硅酮胶补缝。'],
-  ['门', '门框竖梃通长、横档夹中间，白乳胶 + 4×60 拼好并量对角线。门板用 ST4×20 + 垫圈固定在门框正面，它同时让门框保持方正。'],
-  ['合页、磁铁、门封', '左侧装 3 个平合页，两片合页在门关闭时处在同一平面（左侧面）。右立柱正面和门框背面各钻 4 个 Ø10×3 沉孔，用 AB 胶嵌磁铁，注意极性。前框贴门封条，装拉手。'],
-  ['放入 A1 并走线', 'A1 居中放置，前脚距前框内侧 ≥90 mm。电源线走后板过线孔；AMS lite 放箱外右侧，PTFE 管和线缆走顶板过线孔。']
-];
-$('#stList').innerHTML = STEPS.map(s => `<li>${s[0]}</li>`).join('');
+const STEPS = {
+  zh: [
+    ['底板', '650×705 桐木拼板，底面四角装橡胶脚垫。底板就是整个箱子的地面，A1 直接放在上面。'],
+    ['底框', '4 根方条围成矩形：前后梁通长，侧梁夹在中间。每角白乳胶 + 2 颗 4×50（先打 Ø2.5 引孔）。再从底板下方用 4×40 把底框固定在底板上。'],
+    ['立柱', '4 根立柱站在底框四角，30 面朝前后。从底框下方打 4×60 进立柱端面，内侧再加 L 角码。'],
+    ['顶框', '同底框的做法拼好后压在立柱顶上，4×60 向下固定。拧紧前量两条对角线，相差 ≤2 mm。'],
+    ['侧板与后板', '木框外表面贴一圈 3 mm 泡棉条。板材孔 Ø6、距边 15 mm，ST4×20 + 尼龙垫圈，从每条边中间往两端拧，不要拧死。后板压住侧板后沿。'],
+    ['顶板', '同样方法固定，顶板盖住侧板和后板的上沿。转角缝用中性透明硅酮胶补缝。'],
+    ['门', '门框竖梃通长、横档夹中间，白乳胶 + 4×60 拼好并量对角线。门板用 ST4×20 + 垫圈固定在门框正面，它同时让门框保持方正。'],
+    ['合页、磁铁、门封', '左侧装 3 个平合页，两片合页在门关闭时处在同一平面（左侧面）。右立柱正面和门框背面各钻 4 个 Ø10×3 沉孔，用 AB 胶嵌磁铁，注意极性。前框贴门封条，装拉手。'],
+    ['放入 A1 并走线', 'A1 居中放置，前脚距前框内侧 ≥90 mm。电源线走后板过线孔；AMS lite 放箱外右侧，PTFE 管和线缆走顶板过线孔。']
+  ],
+  en: [
+    ['Base', 'Fit a rubber foot at each corner under the 650×705 paulownia panel. The base is the floor of the enclosure; the A1 stands directly on it.'],
+    ['Bottom frame', 'Make a rectangle from 4 strips: front and back rails run full width, side rails fit between them. Glue each corner and drive two 4×50 screws (pre-drill Ø2.5). Then screw the frame to the base from below with 4×40 screws.'],
+    ['Posts', 'Stand the 4 posts on the corners of the bottom frame, 30 mm faces to the front and back. Drive 4×60 screws up through the frame into the post ends and add an L bracket on the inside.'],
+    ['Top frame', 'Build it like the bottom frame, set it on the posts and screw down with 4×60. Before tightening, check that the diagonals differ by no more than 2 mm.'],
+    ['Side and back panels', 'Run 3 mm foam tape around the outer faces of the frame. Panel holes are Ø6, 15 mm from the edge; fix with ST4×20 and nylon washers, working from the middle of each edge outward, without overtightening. The back panel covers the rear edges of the side panels.'],
+    ['Top panel', 'Fix it the same way so it covers the top edges of the side and back panels. Fill the corner gaps with neutral-cure clear silicone.'],
+    ['Door', 'Stiles run full height with the rails between them. Glue, screw with 4×60 and check the diagonals. Fix the door panel to the front of the frame with ST4×20 and washers; it also keeps the frame square.'],
+    ['Hinges, magnets, seal', 'Fit 3 butt hinges on the left so both leaves lie flat on the left side when the door is closed. Drill 4 Ø10×3 pockets in the front of the right post and the back of the door and set the magnets in epoxy, checking polarity. Stick the seal on the front frame and fit the handle.'],
+    ['Place the A1 and route cables', 'Centre the A1 with its front feet at least 90 mm from the inside of the front frame. Run the power cable through the back grommet. Keep the AMS lite outside on the right and bring its PTFE tube and cable in through the top grommet.']
+  ]
+};
+function renderStepList() {
+  $('#stList').innerHTML = STEPS[lang].map((s, i) => `<li${i === state.step - 1 ? ' class="on"' : ''}>${s[0]}</li>`).join('');
+}
 function setStep(n) {
   state.step = n; select(null);
+  renderStepList();
   if (n) {
     $('#stRange').value = n; $('#stV').textContent = `${n}/9`;
-    $('#stTitle').textContent = `${n}. ${STEPS[n - 1][0]}`; $('#stText').textContent = STEPS[n - 1][1];
-    [...$('#stList').children].forEach((li, i) => li.classList.toggle('on', i === n - 1));
+    $('#stTitle').textContent = `${n}. ${STEPS[lang][n - 1][0]}`; $('#stText').textContent = STEPS[lang][n - 1][1];
     if (n < 7) { state.doorTarget = 0; }
   } else {
-    clearHighlight(); [...$('#stList').children].forEach(li => li.classList.remove('on'));
-    $('#stTitle').textContent = '整机'; $('#stText').textContent = '拖动滑块或点上一步/下一步，逐步查看装配顺序。';
+    clearHighlight();
+    $('#stTitle').textContent = tr('whole'); $('#stText').textContent = tr('whole_text');
   }
   applyVisibility();
 }
@@ -886,6 +1019,14 @@ $('#stPrev').onclick = () => setStep(Math.max(1, (state.step || 1) - 1));
 $('#stNext').onclick = () => setStep(Math.min(9, (state.step || 0) + 1));
 $('#stAll').onclick = () => setStep(0);
 
+/* ---------- language ---------- */
+function setLang(l) {
+  lang = l;
+  try { localStorage.setItem('a1-lang', l); } catch (e) {}
+  applyStatic();
+  build(); updateTube(); setStep(state.step);
+}
+$('#langBtn').onclick = () => setLang(lang === 'zh' ? 'en' : 'zh');
 /* ---------- UI wiring ---------- */
 document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
   document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-selected', x === b));
@@ -947,7 +1088,7 @@ function loop() {
     state.door += (state.doorTarget - state.door) * (reduceMotion ? 1 : Math.min(1, dt * 5));
     updateDoor();
     doorEl.value = Math.round(state.door); $('#doorV').textContent = Math.round(state.door) + '°';
-    $('#doorBtn').textContent = state.doorTarget > 5 ? '关门' : '开门';
+    $('#doorBtn').textContent = state.doorTarget > 5 ? tr('door_close') : tr('door_open');
   }
   if (camTween) {
     camTween.t = Math.min(1, camTween.t + dt * 2.2);
@@ -980,6 +1121,7 @@ function loop() {
 }
 
 applyTheme();
+applyStatic();
 build();
 resize();
 fitView('iso', true);
