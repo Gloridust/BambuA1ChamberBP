@@ -17,7 +17,8 @@ Hardware,H5,Wood screw,4×50,20,pcs,Frame corners
 Hardware,H6,Wood screw,4×60,30,pcs,Posts and door frame
 Hardware,H7,Wood screw,4×40,16,pcs,Base → bottom frame
 Hardware,H8,L bracket,40×40 with 4×16 screws,8,pcs,Inside of post-to-frame joints
-Hardware,H9,Neodymium disc magnet,Ø10×3 N52,8,pcs,4 pairs; set into right post and door
+Hardware,H9,Countersunk neodymium magnet,Ø12×3 N52 M3 countersink 4 N + 4 S,8,pcs,4 pairs in Ø12×2.5 pockets with screw + epoxy
+Hardware,H14,Countersunk wood screw (magnets),3×12 stainless,8,pcs,Drive until flush with the magnet
 Hardware,H10,Handle,96 mm centres with M4×40,1,pcs,
 Hardware,H11,Rubber foot,Ø30,4,pcs,
 Hardware,H12,Brush grommet,Ø50,2,pcs,Back: power cable / Top: PTFE tube

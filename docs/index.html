@@ -315,7 +315,7 @@ const I18N = {
 <li><b>高度对齐。</b>30×40 顶框立放后框高 640，原透明板 630 对不上。现在框高 680，侧/后板也是 680。</li>
 <li><b>门改成木框门。</b>646×683 的 3 mm 单板做门会明显挠曲，合页螺栓孔容易裂；改成 30×40 门框 + 门板，合页、磁铁都吃在木头上。</li>
 <li><b>板材孔径 4.5 → 6 mm。</b>亚克力/PC 热胀约为木材的 10 倍，留足滑动余量才不会从孔位裂开。</li>
-<li><b>门吸改为嵌入式磁铁。</b>表面门吸较厚，会顶开门封条；嵌入后门能均匀压住封条。</li>
+<li><b>门吸改为嵌入式磁铁。</b>表面门吸较厚，会顶开门封条。现在用沉头孔磁铁嵌进 2.5 mm 深的平底槽，螺丝 + AB 胶双重固定，不怕开门时被拔出来。</li>
 <li><b>加过线孔和可选排风扇。</b>电源线走后板，AMS lite 放箱外右侧，PTFE 管和线缆走顶板。</li>`,
     glue_h: '透明板怎么固定、用什么胶',
     glue_note: '结论：螺丝 + 尼龙垫圈做主固定，泡棉条做密封，胶只用来补缝。不要把板材整面胶死在木框上：板材热胀比木头大得多，胶死后会翘曲或开裂。',
@@ -362,7 +362,7 @@ const I18N = {
 <li><b>Heights now match.</b> With the 30×40 top frame on edge the frame was 640 tall, but the panels were 630. The frame is now 680 and the side/back panels are 680.</li>
 <li><b>Framed door.</b> A single 646×683 sheet of 3 mm acrylic sags, and the hinge bolt holes crack. The door is now a 30×40 frame with the panel on it, so hinges and magnets screw into wood.</li>
 <li><b>Panel holes 4.5 → 6 mm.</b> Acrylic and PC expand about 10× more than wood. The panels need room to slide or they crack at the holes.</li>
-<li><b>Embedded magnets instead of a surface catch.</b> A surface catch is thick enough to hold the door off the seal. Flush magnets let the door press the seal evenly.</li>
+<li><b>Embedded magnets instead of a surface catch.</b> A surface catch is thick enough to hold the door off the seal. Countersunk magnets now sit in 2.5 mm pockets, held by a screw and epoxy, so opening the door can't pull them out.</li>
 <li><b>Cable grommets and an optional exhaust fan.</b> Power enters through the back panel. The AMS lite sits outside on the right; its PTFE tube and cable come in through the top.</li>`,
     glue_h: 'Mounting the panels and choosing glue',
     glue_note: 'Use screws with nylon washers to hold the panels and foam tape to seal them. Use glue only to fill gaps. Do not glue a panel flat onto the frame: plastic expands much more than wood, so a glued panel warps or cracks.',
@@ -676,10 +676,12 @@ function build() {
     door.add(T(g, 'handle', 'hw', 8));
   }
   const magY = [0.12, 0.37, 0.63, 0.88].map(f => FY + 40 + P * f);
-  const magXg = xR - 24;
+  const magXg = xR - 21;
   magY.forEach(y => {
-    const m = cyl(5, 1.6, 'z', M.magnet, 16); m.position.set(magXg - (xL - 3), y, -0.6); door.add(T(m, 'magnet', 'hw', 8));
-    const c = cyl(5, 1.6, 'z', M.magnet, 16); c.position.set(magXg, y, zF + 0.6); item(T(c, 'magnet', 'hw', 8), [0, 0, 130]);
+    // countersunk magnet in a Ø12 × 2.5 pocket, held by an M3 countersunk screw + epoxy
+    const mk = () => { const g = new THREE.Group(); g.add(cyl(6, 1.6, 'z', M.magnet, 20)); const sc = cyl(2.6, 1.8, 'z', M.screw, 12); g.add(sc); return g; };
+    const m = mk(); m.position.set(magXg - (xL - 3), y, -0.6); door.add(T(m, 'magnet', 'hw', 8));
+    const c = mk(); c.position.set(magXg, y, zF + 0.6); item(T(c, 'magnet', 'hw', 8), [0, 0, 130]);
   });
   item(door, [0, 0, 280]);
 
@@ -954,7 +956,9 @@ function computeBOM() {
     { id: 'H6', name: L('木螺丝（立柱、门框）', 'Wood screw (posts, door frame)'), spec: '4×60', qty: 30, note: L('穿 40 厚木料再吃进 20 mm', 'Through 40 mm of wood with 20 mm of bite') },
     { id: 'H7', name: L('木螺丝（底板→底框）', 'Wood screw (base → bottom frame)'), spec: '4×40', qty: 16, note: L('从底板下方打，每边 3–4 颗', 'From below, 3–4 per side') },
     { id: 'H8', name: L('L 型角码', 'L bracket'), spec: L('40×40，配 4×16 螺丝', '40×40 with 4×16 screws'), qty: 8, note: L('立柱与顶/底框的内侧', 'Inside of each post-to-frame joint') },
-    { id: 'H9', name: L('钕铁硼圆磁铁', 'Neodymium disc magnet'), spec: 'Ø10×3 N52', qty: 8, note: L('4 对，嵌入右立柱和门框背面', '4 pairs, set into the right post and the back of the door') },
+    { id: 'H9', name: L('沉头孔钕磁铁', 'Countersunk neodymium magnet'), spec: L('Ø12×3 N52，M3 沉孔，N/S 各 4', 'Ø12×3 N52, M3 countersink, 4 N + 4 S'), qty: 8,
+      note: L('4 对：右立柱正面、门框背面各开 Ø12×2.5 平底槽，螺丝 + AB 胶固定', '4 pairs in Ø12 × 2.5 mm flat-bottom pockets in the right post and the back of the door, held by a screw plus epoxy') },
+    { id: 'H14', name: L('沉头木螺丝（磁铁）', 'Countersunk wood screw (magnets)'), spec: '3×12', qty: 8, note: L('不锈钢，拧到与磁铁平齐即停', 'Stainless; stop when flush with the magnet') },
     { id: 'H10', name: L('拉手', 'Handle'), spec: L('孔距 96，配 M4×40', '96 mm centres, M4×40 screws'), qty: 1, note: L('从门框背面沉孔穿螺丝', 'Screws from counterbores on the back of the stile') },
     { id: 'H11', name: L('橡胶脚垫', 'Rubber foot'), spec: 'Ø30', qty: 4, note: '' },
     { id: 'H12', name: L('毛刷过线孔', 'Brush grommet'), spec: 'Ø50', qty: (state.power === 'panel' ? 1 : 0) + (state.feed === 'top' ? 0 : 1),
@@ -966,7 +970,7 @@ function computeBOM() {
       note: L(`门封 ${(seal / 1000).toFixed(1)} m + 板材衬垫 ${(gasket / 1000).toFixed(1)} m`, `Door seal ${(seal / 1000).toFixed(1)} m + panel gaskets ${(gasket / 1000).toFixed(1)} m`) },
     { id: 'G2', name: L('中性透明硅酮胶', 'Neutral-cure clear silicone'), spec: L('300 ml + 胶枪', '300 ml + gun'), qty: 1, note: L('只补转角缝和底边缝', 'Only for corner and bottom-edge gaps') },
     { id: 'G3', name: L('木工白乳胶', 'PVA wood glue'), spec: L('小瓶', 'Small bottle'), qty: 1, note: L('所有木-木接缝', 'All wood-to-wood joints') },
-    { id: 'G4', name: L('环氧 AB 胶', 'Two-part epoxy'), spec: L('5 分钟型', '5-minute'), qty: 1, note: L('粘磁铁', 'For the magnets') }
+    { id: 'G4', name: L('环氧 AB 胶', 'Two-part epoxy'), spec: L('5 分钟型', '5-minute'), qty: 1, note: L('磁铁槽底和螺丝孔各点一点', 'A dab in each magnet pocket and screw hole') }
   ];
   const opt = [
     { id: 'O1', name: L('12 cm 排风扇 + 防护网', '120 mm fan + guard'), spec: L('5 V USB 调速', '5 V USB, speed control'), qty: 1, note: L('装后板左上；打 PLA 时开', 'Back panel, upper left; run it for PLA') },
@@ -1072,7 +1076,7 @@ const STEPS = {
     ['侧板与后板', '木框外表面贴一圈 3 mm 泡棉条。板材孔 Ø6、距边 15 mm，ST4×20 + 尼龙垫圈，从每条边中间往两端拧，不要拧死。后板压住侧板后沿。'],
     ['顶板', '同样方法固定，顶板盖住侧板和后板的上沿。转角缝用中性透明硅酮胶补缝。'],
     ['门', '门框竖梃通长、横档夹中间，白乳胶 + 4×60 拼好并量对角线。门板用 ST4×20 + 垫圈固定在门框正面，它同时让门框保持方正。'],
-    ['合页、磁铁、门封', '左侧装 3 个平合页，两片合页在门关闭时处在同一平面（左侧面）。右立柱正面和门框背面各钻 4 个 Ø10×3 沉孔，用 AB 胶嵌磁铁，注意极性。前框贴门封条，装拉手。'],
+    ['合页、磁铁、门封', '左侧装 3 个平合页，两片合页在门关闭时处在同一平面（左侧面）。右立柱正面和门框背面各用 Ø12 平底钻开 4 个 2.5 mm 深的槽，槽底点 AB 胶，放入沉头孔磁铁，再用 3×12 沉头木螺丝拧到平齐。立柱上全用 N 极朝外的，门上全用 S 极朝外的。前框贴门封条，装拉手。'],
     ['放入 A1 并走线', 'A1 居中放置，前脚距前框内侧 ≥90 mm。电源线走后板过线孔；AMS lite 放箱外右侧，PTFE 管和线缆走顶板过线孔。']
   ],
   en: [
@@ -1083,7 +1087,7 @@ const STEPS = {
     ['Side and back panels', 'Run 3 mm foam tape around the outer faces of the frame. Panel holes are Ø6, 15 mm from the edge; fix with ST4×20 and nylon washers, working from the middle of each edge outward, without overtightening. The back panel covers the rear edges of the side panels.'],
     ['Top panel', 'Fix it the same way so it covers the top edges of the side and back panels. Fill the corner gaps with neutral-cure clear silicone.'],
     ['Door', 'Stiles run full height with the rails between them. Glue, screw with 4×60 and check the diagonals. Fix the door panel to the front of the frame with ST4×20 and washers; it also keeps the frame square.'],
-    ['Hinges, magnets, seal', 'Fit 3 butt hinges on the left so both leaves lie flat on the left side when the door is closed. Drill 4 Ø10×3 pockets in the front of the right post and the back of the door and set the magnets in epoxy, checking polarity. Stick the seal on the front frame and fit the handle.'],
+    ['Hinges, magnets, seal', 'Fit 3 butt hinges on the left so both leaves lie flat on the left side when the door is closed. Bore four Ø12 × 2.5 mm flat-bottom pockets (Forstner bit) in the front of the right post and the back of the door, add a dab of epoxy, seat a countersunk magnet and drive a 3×12 countersunk screw until flush. Use N-facing magnets on the post and S-facing ones on the door. Stick the seal on the front frame and fit the handle.'],
     ['Place the A1 and route cables', 'Centre the A1 with its front feet at least 90 mm from the inside of the front frame. Run the power cable through the back grommet. Keep the AMS lite outside on the right and bring its PTFE tube and cable in through the top grommet.']
   ]
 };

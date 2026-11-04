@@ -22,7 +22,7 @@ Original plan: 650×650×15 base, four 30×40×600 posts, a top frame of 2 × 64
 | 3 | **Heights don't match** | With the 30×40 top frame on edge, the frame is 600 + 40 = 640 tall, but the panels are 630 | Frame 680 tall (40 bottom frame + 600 post + 40 top frame); side and back panels 680 |
 | 4 | **Door is a single 3 mm sheet** | A sheet about 646×640 sags noticeably, and M3 hinge bolts straight through acrylic crack the holes | **Framed door:** 30×40 frame with the panel on it, so hinges and magnets screw into wood |
 | 5 | **4.5 mm panel holes** | Acrylic and PC expand about 10× more than wood. A 700 mm panel grows about 1.5 mm over a 30 °C rise. An ST4 screw in a 4.5 mm hole has almost no room, so the panel cracks at the holes | **Ø6** holes with 12 mm OD nylon washers |
-| 6 | **Surface magnetic catch** | The catch is thick enough to hold the door off the seal | **Ø10×3 neodymium magnets set flush** into the right post and the back of the door |
+| 6 | **Surface magnetic catch** | The catch is thick enough to hold the door off the seal | **Ø12×3 countersunk magnets set into pockets** in the right post and the back of the door, held by a screw plus epoxy (see the end of section 4) |
 | 7 | **No cable entry or heat exhaust** | The power cable and the AMS lite's PTFE tube and cable have no way in | Ø50 brush grommets in the back and top panels; optional 120 mm exhaust fan |
 
 Two more recommendations:
@@ -131,7 +131,8 @@ When ordering:
 | H6 | Wood screw | 4×60 | 30 | Posts and door corners: through 40 mm of wood with 20 mm of bite |
 | H7 | Wood screw | 4×40 | 16 | Base → bottom frame, from below |
 | H8 | L bracket | 40×40 with 4×16 screws | 8 | Inside each post-to-frame joint |
-| H9 | Neodymium disc magnet | Ø10×3 N52 | 8 | 4 pairs, set into the front of the right post and the back of the door |
+| H9 | Countersunk neodymium magnet | Ø12×3 N52, M3 countersink, 4 N + 4 S | 8 | 4 pairs, set into the front of the right post and the back of the door |
+| H14 | Countersunk wood screw (magnets) | 3×12 stainless | 8 | Drive until flush with the magnet |
 | H10 | Handle | 96 mm centres, M4×40 screws | 1 | Screws from counterbores on the back of the stile |
 | H11 | Rubber foot | Ø30 | 4 | |
 | H12 | Brush grommet | Ø50 | 2 | Back: power cable. Top: PTFE tube and cable |
@@ -143,7 +144,7 @@ When ordering:
 | G1 | Single-sided EVA foam tape | 3×10 mm | 20 m | Door seal about 2.5 m + panel gaskets about 13.5 m |
 | G2 | Neutral-cure clear silicone | 300 ml + gun | 1 | Only for corner and bottom-edge gaps |
 | G3 | PVA wood glue | Small bottle | 1 | All wood-to-wood joints |
-| G4 | Two-part epoxy | 5-minute | 1 | For the magnets |
+| G4 | Two-part epoxy | 5-minute | 1 | A dab in each magnet pocket and screw hole |
 
 ### 5. Optional
 
@@ -174,6 +175,15 @@ Compared with the original BOM: strips go from 4.8 m to about 10 m (bottom frame
 
 Driving the screws: start at the middle hole of each edge and work outward. Stop when the washer seats, then back every screw off about a quarter turn so the panel can slide in its Ø6 holes.
 
+### Mounting the door magnets
+
+Don't just glue magnets onto the wood surface. Paulownia is soft, and every time the door opens it pulls on the magnets, so a glued surface joint eventually lets go. Set them in pockets and use a screw plus glue:
+
+1. **Buy countersunk magnets:** Ø12×3 N52 with an M3 countersunk hole. The countersink fixes the pole on each magnet, so buy N/S pairs: 4 with N facing out and 4 with S facing out.
+2. **Bore flat-bottom pockets:** with a Ø12 Forstner bit, bore four pockets **2.5 mm deep** in the front of the right post and four in the back of the right door stile, lined up with each other. Bore the post first, put a dab of paint in each pocket and close the door to mark the matching spots.
+3. **Fix them:** put a dab of epoxy in the pocket, seat the magnet and drive a 3×12 stainless countersunk wood screw until it is flush. Overtightening cracks the magnet. Use N-facing magnets on the post and S-facing ones on the door.
+4. **Why 2.5 mm deep:** each 3 mm magnet stands 0.5 mm proud, 1 mm for the pair. The 3 mm door seal compresses to about 1.5 mm, so the magnets never touch, but they are close enough to hold the door against the seal.
+
 ---
 
 ## 5. Assembly order
@@ -187,14 +197,13 @@ The Assembly tab in the 3D model shows each step.
 5. **Side and back panels:** run foam tape around the outer faces of the frame and fix the panels with ST4×20 and nylon washers. The back panel covers the rear edges of the side panels.
 6. **Top panel:** fix it the same way, covering the top edges of the side and back panels. Fill the corner gaps with neutral-cure silicone.
 7. **Door:** stiles full height, rails between them; glue, screw with 4×60 and check the diagonals. Fix the door panel to the front of the frame with ST4×20; it also keeps the frame square.
-8. **Hinges, magnets, seal:** fit three butt hinges on the left so both leaves lie on the left side face when the door is closed (pin on the front-left outer corner; the door opens to about 180°). Drill four Ø10×3 pockets in the front of the right post and the back of the door and set the magnets in epoxy, checking polarity. Stick the seal on the front frame and fit the handle.
+8. **Hinges, magnets, seal:** fit three butt hinges on the left so both leaves lie on the left side face when the door is closed (pin on the front-left outer corner; the door opens to about 180°). Fit four magnets in the front of the right post and the back of the door; see the end of section 4. Stick the seal on the front frame and fit the handle.
 9. **Place the A1 and route cables:** centre the A1 with its front feet at least 90 mm from the inside of the front frame. Run the power cable through the back grommet. Keep the AMS lite outside on the right and bring its PTFE tube and cable in through the top grommet.
 
 Tips:
 
 - Paulownia is soft. Pre-drill Ø2.5 pilot holes for every wood screw and stop as soon as the parts pull tight. For a stiffer frame, make the posts from pine or fir in the same size.
 - Drill acrylic with a step bit or an acrylic bit, at low speed, with scrap wood underneath and the film still on.
-- Let each pair of magnets snap together first, then glue them one at a time so the polarity matches.
 
 ---
 
