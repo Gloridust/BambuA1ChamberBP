@@ -175,6 +175,47 @@ Compared with the original BOM: strips go from 4.8 m to about 10 m (bottom frame
 
 Driving the screws: start at the middle hole of each edge and work outward. Stop when the washer seats, then back every screw off about a quarter turn so the panel can slide in its Ø6 holes.
 
+### Panel mounting: screwed on / rebate + bead
+
+The clear panels are **not glued to the surface** in either version. Both hold them mechanically; glue only fills gaps. Switch between them on the Controls tab of the 3D model.
+
+| | Screwed on (default) | Rebate + bead (recommended, better finish) |
+|---|---|---|
+| How | Panel lies on the outer face of the frame, fixed through Ø6 holes with ST4×20 screws and nylon washers over 3 mm foam tape | A 10 × 4 mm rebate along the inner edge of each opening; the panel sits in it flush with the frame, held by 20×5 wooden beads screwed into the wood |
+| Holes in panels | Yes, 16 per panel | None, so nothing can crack at a hole |
+| Room to expand | Ø6 holes give each screw ±1 mm | 2 mm gap all round; the panel moves freely |
+| Tools | Drill | Router with a rebate bit, or have the timber shop cut the rebates |
+| Replacing a panel | Unscrew it | Remove the beads |
+| Look | Panel edges exposed | Panel flush with the frame, edges hidden by beads |
+
+**Where the rebates go** (always the edge facing the opening, 10 wide × 4 deep):
+
+| Part | Face with the rebate |
+|---|---|
+| A Post | Side face (side panel); back posts also the back face (back panel) |
+| B Front/back rail | Bottom back rail: top edge of the outer face. Top back rail: bottom edge of the outer face. Top front and back rails: inner edge of the top face (top panel) |
+| C Side rail | Bottom side rails: top edge of the outer face. Top side rails: bottom edge of the outer face + inner edge of the top face |
+| D / E Door frame | Inner edge of the front face |
+
+**BOM changes for the rebate version** (frame 640×700, posts 600):
+
+| # | Part | Change to | Qty |
+|---|---|---|---|
+| D | Door stile | 30×40×**680** | 2 |
+| E | Door rail | 30×40×**560** | 2 |
+| G | Glazing bead (new) | Solid wood 20×5, about 12.4 m in total (buy 7 × 2 m) | |
+| P1 | Side panel | **636×616**, no screw holes | 2 |
+| P2 | Back panel | **596×616**, Ø50 grommet hole only | 1 |
+| P3 | Top panel | **596×656**, Ø50 grommet hole only | 1 |
+| P4 | Door panel | **576×616**, no holes | 1 |
+| H2 | Hinge screws | 3.5×**25** (straight into the post) | 20 |
+| H3 | Bead screws | Countersunk wood screw **3×16**, about 106, buy 120 | 120 |
+| H4 | Nylon washers | Not needed | 0 |
+| G1 | Door seal foam | 3×10, door seal only | 5 m |
+| G5 | Rebate bedding foam (new) | Single-sided EVA **1×8 mm** on the rebate floor | 15 m |
+
+The door becomes as wide as the frame (640) because the side panels no longer stand proud of it. Finished size about 650 × 743 (with door) × 710 mm.
+
 ### Mounting the door magnets
 
 Don't just glue magnets onto the wood surface. Paulownia is soft, and every time the door opens it pulls on the magnets, so a glued surface joint eventually lets go. Set them in pockets and use a screw plus glue:
