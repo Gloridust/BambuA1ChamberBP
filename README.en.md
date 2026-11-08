@@ -4,7 +4,7 @@
 
 A frame of 30×40 spruce or pine strips with a flat wooden base, 3 mm clear panels on the other five sides and a hinged front door, built for the Bambu Lab A1 (not the mini).
 
-- **Interactive 3D model:** [`docs/index.html`](docs/index.html). Open it in a browser, or point GitHub Pages at the `/docs` folder of the `main` branch. You can open the door, explode the model, step through the assembly and tap any part for its spec. Changing a frame size recalculates the BOM and the clearance checks. The page has a 中文 / EN switch.
+- **Interactive 3D model:** [`docs/index.html`](docs/index.html). Live at <https://gloridust.github.io/BambuA1ChamberBP/> (GitHub Pages), or open the local file in a browser. You can open the door, explode the model, step through the assembly and tap any part for its spec. Changing a frame size recalculates the BOM and the clearance checks. The page has a 中文 / EN switch.
 - **Shopping list:** [`bom.en.csv`](bom.en.csv) (English) or [`bom.csv`](bom.csv) (Chinese). Both open in Excel or Numbers.
 - **Timber drawings (PDF, 5 sheets, ready for the timber shop):** [English](docs/drawings/A1-enclosure-drawings-en.pdf) / [中文](docs/drawings/A1-enclosure-drawings-zh.pdf). Plain-strip version: the shop only cuts to length, no grooves. Cut list, assembly views, door frame and fixing details, panel holes.
 - Optional rebate-and-bead drawings (needs a router, or a joinery shop that can cut stopped rebates): [English](docs/drawings/A1-enclosure-drawings-rebate-en.pdf) / [中文](docs/drawings/A1-enclosure-drawings-rebate-zh.pdf).
@@ -161,7 +161,22 @@ Compared with the original BOM: strips go from 4.8 m to about 10 m (bottom frame
 
 ---
 
-## 4. Mounting the panels and choosing glue
+## 4. How everything is fixed: where screws and glue go
+
+The plain-strip version has no grooves, so everything is held by screws. Glue is used only on wood-to-wood joints and the magnets; **the clear panels are not glued**.
+
+| Joint | Fixed with | Notes |
+|---|---|---|
+| Frame joints (frame and door corners) | PVA glue + wood screws 4×50 / 4×60 | Glue every joint, then two screws; pre-drill Ø3 |
+| Posts to top/bottom frames | 4×60 wood screws + L brackets | Screws through the rail into the post end, bracket on the inside; glue the contact faces too |
+| Bottom frame → base | 4×40 wood screws | From below, 3–4 per side |
+| Clear panels → frame | ST4×20 screws + nylon washers on 3 mm foam tape | **No glue.** The Ø6 hole is 2 mm larger than the screw to allow for expansion |
+| Panel corner and bottom gaps | Neutral-cure clear silicone (optional) | Fills gaps only, carries no load |
+| Hinges | Countersunk wood screws 3.5×30 | Through the side panel into the post |
+| Door magnets | Pocket + 3×12 screw + a dab of epoxy | See the end of this section |
+| Door seal | Self-adhesive foam tape | On the front face of the frame |
+
+### Why the panels are not glued
 
 **Use screws with nylon washers to hold the panels and foam tape to seal them. Use glue only to fill gaps. Do not glue a panel flat onto the frame.** Acrylic and PC expand about 10× more than wood, so a glued panel warps or cracks at the glue line and the holes.
 
@@ -177,9 +192,9 @@ Compared with the original BOM: strips go from 4.8 m to about 10 m (bottom frame
 
 Driving the screws: start at the middle hole of each edge and work outward. Stop when the washer seats, then back every screw off about a quarter turn so the panel can slide in its Ø6 holes.
 
-### Panel mounting: screwed on / rebate + bead
+### Optional: rebate + bead (router needed)
 
-The clear panels are **not glued to the surface** in either version. Both hold them mechanically; glue only fills gaps. Switch between them on the Controls tab of the 3D model.
+Most timber yards only cut to length and cannot cut stopped rebates, so the default is the plain-strip, screwed-on build above. This method is for anyone with a router or a joinery shop. Neither method glues the panels. Switch between them on the Controls tab of the 3D model.
 
 | | Screwed on (default, plain strips) | Rebate + bead (optional, router needed) |
 |---|---|---|
@@ -234,7 +249,7 @@ Don't just glue magnets onto the wood surface. Every time the door opens it pull
 The Assembly tab in the 3D model shows each step.
 
 1. **Base:** fit a rubber foot at each corner under the 650×705 base board.
-2. **Bottom frame:** make a rectangle from four 640 strips, front and back rails full width, side rails between them. Glue each corner and drive two 4×50 screws (pre-drill Ø2.5). Screw the frame to the base from below with 4×40.
+2. **Bottom frame:** make a rectangle from four 640 strips, front and back rails full width, side rails between them. Glue each corner and drive two 4×50 screws (pre-drill Ø3). Screw the frame to the base from below with 4×40.
 3. **Posts:** stand the four 600 posts on the corners, 30 mm faces to the front and back. Drive 4×60 up through the frame into the post ends and add an L bracket on the inside.
 4. **Top frame:** build it like the bottom frame, set it on the posts and screw down with 4×60. Before tightening, check that the diagonals differ by no more than 2 mm.
 5. **Side and back panels:** run foam tape around the outer faces of the frame and fix the panels with ST4×20 and nylon washers. The back panel covers the rear edges of the side panels.
@@ -256,5 +271,6 @@ Tips:
 |---|---|
 | `docs/index.html` | Interactive three.js model, Chinese and English (parametric: frame width, depth, post height) |
 | `bom.en.csv` / `bom.csv` | Final BOM in English / Chinese (default size 640×700×600) |
-| `docs/drawings/*.pdf` | Timber machining drawings, English / Chinese |
+| `docs/drawings/A1-enclosure-drawings-*.pdf` | Timber drawings (plain-strip version, default), English / Chinese |
+| `docs/drawings/A1-enclosure-drawings-rebate-*.pdf` | Rebate-and-bead drawings (optional) |
 | `drawings/build.js` | Drawing generator: `node drawings/build.js` (needs Playwright + Chromium) |
