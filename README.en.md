@@ -2,11 +2,12 @@
 
 [中文](README.md) | **English**
 
-A paulownia-strip frame with a flat wooden base, 3 mm clear panels on the other five sides and a hinged front door, built for the Bambu Lab A1 (not the mini).
+A frame of 30×40 spruce or pine strips with a flat wooden base, 3 mm clear panels on the other five sides and a hinged front door, built for the Bambu Lab A1 (not the mini).
 
 - **Interactive 3D model:** [`docs/index.html`](docs/index.html). Open it in a browser, or point GitHub Pages at the `/docs` folder of the `main` branch. You can open the door, explode the model, step through the assembly and tap any part for its spec. Changing a frame size recalculates the BOM and the clearance checks. The page has a 中文 / EN switch.
 - **Shopping list:** [`bom.en.csv`](bom.en.csv) (English) or [`bom.csv`](bom.csv) (Chinese). Both open in Excel or Numbers.
-- **Timber machining drawings (PDF, 8 sheets, ready for the timber shop):** [English](docs/drawings/A1-enclosure-drawings-en.pdf) / [中文](docs/drawings/A1-enclosure-drawings-zh.pdf). External feed + rebate-and-bead version: cut list, profiles, part drawings, door frame, assembly views and panel holes, with the screw-on version as an appendix.
+- **Timber drawings (PDF, 5 sheets, ready for the timber shop):** [English](docs/drawings/A1-enclosure-drawings-en.pdf) / [中文](docs/drawings/A1-enclosure-drawings-zh.pdf). Plain-strip version: the shop only cuts to length, no grooves. Cut list, assembly views, door frame and fixing details, panel holes.
+- Optional rebate-and-bead drawings (needs a router, or a joinery shop that can cut stopped rebates): [English](docs/drawings/A1-enclosure-drawings-rebate-en.pdf) / [中文](docs/drawings/A1-enclosure-drawings-rebate-zh.pdf).
 
 > Bambu Lab does not recommend enclosing the A1. This enclosure is for dust, noise, drafts and pets. For PLA, keep the inside below 35 °C by running the exhaust fan or leaving the door ajar. The A1 is not well suited to ABS or ASA.
 
@@ -19,7 +20,7 @@ Original plan: 650×650×15 base, four 30×40×600 posts, a top frame of 2 × 64
 | # | Problem | Effect | Change |
 |---|---|---|---|
 | 1 | **Not deep enough:** inner depth 640 − 2×30 = 580 mm | The A1 bed sweeps about 545 mm front to back (it reaches about 80 mm past the front of the base). That leaves about 17 mm at each end, and the power cable plugs in at the back | Frame depth **700**, inner depth 640, about 47 mm clearance front and back |
-| 2 | **No bottom frame** | The bottom edges of the panels and the door have no wood to fix or seal against, so the 3 mm sheets bow out and leak air. The posts only hold by screws into 15 mm of soft paulownia | Add a **bottom frame** identical to the top frame (4 strips) |
+| 2 | **No bottom frame** | The bottom edges of the panels and the door have no wood to fix or seal against, so the 3 mm sheets bow out and leak air. The posts only hold by screws into the 15 mm base | Add a **bottom frame** identical to the top frame (4 strips) |
 | 3 | **Heights don't match** | With the 30×40 top frame on edge, the frame is 600 + 40 = 640 tall, but the panels are 630 | Frame 680 tall (40 bottom frame + 600 post + 40 top frame); side and back panels 680 |
 | 4 | **Door is a single 3 mm sheet** | A sheet about 646×640 sags noticeably, and M3 hinge bolts straight through acrylic crack the holes | **Framed door:** 30×40 frame with the panel on it, so hinges and magnets screw into wood |
 | 5 | **4.5 mm panel holes** | Acrylic and PC expand about 10× more than wood. A 700 mm panel grows about 1.5 mm over a 30 °C rise. An ST4 screw in a 4.5 mm hole has almost no room, so the panel cracks at the holes | **Ø6** holes with 12 mm OD nylon washers |
@@ -83,7 +84,7 @@ Strips total about 10.5 m, still six 2 m lengths: `763+763` · `680+680+566` ×2
 
 ## 3. Final BOM
 
-### 1. Wood (paulownia 30×40 strips, sanded on four sides, cut to ±1 mm)
+### 1. Wood (30×40 kiln-dried spruce or pine, planed four sides, cut to ±1 mm; the shop only cuts to length)
 
 | # | Part | Size | Qty | Notes |
 |---|---|---|---|---|
@@ -92,7 +93,7 @@ Strips total about 10.5 m, still six 2 m lengths: `763+763` · `680+680+566` ×2
 | C | Top/bottom frame, side rail | 30×40×640 | 4 | Fits between the front and back rails |
 | D | Door stile | 30×40×683 | 2 | 40 mm face to the front, full height |
 | E | Door rail | 30×40×566 | 2 | Fits between the stiles |
-| F | Base board | Paulownia panel 650×705×15 | 1 | Bottom frame screwed on from below with 4×40 screws |
+| F | Base board | Solid-wood panel or plywood 650×705×15 | 1 | Bottom frame screwed on from below with 4×40 screws |
 
 The strips add up to about **10.0 m**. Cutting plan on 2 m stock (3 mm kerf), 6 lengths:
 
@@ -180,7 +181,7 @@ Driving the screws: start at the middle hole of each edge and work outward. Stop
 
 The clear panels are **not glued to the surface** in either version. Both hold them mechanically; glue only fills gaps. Switch between them on the Controls tab of the 3D model.
 
-| | Screwed on (default) | Rebate + bead (recommended, better finish) |
+| | Screwed on (default, plain strips) | Rebate + bead (optional, router needed) |
 |---|---|---|
 | How | Panel lies on the outer face of the frame, fixed through Ø6 holes with ST4×20 screws and nylon washers over 3 mm foam tape | A 10 × 4 mm rebate along the inner edge of each opening; the panel sits in it flush with the frame, held by 20×5 wooden beads screwed into the wood |
 | Holes in panels | Yes, 16 per panel | None, so nothing can crack at a hole |
@@ -219,7 +220,7 @@ The door becomes as wide as the frame (640) because the side panels no longer st
 
 ### Mounting the door magnets
 
-Don't just glue magnets onto the wood surface. Paulownia is soft, and every time the door opens it pulls on the magnets, so a glued surface joint eventually lets go. Set them in pockets and use a screw plus glue:
+Don't just glue magnets onto the wood surface. Every time the door opens it pulls on the magnets, so a glued surface joint eventually lets go. Set them in pockets and use a screw plus glue:
 
 1. **Buy countersunk magnets:** Ø12×3 N52 with an M3 countersunk hole. The countersink fixes the pole on each magnet, so buy N/S pairs: 4 with N facing out and 4 with S facing out.
 2. **Bore flat-bottom pockets:** with a Ø12 Forstner bit, bore four pockets **2.5 mm deep** in the front of the right post and four in the back of the right door stile, lined up with each other. Bore the post first, put a dab of paint in each pocket and close the door to mark the matching spots.
@@ -232,7 +233,7 @@ Don't just glue magnets onto the wood surface. Paulownia is soft, and every time
 
 The Assembly tab in the 3D model shows each step.
 
-1. **Base:** fit a rubber foot at each corner under the 650×705 paulownia panel.
+1. **Base:** fit a rubber foot at each corner under the 650×705 base board.
 2. **Bottom frame:** make a rectangle from four 640 strips, front and back rails full width, side rails between them. Glue each corner and drive two 4×50 screws (pre-drill Ø2.5). Screw the frame to the base from below with 4×40.
 3. **Posts:** stand the four 600 posts on the corners, 30 mm faces to the front and back. Drive 4×60 up through the frame into the post ends and add an L bracket on the inside.
 4. **Top frame:** build it like the bottom frame, set it on the posts and screw down with 4×60. Before tightening, check that the diagonals differ by no more than 2 mm.
@@ -244,7 +245,7 @@ The Assembly tab in the 3D model shows each step.
 
 Tips:
 
-- Paulownia is soft. Pre-drill Ø2.5 pilot holes for every wood screw and stop as soon as the parts pull tight. For a stiffer frame, make the posts from pine or fir in the same size.
+- Use kiln-dried spruce or pine (8–12 % moisture) with straight grain and few knots. Pre-drill Ø3 pilot holes for every wood screw, especially near strip ends, and stop as soon as the parts pull tight. Paulownia also works but holds screws poorly.
 - Drill acrylic with a step bit or an acrylic bit, at low speed, with scrap wood underneath and the film still on.
 
 ---

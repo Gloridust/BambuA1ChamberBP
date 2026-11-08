@@ -150,7 +150,7 @@ td small{display:block;color:var(--muted);font-size:11px;line-height:1.4}
     <div class="labels" id="labels"></div>
     <div class="ttl">
       <h1 data-i18n="h1">A1 木框封箱</h1>
-      <p data-i18n="sub">拓竹 A1 · 桐木框 + 3 mm 透明板 · 修订版 v2</p>
+      <p data-i18n="sub">拓竹 A1 · 木方框 + 3 mm 透明板 · 修订版 v2</p>
     </div>
     <div class="views" role="group" data-i18n-aria="views_aria" aria-label="视角">
       <button type="button" id="langBtn" class="lang" aria-label="Switch language">EN</button>
@@ -256,7 +256,7 @@ td small{display:block;color:var(--muted);font-size:11px;line-height:1.4}
         <p class="note" data-i18n-html="drawings_link"></p>
         <textarea id="bomText" hidden readonly style="width:100%;height:120px;font:12px var(--f-mono)"></textarea>
       </div>
-      <div class="sec"><h2 data-i18n="bom_wood_h">一、木料（桐木 30×40 方条 + 底板）</h2><div class="tbl-wrap"><table id="tWood"></table></div>
+      <div class="sec"><h2 data-i18n="bom_wood_h">一、木料（30×40 木方 + 底板）</h2><div class="tbl-wrap"><table id="tWood"></table></div>
         <div class="sum"><span data-i18n="wood_sum">方条合计</span><b id="woodSum"></b></div>
         <p class="note" data-i18n="cut_note">四面砂光，切割误差 ±1 mm。按 2 m 长料排料如下（锯缝按 3 mm）：</p>
         <div id="cutPlan" style="display:grid;gap:6px"></div>
@@ -301,7 +301,7 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* ---------- i18n ---------- */
 const I18N = {
   zh: {
-    title: 'A1 木框封箱', h1: 'A1 木框封箱', sub: '拓竹 A1 · 桐木框 + 3 mm 透明板 · 修订版 v2',
+    title: 'A1 木框封箱', h1: 'A1 木框封箱', sub: '拓竹 A1 · 木方框 + 3 mm 透明板 · 修订版 v2',
     stage_aria: '3D 模型', views_aria: '视角', close: '关闭', prev: '上一步', next: '下一步', step_aria: '装配步骤',
     v_iso: '等轴', v_front: '正面', v_side: '侧面', v_top: '俯视',
     hint: '拖动旋转 · 双指缩放 · 点部件看规格',
@@ -332,16 +332,16 @@ const I18N = {
 <div><span class="pill good">推荐</span><p><b>中性透明硅酮胶（中性玻璃胶）</b>只用于转角缝、底边缝补缝。固化后仍有弹性，对亚克力和 PC 都安全。</p></div>
 <div><span class="pill warn">可用</span><p><b>MS 改性硅烷胶 / VHB 泡棉双面胶</b>：想少打螺丝时可以用作辅助粘接，但仍保留四角和中间的螺丝。</p></div>
 <div><span class="pill bad">别用</span><p><b>502 / 瞬干胶</b>会让亚克力、PC 发白和应力开裂；<b>酸性玻璃胶</b>放出醋酸，会让 PC 起银纹；<b>万能胶 / 氯丁胶</b>含溶剂，会咬花板面；<b>环氧硬胶大面积粘</b>太硬，热胀时拉裂板材。</p></div>`,
-    drawings_link: `加工图纸 PDF：<a href="https://github.com/Gloridust/BambuA1ChamberBP/blob/main/docs/drawings/A1-enclosure-drawings-zh.pdf" target="_blank" rel="noopener">中文</a> · <a href="https://github.com/Gloridust/BambuA1ChamberBP/blob/main/docs/drawings/A1-enclosure-drawings-en.pdf" target="_blank" rel="noopener">English</a>（外置供料 + 裁口压条版）`,
+    drawings_link: `加工图纸 PDF：<a href="https://github.com/Gloridust/BambuA1ChamberBP/blob/main/docs/drawings/A1-enclosure-drawings-zh.pdf" target="_blank" rel="noopener">中文</a> · <a href="https://github.com/Gloridust/BambuA1ChamberBP/blob/main/docs/drawings/A1-enclosure-drawings-en.pdf" target="_blank" rel="noopener">English</a>（纯木方版，只需锯切）`,
     bom_h: '最终 BOM', copy: '复制为表格', copied: '已复制', copy_fb: '已展开，手动复制',
-    bom_wood_h: '一、木料（桐木 30×40 方条 + 底板）', wood_sum: '方条合计',
+    bom_wood_h: '一、木料（30×40 木方 + 底板）', wood_sum: '方条合计',
     cut_note: '四面砂光，切割误差 ±1 mm。按 2 m 长料排料如下（锯缝按 3 mm）：',
     bom_panel_h: '二、透明板（亚克力或 PC 板店）',
     panel_note: '要清晰透明，选浇铸亚克力（cast）或实心 PC 耐力板，不选中空阳光板。边缘抛光，保留保护膜。孔径 Ø6 mm，距边 15 mm，孔距 ≤175 mm，可让商家代钻。',
     bom_hw_h: '三、五金', bom_glue_h: '四、胶与密封', bom_opt_h: '五、可选',
     th: ['#', '名称', '规格', '数量'], tsv_head: '编号\t名称\t规格\t数量\t说明',
     stAll: '退出分步，显示整机', tips_h: '施工要点',
-    tips: `<li>桐木很软：所有木螺丝先打 Ø2.5 引孔，拧到贴合即停。</li>
+    tips: `<li>木料用云杉或松木烘干料。所有木螺丝先打 Ø3 引孔，拧到贴合即停。</li>
 <li>每个框角都上白乳胶，干透前量两条对角线，相差 ≤2 mm。</li>
 <li>钻亚克力用阶梯钻或亚克力专用钻头，低速、下面垫木板，带膜钻。</li>
 <li>板材螺丝从每条边中间往两端拧，最后再统一回拧 1/4 圈留余量。</li>
@@ -350,7 +350,7 @@ const I18N = {
     good: '充足', warn: '偏紧', bad: '不够'
   },
   en: {
-    title: 'A1 Wooden Enclosure', h1: 'A1 Wooden Enclosure', sub: 'Bambu Lab A1 · paulownia frame + 3 mm clear panels · rev. v2',
+    title: 'A1 Wooden Enclosure', h1: 'A1 Wooden Enclosure', sub: 'Bambu Lab A1 · wooden frame + 3 mm clear panels · rev. v2',
     stage_aria: '3D model', views_aria: 'Camera views', close: 'Close', prev: 'Previous step', next: 'Next step', step_aria: 'Assembly step',
     v_iso: 'Iso', v_front: 'Front', v_side: 'Side', v_top: 'Top',
     hint: 'Drag to orbit · pinch to zoom · tap a part for specs',
@@ -381,16 +381,16 @@ const I18N = {
 <div><span class="pill good">Use</span><p><b>Neutral-cure clear silicone</b> only to fill corner and bottom-edge gaps. It stays flexible and is safe on acrylic and PC.</p></div>
 <div><span class="pill warn">OK</span><p><b>MS polymer adhesive or VHB foam tape</b> can help if you want fewer screws, but keep the screws at the corners and mid-edges.</p></div>
 <div><span class="pill bad">Avoid</span><p><b>Cyanoacrylate (super glue)</b> fogs and stress-cracks acrylic and PC. <b>Acetoxy (acid-cure) silicone</b> releases acetic acid that crazes PC. <b>Solvent contact cement</b> etches the surface. <b>Rigid epoxy over large areas</b> cracks the panel as it expands.</p></div>`,
-    drawings_link: `Machining drawings (PDF): <a href="https://github.com/Gloridust/BambuA1ChamberBP/blob/main/docs/drawings/A1-enclosure-drawings-en.pdf" target="_blank" rel="noopener">English</a> · <a href="https://github.com/Gloridust/BambuA1ChamberBP/blob/main/docs/drawings/A1-enclosure-drawings-zh.pdf" target="_blank" rel="noopener">中文</a> (external feed + rebate-and-bead version)`,
+    drawings_link: `Machining drawings (PDF): <a href="https://github.com/Gloridust/BambuA1ChamberBP/blob/main/docs/drawings/A1-enclosure-drawings-en.pdf" target="_blank" rel="noopener">English</a> · <a href="https://github.com/Gloridust/BambuA1ChamberBP/blob/main/docs/drawings/A1-enclosure-drawings-zh.pdf" target="_blank" rel="noopener">中文</a> (plain-strip version, cut to length only)`,
     bom_h: 'Final BOM', copy: 'Copy as table', copied: 'Copied', copy_fb: 'Shown below, copy it manually',
-    bom_wood_h: '1. Wood (paulownia 30×40 strips + base)', wood_sum: 'Strip total',
+    bom_wood_h: '1. Wood (30×40 strips + base)', wood_sum: 'Strip total',
     cut_note: 'Sanded on four sides, cut to ±1 mm. Cutting plan on 2 m stock (3 mm kerf):',
     bom_panel_h: '2. Clear panels (acrylic or PC supplier)',
     panel_note: 'For a clear view, use cast acrylic or solid polycarbonate, not twin-wall PC. Polish the edges and keep the protective film on. Holes Ø6 mm, 15 mm from the edge, ≤175 mm apart; the supplier can drill them.',
     bom_hw_h: '3. Hardware', bom_glue_h: '4. Adhesives and seals', bom_opt_h: '5. Optional',
     th: ['#', 'Part', 'Spec', 'Qty'], tsv_head: 'ID\tPart\tSpec\tQty\tNotes',
     stAll: 'Exit steps, show full build', tips_h: 'Build tips',
-    tips: `<li>Paulownia is soft: pre-drill Ø2.5 pilot holes for every wood screw and stop as soon as the parts pull tight.</li>
+    tips: `<li>Use kiln-dried spruce or pine. Pre-drill Ø3 pilot holes for every wood screw and stop as soon as the parts pull tight.</li>
 <li>Glue every frame joint and check that the two diagonals differ by no more than 2 mm before the glue sets.</li>
 <li>Drill acrylic with a step bit or an acrylic bit, at low speed, with scrap wood underneath and the film still on.</li>
 <li>Drive panel screws from the middle of each edge outward, then back each one off about a quarter turn.</li>
@@ -1004,7 +1004,7 @@ function computeBOM() {
   });
   const beadLen = G.beadPieces.reduce((a, [l, c]) => a + l * c, 0);
   const rebNote = L('；按开口内边裁口 10×4', '; rebate 10×4 along the opening edge');
-  const strip = L('桐木方条 30×40', 'Paulownia strip 30×40');
+  const strip = L('木方 30×40', 'Strip 30×40');
   const sheet = L('3 mm 透明板', '3 mm clear sheet');
   const holesTxt = n => L(`${n} 孔`, `${n} holes`);
   const wood = [
@@ -1019,7 +1019,7 @@ function computeBOM() {
   const bead = reb ? { id: 'G', name: L('木压条', 'Glazing bead'), spec: L('实木 20×5', 'Solid wood 20×5'), qty: `${(beadLen / 1000).toFixed(1)} m`,
     note: L(`买 ${Math.ceil(beadLen * 1.1 / 2000)} 根 2 m。每个开口：横 2 根（开口宽 + 40），竖 2 根（开口高）`,
             `Buy ${Math.ceil(beadLen * 1.1 / 2000)} × 2 m. Per opening: 2 across (opening width + 40), 2 upright (opening height)`) } : null;
-  const base = { id: 'F', name: L('底板', 'Base board'), spec: L(`桐木拼板 ${W + 10}×${D + 5}×15`, `Paulownia panel ${W + 10}×${D + 5}×15`), qty: 1,
+  const base = { id: 'F', name: L('底板', 'Base board'), spec: L(`实木拼板或多层板 ${W + 10}×${D + 5}×15`, `Wood panel or plywood ${W + 10}×${D + 5}×15`), qty: 1,
     note: L('底框从下方用 4×40 木螺丝固定', 'Bottom frame screwed on from below with 4×40 screws') };
   const sz = k => `${sheet} ${PS[k][0]}×${PS[k][1]}`;
   const noHole = L('不打螺丝孔，四周各入裁口 8 mm', 'No screw holes; sits 8 mm into the rebate all round');
@@ -1169,7 +1169,7 @@ function renderChecks() {
 /* ---------- assembly steps ---------- */
 const STEPS = {
   zh: [
-    ['底板', '650×705 桐木拼板，底面四角装橡胶脚垫。底板就是整个箱子的地面，A1 直接放在上面。'],
+    ['底板', '650×705 底板，底面四角装橡胶脚垫。底板就是整个箱子的地面，A1 直接放在上面。'],
     ['底框', '4 根方条围成矩形：前后梁通长，侧梁夹在中间。每角白乳胶 + 2 颗 4×50（先打 Ø2.5 引孔）。再从底板下方用 4×40 把底框固定在底板上。'],
     ['立柱', '4 根立柱站在底框四角，30 面朝前后。从底框下方打 4×60 进立柱端面，内侧再加 L 角码。'],
     ['顶框', '同底框的做法拼好后压在立柱顶上，4×60 向下固定。拧紧前量两条对角线，相差 ≤2 mm。'],
@@ -1180,7 +1180,7 @@ const STEPS = {
     ['放入 A1 并走线', 'A1 居中放置，前脚距前框内侧 ≥90 mm。电源线走后板过线孔；AMS lite 放箱外右侧，PTFE 管和线缆走顶板过线孔。']
   ],
   en: [
-    ['Base', 'Fit a rubber foot at each corner under the 650×705 paulownia panel. The base is the floor of the enclosure; the A1 stands directly on it.'],
+    ['Base', 'Fit a rubber foot at each corner under the 650×705 base board. The base is the floor of the enclosure; the A1 stands directly on it.'],
     ['Bottom frame', 'Make a rectangle from 4 strips: front and back rails run full width, side rails fit between them. Glue each corner and drive two 4×50 screws (pre-drill Ø2.5). Then screw the frame to the base from below with 4×40 screws.'],
     ['Posts', 'Stand the 4 posts on the corners of the bottom frame, 30 mm faces to the front and back. Drive 4×60 screws up through the frame into the post ends and add an L bracket on the inside.'],
     ['Top frame', 'Build it like the bottom frame, set it on the posts and screw down with 4×60. Before tightening, check that the diagonals differ by no more than 2 mm.'],
