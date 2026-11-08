@@ -93,6 +93,7 @@ button,input{font:inherit;color:inherit}
 .tg input:checked+span{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .tg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
 .note{font-size:12px;color:var(--muted);margin:0}
+.note a{color:var(--accent);font-weight:500}
 .presets{display:flex;gap:6px;flex-wrap:wrap}
 
 .checks{display:grid;gap:8px}
@@ -252,6 +253,7 @@ td small{display:block;color:var(--muted);font-size:11px;line-height:1.4}
       <div class="sec">
         <div class="row" style="justify-content:space-between"><h3 data-i18n="bom_h">最终 BOM</h3><button type="button" class="btn ghost" id="copyBom" data-i18n="copy">复制为表格</button></div>
         <p class="note" id="bomMeta"></p>
+        <p class="note" data-i18n-html="drawings_link"></p>
         <textarea id="bomText" hidden readonly style="width:100%;height:120px;font:12px var(--f-mono)"></textarea>
       </div>
       <div class="sec"><h2 data-i18n="bom_wood_h">一、木料（桐木 30×40 方条 + 底板）</h2><div class="tbl-wrap"><table id="tWood"></table></div>
@@ -330,6 +332,7 @@ const I18N = {
 <div><span class="pill good">推荐</span><p><b>中性透明硅酮胶（中性玻璃胶）</b>只用于转角缝、底边缝补缝。固化后仍有弹性，对亚克力和 PC 都安全。</p></div>
 <div><span class="pill warn">可用</span><p><b>MS 改性硅烷胶 / VHB 泡棉双面胶</b>：想少打螺丝时可以用作辅助粘接，但仍保留四角和中间的螺丝。</p></div>
 <div><span class="pill bad">别用</span><p><b>502 / 瞬干胶</b>会让亚克力、PC 发白和应力开裂；<b>酸性玻璃胶</b>放出醋酸，会让 PC 起银纹；<b>万能胶 / 氯丁胶</b>含溶剂，会咬花板面；<b>环氧硬胶大面积粘</b>太硬，热胀时拉裂板材。</p></div>`,
+    drawings_link: `加工图纸 PDF：<a href="https://github.com/Gloridust/BambuA1ChamberBP/blob/main/docs/drawings/A1-enclosure-drawings-zh.pdf" target="_blank" rel="noopener">中文</a> · <a href="https://github.com/Gloridust/BambuA1ChamberBP/blob/main/docs/drawings/A1-enclosure-drawings-en.pdf" target="_blank" rel="noopener">English</a>（外置供料 + 裁口压条版）`,
     bom_h: '最终 BOM', copy: '复制为表格', copied: '已复制', copy_fb: '已展开，手动复制',
     bom_wood_h: '一、木料（桐木 30×40 方条 + 底板）', wood_sum: '方条合计',
     cut_note: '四面砂光，切割误差 ±1 mm。按 2 m 长料排料如下（锯缝按 3 mm）：',
@@ -378,6 +381,7 @@ const I18N = {
 <div><span class="pill good">Use</span><p><b>Neutral-cure clear silicone</b> only to fill corner and bottom-edge gaps. It stays flexible and is safe on acrylic and PC.</p></div>
 <div><span class="pill warn">OK</span><p><b>MS polymer adhesive or VHB foam tape</b> can help if you want fewer screws, but keep the screws at the corners and mid-edges.</p></div>
 <div><span class="pill bad">Avoid</span><p><b>Cyanoacrylate (super glue)</b> fogs and stress-cracks acrylic and PC. <b>Acetoxy (acid-cure) silicone</b> releases acetic acid that crazes PC. <b>Solvent contact cement</b> etches the surface. <b>Rigid epoxy over large areas</b> cracks the panel as it expands.</p></div>`,
+    drawings_link: `Machining drawings (PDF): <a href="https://github.com/Gloridust/BambuA1ChamberBP/blob/main/docs/drawings/A1-enclosure-drawings-en.pdf" target="_blank" rel="noopener">English</a> · <a href="https://github.com/Gloridust/BambuA1ChamberBP/blob/main/docs/drawings/A1-enclosure-drawings-zh.pdf" target="_blank" rel="noopener">中文</a> (external feed + rebate-and-bead version)`,
     bom_h: 'Final BOM', copy: 'Copy as table', copied: 'Copied', copy_fb: 'Shown below, copy it manually',
     bom_wood_h: '1. Wood (paulownia 30×40 strips + base)', wood_sum: 'Strip total',
     cut_note: 'Sanded on four sides, cut to ±1 mm. Cutting plan on 2 m stock (3 mm kerf):',

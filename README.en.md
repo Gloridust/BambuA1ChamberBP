@@ -6,6 +6,7 @@ A paulownia-strip frame with a flat wooden base, 3 mm clear panels on the other 
 
 - **Interactive 3D model:** [`docs/index.html`](docs/index.html). Open it in a browser, or point GitHub Pages at the `/docs` folder of the `main` branch. You can open the door, explode the model, step through the assembly and tap any part for its spec. Changing a frame size recalculates the BOM and the clearance checks. The page has a 中文 / EN switch.
 - **Shopping list:** [`bom.en.csv`](bom.en.csv) (English) or [`bom.csv`](bom.csv) (Chinese). Both open in Excel or Numbers.
+- **Timber machining drawings (PDF, 8 sheets, ready for the timber shop):** [English](docs/drawings/A1-enclosure-drawings-en.pdf) / [中文](docs/drawings/A1-enclosure-drawings-zh.pdf). External feed + rebate-and-bead version: cut list, profiles, part drawings, door frame, assembly views and panel holes, with the screw-on version as an appendix.
 
 > Bambu Lab does not recommend enclosing the A1. This enclosure is for dust, noise, drafts and pets. For PLA, keep the inside below 35 °C by running the exhaust fan or leaving the door ajar. The A1 is not well suited to ABS or ASA.
 
@@ -254,3 +255,5 @@ Tips:
 |---|---|
 | `docs/index.html` | Interactive three.js model, Chinese and English (parametric: frame width, depth, post height) |
 | `bom.en.csv` / `bom.csv` | Final BOM in English / Chinese (default size 640×700×600) |
+| `docs/drawings/*.pdf` | Timber machining drawings, English / Chinese |
+| `drawings/build.js` | Drawing generator: `node drawings/build.js` (needs Playwright + Chromium) |

@@ -6,6 +6,7 @@
 
 - **3D 交互模型**：[`docs/index.html`](docs/index.html)。直接用浏览器打开，或在仓库设置里把 GitHub Pages 指向 `main` 分支的 `/docs` 目录。可以开关门、爆炸视图、分步装配、点部件看规格；改尺寸后 BOM 和空间检查会一起重算。页面右上角可切换中文 / EN。
 - **采购清单**：[`bom.csv`](bom.csv)（中文）/ [`bom.en.csv`](bom.en.csv)（英文），可直接用 Excel 或 Numbers 打开。
+- **木料加工图纸（PDF，8 页，可直接发给木料店）**：[中文](docs/drawings/A1-enclosure-drawings-zh.pdf) / [English](docs/drawings/A1-enclosure-drawings-en.pdf)。外置供料 + 裁口压条版，含下料表、截面型号、零件图、门框、三视图、透明板开孔，附录为螺丝直固版。
 
 > 拓竹官方不推荐给 A1 加封箱。这个箱子主要用来防尘、降噪、挡风、防宠物。打 PLA 时箱内温度要控制在 35 °C 以下，可以开排风扇或留一条门缝。A1 本身不适合打 ABS/ASA。
 
@@ -255,3 +256,5 @@
 | `docs/index.html` | three.js 交互 3D 模型，中英双语（参数化：外框宽、深、立柱高） |
 | `bom.csv` / `bom.en.csv` | 最终 BOM，中文 / 英文（默认尺寸 640×700×600） |
 | `README.en.md` | 英文说明 |
+| `docs/drawings/*.pdf` | 木料加工图纸，中文 / 英文 |
+| `drawings/build.js` | 图纸生成脚本：`node drawings/build.js`（需要 Playwright + Chromium） |
