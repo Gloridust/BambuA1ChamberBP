@@ -2,7 +2,7 @@
 
 [中文](README.md) | **English**
 
-A frame of 30×40 spruce or pine strips with a flat wooden base, 4 mm clear twin-wall polycarbonate panels on the other five sides and a hinged front door, built for the Bambu Lab A1 (not the mini).
+A frame of 30×40 spruce or pine strips with a flat wooden base, 3 mm or 4 mm clear twin-wall polycarbonate panels on the other five sides and a hinged front door, built for the Bambu Lab A1 (not the mini).
 
 - **Interactive 3D model:** [`docs/index.html`](docs/index.html). Live at <https://gloridust.github.io/BambuA1ChamberBP/> (GitHub Pages), or open the local file in a browser. You can open the door, explode the model, step through the assembly and tap any part for its spec. Changing a frame size recalculates the BOM and the clearance checks. The page has a 中文 / EN switch.
 - **Shopping list:** [`bom.en.csv`](bom.en.csv) (English) or [`bom.csv`](bom.csv) (Chinese). Both open in Excel or Numbers.
@@ -77,7 +77,7 @@ Strips total about 10.5 m, still six 2 m lengths: `763+763` · `680+680+566` ×2
 
 | Option | How | Best for |
 |---|---|---|
-| Hole in back panel (default) | Ø50 hole in the lower right of the back panel with a brush grommet, centre about 120 mm above the desk | Have the panel supplier cut it; no woodwork |
+| Hole in back panel (default) | Ø50 hole in the lower right of the back panel with a brush grommet, centre about 120 mm above the desk | Cut it yourself with a Ø50 hole cutter; no woodwork |
 | Notch in bottom rail | Cut a 60×25 mm notch under the bottom back rail (two saw cuts, chisel out the middle) and a matching notch in the back panel edge; seal with a brush strip. Unplug the cable at the A1 end to thread it through | Easier if you're cutting the wood yourself; no round hole in the panel |
 
 ---
@@ -106,9 +106,9 @@ The strips add up to about **10.0 m**. Cutting plan on 2 m stock (3 mm kerf), 6 
 #6  566
 ```
 
-### 2. Clear panels (4 mm clear twin-wall polycarbonate, "sunlight board")
+### 2. Clear panels (3 mm or 4 mm clear twin-wall polycarbonate, "sunlight board")
 
-The timber sizes do not change, and the panel sizes are exactly the same as for a 3 mm sheet; only the thickness is 4 mm (4 mm is usually the thinnest twin-wall sheet).
+The timber sizes do not change, and the panel sizes are exactly the same as for a 3 mm sheet; only the thickness is 3 mm or 4 mm, whichever you can find: 4 mm is stiffer, 3 mm is lighter and cheaper, and the screws are the same.
 
 | # | Part | Size | Qty | Channel direction | Holes |
 |---|---|---|---|---|---|
@@ -119,12 +119,12 @@ The timber sizes do not change, and the panel sizes are exactly the same as for 
 
 When ordering:
 
-- **4 mm clear twin-wall PC**, clear colour (not opal or tinted); a UV-coated one lasts longer.
+- **3 mm or 4 mm clear twin-wall PC**, clear colour (not opal or tinted); a UV-coated one lasts longer.
 - **Channel direction as in the table:** vertical for the side, back and door panels, front to back for the top. Ask the supplier to cut them that way.
 - Size tolerance ±1 mm, protective film left on. Edges do not need polishing.
-- The supplier can drill the holes: **Ø6, 15 mm from the edge, no more than 175 mm apart** (5 holes per edge, corners shared).
+- **Do not ask the supplier to drill; just have them cut the sheets.** You drill the holes yourself: **Ø6, 15 mm from the edge, no more than 175 mm apart** (5 holes per edge, corners shared); steps in section 5, "Drilling the twin-wall sheet yourself".
 - Seal the cut ends before fitting: aluminium foil tape on the two edges where the channels are open (see G6).
-- If only 6 mm sheet is available it also works; use ST4×30 screws.
+- 6 mm sheet also works; use ST4×30 screws.
 - About 1 mm of mismatch at the panel edges is normal: the sheet is 1 mm thicker than the 3 mm it was drawn for, and it makes no practical difference.
 
 ### 3. Hardware
@@ -133,7 +133,7 @@ When ordering:
 |---|---|---|---|---|
 | H1 | Stainless butt hinge | 2 in (50 mm) | 3 | Door, left side, pin on the front-left outer corner |
 | H2 | Countersunk wood screw | 3.5×30 | 20 | Hinges, through the side panel into the post |
-| H3 | Pan-head wood screw | ST4×25 | 100 | Panels (80 holes plus spares); a little longer than 20 mm so it still bites about 16 mm into the wood after the 4 mm sheet and the foam |
+| H3 | Pan-head wood screw | ST4×25 | 100 | Panels (80 holes plus spares); a little longer than 20 mm so it still bites about 16–17 mm into the wood after the 3–4 mm sheet and the foam |
 | H4 | Large flat washer (stainless) | M6: 6.4×18×1.6 (DIN 9021) | 100 | 18 mm OD covers the Ø6 hole and spreads the load so the hollow sheet is not crushed |
 | H5 | Wood screw | 4×50 | 20 | 8 frame corners, 2 per corner |
 | H6 | Wood screw | 4×60 | 30 | Posts and door corners: through 40 mm of wood with 20 mm of bite |
@@ -143,7 +143,7 @@ When ordering:
 | H14 | Countersunk wood screw (magnets) | 3×12 stainless | 8 | Drive until flush with the magnet |
 | H10 | Handle | 96 mm centres, M4×40 screws | 1 | Screws from counterbores on the back of the stile |
 | H11 | Rubber foot | Ø30 | 4 | |
-| H12 | Brush grommet | Ø50 | 2 | Back: power cable. Top: PTFE tube and cable |
+| H12 | Brush grommet | Ø50 | 2 | Back: power cable. Top: PTFE tube and cable; cut the holes with a Ø50 hole cutter or hole saw |
 
 ### 4. Adhesives and seals
 
@@ -266,7 +266,7 @@ The Assembly tab in the 3D model shows each step.
 2. **Bottom frame:** make a rectangle from four 640 strips, front and back rails full width, side rails between them. Glue each corner and drive two 4×50 screws (pre-drill Ø3). Screw the frame to the base from below with 4×40.
 3. **Posts:** stand the four 600 posts on the corners, 30 mm faces to the front and back. Drive 4×60 up through the frame into the post ends and add an L bracket on the inside.
 4. **Top frame:** build it like the bottom frame, set it on the posts and screw down with 4×60. Before tightening, check that the diagonals differ by no more than 2 mm.
-5. **Side and back panels:** tape the open ends of the twin-wall sheets first, run foam tape around the outer faces of the frame, then fix the panels with ST4×25 and large flat washers, channels vertical. The back panel covers the rear edges of the side panels.
+5. **Side and back panels:** drill the sheets first (see "Drilling the twin-wall sheet yourself" below), then tape the open ends of the twin-wall sheets first, run foam tape around the outer faces of the frame, then fix the panels with ST4×25 and large flat washers, channels vertical. The back panel covers the rear edges of the side panels.
 6. **Top panel:** fix it the same way, covering the top edges of the side and back panels. Fill the corner gaps with neutral-cure silicone.
 7. **Door:** stiles full height, rails between them; glue, screw with 4×60 and check the diagonals. Fix the door panel to the front of the frame with ST4×25 and large flat washers; it also keeps the frame square.
 8. **Hinges, magnets, seal:** fit three butt hinges on the left so both leaves lie on the left side face when the door is closed (pin on the front-left outer corner; the door opens to about 180°). Fit four magnets in the front of the right post and the back of the door; see the end of section 4. Stick the seal on the front frame and fit the handle.
@@ -275,7 +275,20 @@ The Assembly tab in the 3D model shows each step.
 Tips:
 
 - Use kiln-dried spruce or pine (8–12 % moisture) with straight grain and few knots. Pre-drill Ø3 pilot holes for every wood screw, especially near strip ends, and stop as soon as the parts pull tight. Paulownia also works but holds screws poorly.
-- If you drill the twin-wall sheet yourself, use a Ø6 bit at low speed with scrap wood underneath and the film on; clamp the sheet down so the thin walls do not chatter and crack.
+- Drill the sheet holes yourself; steps are under "Drilling the twin-wall sheet yourself" below.
+
+### Drilling the twin-wall sheet yourself (before assembly)
+
+The supplier only cuts the sheets; you drill the holes. An ordinary drill with a Ø6 bit is enough.
+
+1. **Mark:** leave the protective film on and mark the holes on it: centres 15 mm from the edge, no more than 175 mm apart, 5 per edge with the corners shared, 16 in all. The pitch for each panel is on sheet 5 of the drawings (167.5 / 162.5 and so on).
+2. **Drill:** lay the sheet flat on scrap wood and hold or clamp it down. Use the Ø6 bit at low speed with light pressure. Clamping stops the thin walls chattering and cracking. Leave the film on.
+3. **Align:** set the sheet on the foam tape on the frame, then drill a Ø3 pilot hole about 18 mm deep into the wood through each Ø6 hole. The screws are then sure to meet the wood.
+4. **Screw:** ST4×25 with a large washer, from the middle of each edge outward; stop as soon as the washer seats, then back off a quarter turn.
+5. **Grommet holes:** one Ø50 hole each in the back and top panels, with a Ø50 hole cutter or hole saw. Drill a small Ø6 centre hole first as a guide, then fit a brush grommet.
+6. **Fan hole (optional):** a Ø116 hole is hard to cut by hand; skip the fan or use a jigsaw.
+
+Drill and fit one panel at a time: side and back panels first, then the top and the door.
 
 ---
 

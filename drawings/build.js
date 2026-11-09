@@ -628,7 +628,7 @@ function pSheet1(img) {
     [T('内部净空 宽×深×高', 'Clear inside W×D×H'), '580 × 640 × 640'],
     [T('成品外形（含门、脚垫）', 'Finished size (door, feet)'), T('约 650 × 741 × 708', 'about 650 × 741 × 708')],
     [T('30×40 木方合计', '30×40 strip total'), T('10.0 m，16 根（6 根 2 m 料）', '10.0 m, 16 pieces (6 × 2 m)')],
-    [T('透明板', 'Clear panels'), T('4 mm 透明阳光板，5 块，每块 16 个 Ø6 孔', '4 mm clear twin-wall PC, 5 panels, 16 × Ø6 holes each')]
+    [T('透明板', 'Clear panels'), T('3 或 4 mm 透明阳光板，5 块，每块 16 个 Ø6 孔（自己钻）', '3 or 4 mm clear twin-wall PC, 5 panels, 16 × Ø6 holes each (drilled by you)')]
   ];
   facts.forEach(([k, v], i) => { b += Tx(12, 154 + i * 5, k, { size: 2.4, cls: 'mut' }) + Tx(78, 154 + i * 5, v, { size: 2.5, w: 600 }); });
   let y = 34; const x = 152, w = 133;
@@ -638,7 +638,7 @@ function pSheet1(img) {
     T('木料：30×40 木方，云杉或松木烘干料（含水率 8–12%），四面刨光，挑直纹少节疤的（桐木也行，但握钉力差）。', 'Timber: 30×40 strip, kiln-dried spruce or pine (8–12 % moisture), planed four sides, straight grain with few knots. Paulownia also works but holds screws poorly.'),
     T('木料店只需按长度锯切：不开槽、不裁口、不打孔。端面锯直（90°）。', 'The timber shop only cuts to length: no grooves, no rebates, no holes. Square (90°) end cuts.'),
     T('公差：长度 ±1，截面 ±0.5。', 'Tolerances: length ±1, section ±0.5.'),
-    T('透明板用 4 mm 透明阳光板（中空 PC），盖在木框外表面，用 ST4×25 螺丝 + M6 大平垫圈固定，下面垫 3 mm 泡棉条，不用胶粘（见第 4 页节点）。板材尺寸和 3 mm 板一样，木材不受影响。', 'Panels are 4 mm clear twin-wall PC lying on the outside of the frame on 3 mm foam tape, held by ST4×25 screws with M6 large flat washers, not glue (detail on sheet 4). The panel sizes are the same as for a 3 mm sheet, so the timber is unaffected.'),
+    T('透明板用 3 或 4 mm 透明阳光板（中空 PC），盖在木框外表面，用 ST4×25 螺丝 + M6 大平垫圈固定，下面垫 3 mm 泡棉条，不用胶粘（见第 4 页节点）。板材尺寸和 3 mm 板一样，木材不受影响。', 'Panels are 3 or 4 mm clear twin-wall PC lying on the outside of the frame on 3 mm foam tape, held by ST4×25 screws with M6 large flat washers, not glue (detail on sheet 4). The panel sizes are the same as for a 3 mm sheet, so the timber is unaffected.'),
     T('所有木螺丝先打 Ø3 引孔，靠近料端的尤其要打；木-木接缝上白乳胶。', 'Pre-drill Ø3 pilot holes for every wood screw, especially near strip ends; glue every wood-to-wood joint.'),
     T('每根料用铅笔写上编号（A–E）。', 'Pencil the part letter (A–E) on every piece.')
   ];
@@ -775,7 +775,7 @@ function pSheet4() {
   b += R(...P(13, -8.6), 4 * d, 25 * d, 'steel');
   b += Ln(...P(55, -8), ...P(55, -2), 't');
   b += leader(...P(18, -10), P(18, -10)[0] + 28, P(18, -10)[1] - 8, T('ST4×25 螺丝 + M6 大平垫圈 6.4×18', 'ST4×25 screw + M6 large flat washer 6.4×18'));
-  b += leader(...P(40, -5), P(40, -5)[0] + 14, P(40, -5)[1] + 4, T('4 mm 阳光板（中空），Ø6 孔', '4 mm twin-wall sheet, Ø6 hole'));
+  b += leader(...P(40, -5), P(40, -5)[0] + 14, P(40, -5)[1] + 4, T('阳光板（中空，图示 4 mm），Ø6 孔', 'Twin-wall sheet (4 mm shown), Ø6 hole'));
   b += leader(...P(19, -1.5), P(19, -1.5)[0] + 37, P(19, -1.5)[1] + 15, T('泡棉条 3×10', 'Foam tape 3×10'));
   b += leader(...P(30, 15), P(30, 15)[0] + 26, P(30, 15)[1] + 10, T('木框（任一根木方）', 'Frame (any strip)'));
   b += dimH(P(0, 0)[0], P(15, 0)[0], P(0, 30)[1] + 5, '15', P(0, 30)[1] + 0.5, P(15, 30)[1] + 0.5);
@@ -829,8 +829,8 @@ function pSheet5() {
   ], { rh: 6.2 });
   b += t2.svg;
   const notes = [
-    T('每块板四边各 5 孔（四角共用，共 16 孔），孔径 Ø6，孔中心距边 15。可让板材店代钻。', 'Each panel: 5 holes per edge (corners shared, 16 in all), Ø6, centres 15 from the edge. The panel shop can drill them.'),
-    T('材料：4 mm 透明阳光板（中空 PC 双层），透明色。孔道（空心方向）如图箭头：四块都是竖向，顶板沿前后。尺寸公差 ±1，保留保护膜，边缘不用抛光。', 'Material: 4 mm clear twin-wall PC, clear colour. Channel direction as the arrows show: vertical on all four, front to back on the top. Size tolerance ±1, film left on, edges need no polishing.'),
+    T('每块板四边各 5 孔（四角共用，共 16 孔），孔径 Ø6，孔中心距边 15。商家只切板，孔自己钻：板垫废木板压紧、低速、带膜钻；装配时再透过 Ø6 孔给木头钻 Ø3 引孔，约 18 mm 深。', 'Each panel: 5 holes per edge (corners shared, 16 in all), Ø6, centres 15 from the edge. The supplier only cuts the sheets; you drill: sheet on scrap wood, clamped, low speed, film on; at assembly drill Ø3 pilot holes about 18 mm deep into the wood through the Ø6 holes.'),
+    T('材料：3 或 4 mm 透明阳光板（中空 PC 双层），透明色。孔道（空心方向）如图箭头：四块都是竖向，顶板沿前后。尺寸公差 ±1，保留保护膜，边缘不用抛光。', 'Material: 3 or 4 mm clear twin-wall PC, clear colour. Channel direction as the arrows show: vertical on all four, front to back on the top. Size tolerance ±1, film left on, edges need no polishing.'),
     T('切口封边：阳光板孔道敞开的两个边（侧板、后板、门板的上下边，顶板的前后边）装之前用铝箔胶带封住，共约 6.7 m。', 'Edge sealing: tape the two open edges of every sheet (top and bottom of the side, back and door panels, front and back of the top panel) with aluminium foil tape before fitting, about 6.7 m in all.'),
     T('侧板盖住立柱侧面，后板盖住侧板后沿，顶板盖住侧板和后板上沿。过线孔位置可按 A1 电源口现场微调；拉手孔拿到拉手后再开。', 'Side panels cover the post sides, the back panel covers the side panels\' rear edges, the top covers both. Grommet positions can be adjusted to the A1 power socket; drill the handle holes once you have the handle.')
   ];
