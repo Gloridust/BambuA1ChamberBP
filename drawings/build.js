@@ -122,6 +122,7 @@ text.dt { fill: #222 } text.mut { fill: #555 } text.acc { fill: #c4600a }
 .panS { fill: #d9ecf7; stroke: #2f7fb5; stroke-width: 0.25 }
 .foam { fill: #444; stroke: none }
 .washer { fill: #f4f1e6; stroke: #333; stroke-width: 0.2 }
+.cav { fill: #f6fbff; stroke: #2f7fb5; stroke-width: 0.12 }
 .bead { fill: #e3c89c; stroke: #111; stroke-width: 0.25 }
 .steel { fill: #b9c0c6; stroke: #333; stroke-width: 0.2 }
 .thead { fill: #efe7da; stroke: none }
@@ -551,7 +552,7 @@ function sheet7() {
 /* ---------- sheet 8: appendix, screw-on version ---------- */
 function sheet8() {
   let b = Tx(12, 15, T('附录：螺丝直固版（不裁口）', 'Appendix: screw-on version (no rebates)'), { size: 3.6, w: 700 });
-  b += para(12, 21, T('如果没有修边机、木料店也不能代裁口，就用这一版：所有方条都不裁口，透明板盖在木框外表面，用 ST4×20 + 尼龙垫圈固定。只有下表和透明板与裁口版不同，其余图纸照用（忽略裁口）。', 'Use this version if you have no router and the timber shop cannot cut rebates: no strip is rebated, and the panels lie on the outside of the frame, fixed with ST4×20 screws and nylon washers. Only this sheet differs; the other sheets still apply (ignore the rebates).'), 270, 2.4, 1.5).svg;
+  b += para(12, 21, T('如果没有修边机、木料店也不能代裁口，就用这一版：所有方条都不裁口，透明板盖在木框外表面，用 ST4×25 + 大平垫圈固定（板材若换 4 mm 阳光板，见纯木方版图纸）。只有下表和透明板与裁口版不同，其余图纸照用（忽略裁口）。', 'Use this version if you have no router and the timber shop cannot cut rebates: no strip is rebated, and the panels lie on the outside of the frame, fixed with ST4×25 screws and large flat washers (for 4 mm twin-wall sheet see the plain-strip drawings). Only this sheet differs; the other sheets still apply (ignore the rebates).'), 270, 2.4, 1.5).svg;
   const t = table(12, 31, [{ w: 12, title: T('编号', 'ID') }, { w: 36, title: T('名称', 'Part') }, { w: 26, title: T('规格', 'Size'), a: 'end' }, { w: 12, title: T('数量', 'Qty'), a: 'middle' }], [
     ['A', T('立柱', 'Post'), '30×40×600', '4'], ['B', T('顶/底框 前后梁', 'Front/back rail'), '30×40×640', '4'], ['C', T('顶/底框 侧梁', 'Side rail'), '30×40×640', '4'],
     ['D', T('门框竖梃', 'Door stile'), '30×40×683', '2'], ['E', T('门框横档', 'Door rail'), '30×40×566', '2'], ['F', T('底板', 'Base board'), '650×705×15', '1']
@@ -627,7 +628,7 @@ function pSheet1(img) {
     [T('内部净空 宽×深×高', 'Clear inside W×D×H'), '580 × 640 × 640'],
     [T('成品外形（含门、脚垫）', 'Finished size (door, feet)'), T('约 650 × 741 × 708', 'about 650 × 741 × 708')],
     [T('30×40 木方合计', '30×40 strip total'), T('10.0 m，16 根（6 根 2 m 料）', '10.0 m, 16 pieces (6 × 2 m)')],
-    [T('透明板', 'Clear panels'), T('3 mm，5 块，每块 16 个 Ø6 孔', '3 mm, 5 panels, 16 × Ø6 holes each')]
+    [T('透明板', 'Clear panels'), T('4 mm 透明阳光板，5 块，每块 16 个 Ø6 孔', '4 mm clear twin-wall PC, 5 panels, 16 × Ø6 holes each')]
   ];
   facts.forEach(([k, v], i) => { b += Tx(12, 154 + i * 5, k, { size: 2.4, cls: 'mut' }) + Tx(78, 154 + i * 5, v, { size: 2.5, w: 600 }); });
   let y = 34; const x = 152, w = 133;
@@ -637,14 +638,14 @@ function pSheet1(img) {
     T('木料：30×40 木方，云杉或松木烘干料（含水率 8–12%），四面刨光，挑直纹少节疤的（桐木也行，但握钉力差）。', 'Timber: 30×40 strip, kiln-dried spruce or pine (8–12 % moisture), planed four sides, straight grain with few knots. Paulownia also works but holds screws poorly.'),
     T('木料店只需按长度锯切：不开槽、不裁口、不打孔。端面锯直（90°）。', 'The timber shop only cuts to length: no grooves, no rebates, no holes. Square (90°) end cuts.'),
     T('公差：长度 ±1，截面 ±0.5。', 'Tolerances: length ±1, section ±0.5.'),
-    T('透明板盖在木框外表面，用 ST4×20 螺丝 + 尼龙垫圈固定，下面垫 3 mm 泡棉条，不用胶粘（见第 4 页节点）。', 'Panels sit on the outside of the frame on 3 mm foam tape, held by ST4×20 screws with nylon washers, not glue (detail on sheet 4).'),
+    T('透明板用 4 mm 透明阳光板（中空 PC），盖在木框外表面，用 ST4×25 螺丝 + M6 大平垫圈固定，下面垫 3 mm 泡棉条，不用胶粘（见第 4 页节点）。板材尺寸和 3 mm 板一样，木材不受影响。', 'Panels are 4 mm clear twin-wall PC lying on the outside of the frame on 3 mm foam tape, held by ST4×25 screws with M6 large flat washers, not glue (detail on sheet 4). The panel sizes are the same as for a 3 mm sheet, so the timber is unaffected.'),
     T('所有木螺丝先打 Ø3 引孔，靠近料端的尤其要打；木-木接缝上白乳胶。', 'Pre-drill Ø3 pilot holes for every wood screw, especially near strip ends; glue every wood-to-wood joint.'),
     T('每根料用铅笔写上编号（A–E）。', 'Pencil the part letter (A–E) on every piece.')
   ];
   notes.forEach((n, i) => { b += Tx(x, y, `${i + 1}`, { size: 2.5, w: 700 }); const pr = para(x + 5, y, n, w - 5, 2.5, 1.5); b += pr.svg; y += pr.h + 1.6; });
   y += 3;
   b += Tx(x, y, T('图纸目录', 'Sheet list'), { size: 3.6, w: 700 }); y += 5.5;
-  [T('总览', 'Overview'), T('下料表', 'Cut list'), T('框架装配三视图', 'Frame assembly views'), T('门框与安装节点', 'Door frame and fixing details'), T('透明板与开孔', 'Clear panels and holes')]
+  [T('总览', 'Overview'), T('下料表', 'Cut list'), T('框架装配三视图', 'Frame assembly views'), T('门框与安装节点', 'Door frame and fixing details'), T('阳光板与开孔', 'Twin-wall panels and holes')]
     .forEach((l, i) => { b += Tx(x, y + i * 4.6, `${i + 1}`, { size: 2.5, w: 700 }) + Tx(x + 6, y + i * 4.6, l, { size: 2.5 }); });
   return sheet(1, T('总览', 'Overview'), '—', b);
 }
@@ -750,7 +751,7 @@ function pSheet4() {
   [112, 262, 418, 568].forEach(h => { b += Circ(X(622), Y(h), 6 * s + 0.2, 'hid'); });
   [90, 341.5, 593].forEach(h => { b += R(X(-3), Y(h + 25), 3 * s, 50 * s, 'steel'); });
   b += tag(X(20), Y(400), 'D') + tag(X(626), Y(330), 'D') + tag(X(323), Y(20), 'E') + tag(X(323), Y(663), 'E');
-  b += leader(X(622), Y(568), X(646) + 8, Y(610), T('磁铁槽（背面）', 'Magnets (back)'));
+  b += leader(X(622), Y(568), X(590), Y(610), T('磁铁槽（背面）', 'Magnets (back)'), 'end');
   b += leader(X(-1.5), Y(593), X(0) - 4, Y(640), T('合页', 'Hinges'), 'end');
   b += Tx(X(323), Y(340), T('门板 646×683 盖满整个门框正面', 'Door panel 646×683 covers the whole front'), { size: 2.3, a: 'middle', cls: 'mut' });
   b += dimH(X(0), X(646), Y(683) - 6, '646', Y(683) - 0.5, Y(683) - 0.5);
@@ -760,26 +761,28 @@ function pSheet4() {
   b += para(12, 172, T('竖梃 D 通长，横档 E 夹在中间；每角白乳胶 + 2 颗 4×60（从竖梃外侧打入横档端面）。装上门板后门框就会保持方正。磁铁槽、合页自己做。', 'Stiles D run full height with rails E between them; glue each corner and drive two 4×60 screws through the stile into the rail end. The panel keeps the door square once fitted. Magnet pockets and hinges are DIY.'), 110, 2.2, 1.45).svg;
 
   // detail 1: panel fixing section (H to the right, X down into the frame)
-  b += Tx(150, 15, T('节点 1：透明板固定（比例 2:1）', 'Detail 1: panel fixing (scale 2:1)'), { size: 3.2, w: 700 });
-  const dx = 166, dy = 40, d = 2;
+  b += Tx(150, 15, T('节点 1：阳光板固定（比例 1.8:1）', 'Detail 1: twin-wall panel fixing (scale 1.8:1)'), { size: 3.2, w: 700 });
+  const dx = 166, dy = 50, d = 1.8;
   const P = (h, xx) => [dx + h * d, dy + xx * d];
-  b += R(...P(0, 0), 40 * d, 26 * d, 'wd');
-  b += Ln(...P(-1, 26), ...P(41, 26), 'hid');
+  b += R(...P(0, 0), 40 * d, 30 * d, 'wd');
   b += R(...P(10, -3), 10 * d, 3 * d, 'foam');
-  b += R(...P(0, -6), 55 * d, 3 * d, 'panS');
-  b += R(...P(12, -6), 6 * d, 3 * d, 'of');
-  b += R(...P(9, -7), 12 * d, 1 * d, 'washer');
-  b += R(...P(11, -9.5), 8 * d, 2.5 * d, 'steel');
-  b += R(...P(13, -7), 4 * d, 20 * d, 'steel');
-  b += Ln(...P(55, -7), ...P(55, -2), 't');
-  b += leader(...P(15, -8.5), P(15, -8.5)[0] + 30, P(15, -8.5)[1] - 6, T('ST4×20 盘头螺丝 + 尼龙垫圈 4.3×12', 'ST4×20 pan-head screw + nylon washer 4.3×12'));
-  b += leader(...P(40, -4.5), P(40, -4.5)[0] + 16, P(40, -4.5)[1] + 4, T('透明板 3 mm，Ø6 孔', '3 mm panel, Ø6 hole'));
+  b += R(...P(0, -7), 55 * d, 4 * d, 'panS');
+  b += R(...P(0, -6.4), 55 * d, 2.8 * d, 'cav');
+  for (let h = 4; h < 55; h += 8) { if (h > 9 && h < 21) continue; b += Ln(...P(h, -6.4), ...P(h, -3.6), 't'); }
+  b += R(...P(12, -7), 6 * d, 4 * d, 'of');
+  b += R(...P(6, -8.6), 18 * d, 1.6 * d, 'washer');
+  b += R(...P(11, -11.2), 8 * d, 2.6 * d, 'steel');
+  b += R(...P(13, -8.6), 4 * d, 25 * d, 'steel');
+  b += Ln(...P(55, -8), ...P(55, -2), 't');
+  b += leader(...P(18, -10), P(18, -10)[0] + 28, P(18, -10)[1] - 8, T('ST4×25 螺丝 + M6 大平垫圈 6.4×18', 'ST4×25 screw + M6 large flat washer 6.4×18'));
+  b += leader(...P(40, -5), P(40, -5)[0] + 14, P(40, -5)[1] + 4, T('4 mm 阳光板（中空），Ø6 孔', '4 mm twin-wall sheet, Ø6 hole'));
   b += leader(...P(19, -1.5), P(19, -1.5)[0] + 37, P(19, -1.5)[1] + 15, T('泡棉条 3×10', 'Foam tape 3×10'));
   b += leader(...P(30, 15), P(30, 15)[0] + 26, P(30, 15)[1] + 10, T('木框（任一根木方）', 'Frame (any strip)'));
-  b += dimH(P(0, 0)[0], P(15, 0)[0], P(0, 26)[1] + 5, '15', P(0, 26)[1] + 0.5, P(15, 26)[1] + 0.5);
-  b += dimV(P(0, -6)[1], P(0, -3)[1], P(0, 0)[0] - 4, '3', P(0, 0)[0] - 0.5, P(0, 0)[0] - 0.5, { ty: P(0, -4.5)[1] });
+  b += dimH(P(0, 0)[0], P(15, 0)[0], P(0, 30)[1] + 5, '15', P(0, 30)[1] + 0.5, P(15, 30)[1] + 0.5);
+  b += dimH(P(6, 0)[0], P(24, 0)[0], P(0, -11.2)[1] - 5, '18', P(0, -8.6)[1], P(0, -8.6)[1]);
+  b += dimV(P(0, -7)[1], P(0, -3)[1], P(0, 0)[0] - 4, '4', P(0, 0)[0] - 0.5, P(0, 0)[0] - 0.5, { ty: P(0, -5)[1] });
   b += dimV(P(0, -3)[1], P(0, 0)[1], P(0, 0)[0] - 9, '3', P(0, 0)[0] - 0.5, P(0, 0)[0] - 0.5, { ty: P(0, -1.5)[1] });
-  b += para(150, 108, T('孔 Ø6 比螺丝大 2 mm，给板材热胀留余量。拧到垫圈贴紧即停，再回拧 1/4 圈；从每条边中间往两端拧。', 'The Ø6 hole is 2 mm larger than the screw so the panel can expand. Stop when the washer seats, then back off a quarter turn; work from the middle of each edge outward.'), 134, 2.2, 1.45).svg;
+  b += para(150, 114, T('Ø6 孔比螺丝大 2 mm，给板材热胀留余量。垫圈要大，拧到垫圈刚贴紧就停，再回拧 1/4 圈，不要压扁中空板；从每条边中间往两端拧。螺丝穿过板和泡棉后吃进木头约 16 mm。', 'The Ø6 hole is 2 mm larger than the screw so the panel can expand. Use the large washer and stop as soon as it seats, then back off a quarter turn so the hollow sheet is not crushed; work from the middle of each edge outward. The screw bites about 16 mm into the wood.'), 134, 2.2, 1.4).svg;
 
   // detail 2: frame corner (plan of the bottom frame, front-left)
   b += Tx(150, 126, T('节点 2：框角（底框左前角俯视，1:2）', 'Detail 2: frame corner (bottom frame, front-left, plan 1:2)'), { size: 3.2, w: 700 });
@@ -795,7 +798,7 @@ function pSheet4() {
 }
 
 function pSheet5() {
-  let b = Tx(12, 15, T('透明板与开孔（比例约 1:11，从箱外看）', 'Clear panels and holes (about 1:11, seen from outside)'), { size: 3.4, w: 700 });
+  let b = Tx(12, 15, T('阳光板与开孔（比例约 1:11，从箱外看）', 'Twin-wall panels and holes (about 1:11, seen from outside)'), { size: 3.4, w: 700 });
   const s = 0.09;
   let x = 18;
   const rows = [];
@@ -811,6 +814,9 @@ function pSheet5() {
     });
     b += dimH(x, x + p.w * s, y + p.h * s + 4.5, String(p.w), y + p.h * s + 0.5, y + p.h * s + 0.5);
     b += dimV(y, y + p.h * s, x - 3.2, String(p.h), x - 0.5, x - 0.5);
+    { const ax = x + p.w * s / 2, y1 = y + p.h * s * 0.36, y2 = y + p.h * s * 0.64;
+      b += `<line x1="${f(ax)}" y1="${f(y1)}" x2="${f(ax)}" y2="${f(y2)}" class="dim" marker-start="url(#ar)" marker-end="url(#ar)"/>`;
+      b += Tx(ax + 2, (y1 + y2) / 2 + 0.8, T('孔道', 'channels'), { size: 2.2, cls: 'mut' }); }
     rows.push([p.id, `${p.w}×${p.h}`, String(p.qty), `${fmt(eh.px)} / ${fmt(eh.py)}`]);
     x += p.w * s + 8;
   });
@@ -824,12 +830,13 @@ function pSheet5() {
   b += t2.svg;
   const notes = [
     T('每块板四边各 5 孔（四角共用，共 16 孔），孔径 Ø6，孔中心距边 15。可让板材店代钻。', 'Each panel: 5 holes per edge (corners shared, 16 in all), Ø6, centres 15 from the edge. The panel shop can drill them.'),
-    T('材料：3 mm 浇铸亚克力或实心 PC 耐力板（门板建议耐力板），不要中空阳光板。尺寸公差 ±0.5，边缘抛光，保留保护膜。', 'Material: 3 mm cast acrylic or solid polycarbonate (solid PC for the door), not twin-wall PC. Size tolerance ±0.5, polished edges, film left on.'),
+    T('材料：4 mm 透明阳光板（中空 PC 双层），透明色。孔道（空心方向）如图箭头：四块都是竖向，顶板沿前后。尺寸公差 ±1，保留保护膜，边缘不用抛光。', 'Material: 4 mm clear twin-wall PC, clear colour. Channel direction as the arrows show: vertical on all four, front to back on the top. Size tolerance ±1, film left on, edges need no polishing.'),
+    T('切口封边：阳光板孔道敞开的两个边（侧板、后板、门板的上下边，顶板的前后边）装之前用铝箔胶带封住，共约 6.7 m。', 'Edge sealing: tape the two open edges of every sheet (top and bottom of the side, back and door panels, front and back of the top panel) with aluminium foil tape before fitting, about 6.7 m in all.'),
     T('侧板盖住立柱侧面，后板盖住侧板后沿，顶板盖住侧板和后板上沿。过线孔位置可按 A1 电源口现场微调；拉手孔拿到拉手后再开。', 'Side panels cover the post sides, the back panel covers the side panels\' rear edges, the top covers both. Grommet positions can be adjusted to the A1 power socket; drill the handle holes once you have the handle.')
   ];
   let y = 104 + Math.max(t.h, t2.h) + 7;
   notes.forEach(n => { const pr = para(12, y, '· ' + n, 170, 2.4, 1.5); b += pr.svg; y += pr.h + 1; });
-  return sheet(5, T('透明板与开孔', 'Clear panels and holes'), '≈1:11', b);
+  return sheet(5, T('阳光板与开孔', 'Twin-wall panels and holes'), '≈1:11', b);
 }
 
 /* ---------- 3D render for the cover ---------- */

@@ -5,14 +5,14 @@ Wood,C,Top/bottom frame side rail,Spruce/pine strip 30×40×640,4,pcs,Fits betwe
 Wood,D,Door stile,Spruce/pine strip 30×40×683,2,pcs,40 mm face to the front; full height
 Wood,E,Door rail,Spruce/pine strip 30×40×566,2,pcs,Fits between the stiles
 Wood,F,Base board,Solid-wood panel or plywood 650×705×15,1,pcs,Bottom frame screwed on from below with 4×40
-Panels,P1,Side panel (L/R),3 mm cast acrylic or solid PC 700×680,2,pcs,16 holes each; Ø6; 15 mm from edge
-Panels,P2,Back panel,3 mm cast acrylic or solid PC 646×680,1,pcs,16 holes + Ø50 grommet; optional Ø116 fan hole
-Panels,P3,Top panel,3 mm cast acrylic or solid PC 646×703,1,pcs,16 holes + Ø50 grommet (back right)
-Panels,P4,Door panel,3 mm cast acrylic or solid PC 646×683,1,pcs,16 holes; handle holes drilled later
+Panels,P1,Side panel (L/R),4 mm clear twin-wall PC 700×680,2,pcs,Channels along 680 (vertical); 16 holes each; Ø6; 15 mm from edge
+Panels,P2,Back panel,4 mm clear twin-wall PC 646×680,1,pcs,Channels along 680 (vertical); 16 holes + Ø50 grommet; optional Ø116 fan hole
+Panels,P3,Top panel,4 mm clear twin-wall PC 646×703,1,pcs,Channels along 703 (front to back); 16 holes + Ø50 grommet (back right)
+Panels,P4,Door panel,4 mm clear twin-wall PC 646×683,1,pcs,Channels along 683 (vertical); 16 holes; handle holes drilled later
 Hardware,H1,Stainless butt hinge,2 in (50 mm),3,pcs,Door left side; pin on front-left outer corner
 Hardware,H2,Countersunk wood screw,3.5×30,20,pcs,Hinges
-Hardware,H3,Pan-head wood screw,ST4×20,100,pcs,Panels (80 holes + spares)
-Hardware,H4,Nylon flat washer,M4 4.3×12×1,100,pcs,12 mm OD covers the Ø6 hole
+Hardware,H3,Pan-head wood screw,ST4×25,100,pcs,Panels (80 holes + spares)
+Hardware,H4,Large flat washer (stainless),M6 6.4×18×1.6 DIN 9021,100,pcs,18 mm OD covers the Ø6 hole and spreads the load
 Hardware,H5,Wood screw,4×50,20,pcs,Frame corners
 Hardware,H6,Wood screw,4×60,30,pcs,Posts and door frame
 Hardware,H7,Wood screw,4×40,16,pcs,Base → bottom frame
@@ -25,7 +25,8 @@ Hardware,H12,Brush grommet,Ø50,2,pcs,Back: power cable / Top: PTFE tube
 Adhesives & seals,G1,Single-sided EVA foam tape,3×10 mm,20,m,Door seal + panel gaskets
 Adhesives & seals,G2,Neutral-cure clear silicone,300 ml + gun,1,pcs,Gap filling only
 Adhesives & seals,G3,PVA wood glue,Small bottle,1,pcs,Wood-to-wood joints
-Adhesives & seals,G4,Two-part epoxy,5-minute,1,pcs,For the magnets
+Adhesives & seals,G4,Two-part epoxy,5-minute,1,pcs,A dab in each magnet pocket and screw hole
+Adhesives & seals,G6,Aluminium foil tape,48 mm × 10 m,1,roll,Seals the open ends of the twin-wall sheet; about 6.7 m
 Optional,O1,120 mm fan + guard,5 V USB with speed control,1,set,Run it for PLA
 Optional,O2,Thermo-hygrometer,Digital,1,pcs,
 Optional,O3,Activated carbon filter,120×120,1,pcs,
