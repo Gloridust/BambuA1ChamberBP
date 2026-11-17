@@ -262,10 +262,10 @@ Don't just glue magnets onto the wood surface. Every time the door opens it pull
 
 The Assembly tab in the 3D model shows each step.
 
-1. **Base:** fit a rubber foot at each corner under the 650×705 base board.
-2. **Bottom frame:** make a rectangle from four 640 strips, front and back rails full width, side rails between them. Glue each corner and drive two 4×50 screws (pre-drill Ø3). Screw the frame to the base from below with 4×40.
-3. **Posts:** stand the four 600 posts on the corners, 30 mm faces to the front and back. Drive 4×60 up through the frame into the post ends and add an L bracket on the inside.
-4. **Top frame:** build it like the bottom frame, set it on the posts and screw down with 4×60. Before tightening, check that the diagonals differ by no more than 2 mm.
+1. **Base:** fit a rubber foot at each corner under the 650×705 base board and set it aside. The frame goes on in step 4.
+2. **Bottom frame:** make a rectangle from four 640 strips, front and back rails full width, side rails between them. Glue each corner and drive two 4×50 screws (pre-drill Ø3). Do not fix it to the base yet: the post screws go in from underneath.
+3. **Posts:** set the bottom frame on two battens so its underside is clear. Stand the four 600 posts on the corners, 30 mm faces to the front and back. Drive two 4×60 screws per post up through the frame into the post end, diagonally apart, and add an L bracket on the inside.
+4. **Top frame:** build it like the bottom frame, set it on the posts and screw down with 4×60. Before tightening, check that the diagonals differ by no more than 2 mm. Then set the whole frame on the base (flush at the front, 5 mm in at the sides and back) and screw it on from below with 4×40, 3–4 per side.
 5. **Side and back panels:** drill the sheets first (see "Drilling the twin-wall sheet yourself" below), then tape the open ends of the twin-wall sheets first, run foam tape around the outer faces of the frame, then fix the panels with ST4×25 and large flat washers, channels vertical. The back panel covers the rear edges of the side panels.
 6. **Top panel:** fix it the same way, covering the top edges of the side and back panels. Fill the corner gaps with neutral-cure silicone.
 7. **Door:** stiles full height, rails between them; glue, screw with 4×60 and check the diagonals. Fix the door panel to the front of the frame with ST4×25 and large flat washers; it also keeps the frame square.
