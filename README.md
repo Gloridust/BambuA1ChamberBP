@@ -6,6 +6,7 @@
 
 - **3D 交互模型**：[`docs/index.html`](docs/index.html)。在线打开：<https://gloridust.github.io/BambuA1ChamberBP/>（GitHub Pages），或直接用浏览器打开本地文件。可以开关门、爆炸视图、分步装配、点部件看规格；改尺寸后 BOM 和空间检查会一起重算。页面右上角可切换中文 / EN。
 - **采购清单**：[`bom.csv`](bom.csv)（中文）/ [`bom.en.csv`](bom.en.csv)（英文），可直接用 Excel 或 Numbers 打开。
+- **组装说明书（PDF，13 页，按步骤配图）**：[中文](docs/drawings/A1-enclosure-manual-zh.pdf) / [English](docs/drawings/A1-enclosure-manual-en.pdf)。零件清点、工具、9 个装配步骤（钻板 → 框架 → 装板 → 门 → 合页搭扣 → 放 A1）、使用与维护。
 - **木料加工图纸（PDF，5 页，可直接发给木料店）**：[中文](docs/drawings/A1-enclosure-drawings-zh.pdf) / [English](docs/drawings/A1-enclosure-drawings-en.pdf)。纯木方版：木料店只需按长度锯切，不开槽；含下料表、三视图、门框与安装节点、透明板开孔。
 - 可选的裁口压条版图纸（需要修边机，或能做止口裁口的木工房）：[中文](docs/drawings/A1-enclosure-drawings-rebate-zh.pdf) / [English](docs/drawings/A1-enclosure-drawings-rebate-en.pdf)。
 
@@ -124,7 +125,7 @@
 - 尺寸误差 ±1 mm，保留保护膜。阳光板边缘不用抛光。
 - **不用让商家钻孔，只让他们切板。**孔自己钻：**孔径 Ø6，距边 15 mm，孔距 ≤175 mm**（每条边 5 个孔，四角共用），步骤见第 5 节「阳光板自己钻孔」。
 - 可选：装之前在两个露出空心的切口边贴铝箔胶带（见 O8），防灰。
-- 6 mm 厚的货也能用，螺丝改 ST4×30。
+- 6 mm 厚的货也能用，螺丝改 4×30 盘头自攻螺丝。
 - 板边有约 1 mm 的错位属于正常：板厚和设计用的 3 mm 不同，不影响使用。
 
 ### 三、五金（必须买的只有 6 样）

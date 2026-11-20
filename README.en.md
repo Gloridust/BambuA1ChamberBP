@@ -6,6 +6,7 @@ A frame of 30×40 spruce or pine strips with a flat wooden base, 3 mm or 4 mm cl
 
 - **Interactive 3D model:** [`docs/index.html`](docs/index.html). Live at <https://gloridust.github.io/BambuA1ChamberBP/> (GitHub Pages), or open the local file in a browser. You can open the door, explode the model, step through the assembly and tap any part for its spec. Changing a frame size recalculates the BOM and the clearance checks. The page has a 中文 / EN switch.
 - **Shopping list:** [`bom.en.csv`](bom.en.csv) (English) or [`bom.csv`](bom.csv) (Chinese). Both open in Excel or Numbers.
+- **Assembly manual (PDF, 13 pages, illustrated):** [English](docs/drawings/A1-enclosure-manual-en.pdf) / [中文](docs/drawings/A1-enclosure-manual-zh.pdf). Parts check, tools, nine illustrated steps (drill panels → frame → panels → door → hinges and latches → fit the A1), use and care.
 - **Timber drawings (PDF, 5 sheets, ready for the timber shop):** [English](docs/drawings/A1-enclosure-drawings-en.pdf) / [中文](docs/drawings/A1-enclosure-drawings-zh.pdf). Plain-strip version: the shop only cuts to length, no grooves. Cut list, assembly views, door frame and fixing details, panel holes.
 - Optional rebate-and-bead drawings (needs a router, or a joinery shop that can cut stopped rebates): [English](docs/drawings/A1-enclosure-drawings-rebate-en.pdf) / [中文](docs/drawings/A1-enclosure-drawings-rebate-zh.pdf).
 
@@ -124,7 +125,7 @@ When ordering:
 - Size tolerance ±1 mm, protective film left on. Edges do not need polishing.
 - **Do not ask the supplier to drill; just have them cut the sheets.** You drill the holes yourself: **Ø6, 15 mm from the edge, no more than 175 mm apart** (5 holes per edge, corners shared); steps in section 5, "Drilling the twin-wall sheet yourself".
 - Optional: aluminium foil tape on the two edges where the channels are open (see O8), to keep dust out.
-- 6 mm sheet also works; use ST4×30 screws.
+- 6 mm sheet also works; use 4×30 pan-head screws.
 - About 1 mm of mismatch at the panel edges is normal: the sheet thickness differs from the 3 mm it was drawn for, and it makes no practical difference.
 
 ### 3. Hardware (only 6 items are essential)
