@@ -24,7 +24,7 @@ Original plan: 650×650×15 base, four 30×40×600 posts, a top frame of 2 × 64
 | 3 | **Heights don't match** | With the 30×40 top frame on edge, the frame is 600 + 40 = 640 tall, but the panels are 630 | Frame 680 tall (40 bottom frame + 600 post + 40 top frame); side and back panels 680 |
 | 4 | **Door is a single 3 mm sheet** | A sheet about 646×640 sags noticeably, and M3 hinge bolts straight through acrylic crack the holes | **Framed door:** 30×40 frame with the panel on it, so hinges and magnets screw into wood |
 | 5 | **4.5 mm panel holes** | Acrylic and PC expand about 10× more than wood. A 700 mm panel grows about 1.5 mm over a 30 °C rise. An ST4 screw in a 4.5 mm hole has almost no room, so the panel cracks at the holes | **Ø6** holes with 18 mm OD large flat washers |
-| 6 | **Surface magnetic catch** | The catch is thick enough to hold the door off the seal | **Ø12×3 countersunk magnets set into pockets** in the right post and the back of the door, held by a screw plus epoxy (see the end of section 4) |
+| 6 | **Surface magnetic catch** | The catch is thick enough to hold the door off the seal | **Two latches** on the door's right side, mounted on the side faces like the hinges; they just screw on (see the end of section 4) |
 | 7 | **No cable entry or heat exhaust** | The power cable and the AMS lite's PTFE tube and cable have no way in | Ø50 brush grommets in the back and top panels; optional 120 mm exhaust fan |
 
 Two more recommendations:
@@ -69,7 +69,7 @@ For the stock-spool-on-top option, change only these lines of the default BOM:
 | P4 | Door panel | 646×**763** | 1 |
 | P3 | Top panel | 646×703, **no grommet hole** | 1 |
 | H3 / H4 | Panel screws / washers | 88 holes, buy **110** of each | |
-| H12 | Brush grommet | Back panel only | 1 |
+| O10 | Brush grommet (optional) | Back panel only | 1 |
 
 Strips total about 10.5 m, still six 2 m lengths: `763+763` · `680+680+566` ×2 · `640+640+640` ×2 · `640+640`.
 
@@ -106,9 +106,9 @@ The strips add up to about **10.0 m**. Cutting plan on 2 m stock (3 mm kerf), 6 
 #6  566
 ```
 
-### 2. Clear panels (3 mm or 4 mm clear twin-wall polycarbonate, "sunlight board")
+### 2. Clear panels (2–4 mm clear twin-wall polycarbonate, "sunlight board")
 
-The timber sizes do not change, and the panel sizes are exactly the same as for a 3 mm sheet; only the thickness is 3 mm or 4 mm, whichever you can find: 4 mm is stiffer, 3 mm is lighter and cheaper, and the screws are the same.
+The timber sizes do not change, and the panel sizes are exactly the same as for a 3 mm sheet; any thickness from 2 to 4 mm works: 3–4 mm is best and stiffer; 2 mm also works but is softer, so the large washers are a must and the screws must not be overtightened. The screws are the same.
 
 | # | Part | Size | Qty | Channel direction | Holes |
 |---|---|---|---|---|---|
@@ -119,43 +119,34 @@ The timber sizes do not change, and the panel sizes are exactly the same as for 
 
 When ordering:
 
-- **3 mm or 4 mm clear twin-wall PC**, clear colour (not opal or tinted); a UV-coated one lasts longer.
+- **2–4 mm clear twin-wall PC**, clear colour (not opal or tinted); a UV-coated one lasts longer.
 - **Channel direction as in the table:** vertical for the side, back and door panels, front to back for the top. Ask the supplier to cut them that way.
 - Size tolerance ±1 mm, protective film left on. Edges do not need polishing.
 - **Do not ask the supplier to drill; just have them cut the sheets.** You drill the holes yourself: **Ø6, 15 mm from the edge, no more than 175 mm apart** (5 holes per edge, corners shared); steps in section 5, "Drilling the twin-wall sheet yourself".
-- Seal the cut ends before fitting: aluminium foil tape on the two edges where the channels are open (see G6).
+- Optional: aluminium foil tape on the two edges where the channels are open (see O8), to keep dust out.
 - 6 mm sheet also works; use ST4×30 screws.
-- About 1 mm of mismatch at the panel edges is normal: the sheet is 1 mm thicker than the 3 mm it was drawn for, and it makes no practical difference.
+- About 1 mm of mismatch at the panel edges is normal: the sheet thickness differs from the 3 mm it was drawn for, and it makes no practical difference.
 
-### 3. Hardware
+### 3. Hardware (only 6 items are essential)
 
-| # | Part | Spec | Qty | Use |
-|---|---|---|---|---|
-| H1 | Stainless butt hinge | 2 in (50 mm) | 3 | Door, left side, pin on the front-left outer corner |
-| H2 | Countersunk wood screw | 3.5×30 | 20 | Hinges, through the side panel into the post |
-| H3 | Pan-head wood screw | ST4×25 | 100 | Panels (80 holes plus spares); a little longer than 20 mm so it still bites about 16–17 mm into the wood after the 3–4 mm sheet and the foam |
-| H4 | Large flat washer (stainless) | M6: 6.4×18×1.6 (DIN 9021) | 100 | 18 mm OD covers the Ø6 hole and spreads the load so the hollow sheet is not crushed |
-| H5 | Wood screw | 4×50 | 20 | 8 frame corners, 2 per corner |
-| H6 | Wood screw | 4×60 | 30 | Posts and door corners: through 40 mm of wood with 20 mm of bite |
-| H7 | Wood screw | 4×40 | 16 | Base → bottom frame, from below |
-| H8 | L bracket | 40×40 with 4×16 screws | 8 | Inside each post-to-frame joint |
-| H9 | Countersunk neodymium magnet | Ø12×3 N52, M3 countersink, 4 N + 4 S | 8 | 4 pairs, set into the front of the right post and the back of the door |
-| H14 | Countersunk wood screw (magnets) | 3×12 stainless | 8 | Drive until flush with the magnet |
-| H10 | Handle | 96 mm centres, M4×40 screws | 1 | Screws from counterbores on the back of the stile |
-| H11 | Rubber foot | Ø30 | 4 | |
-| H12 | Brush grommet | Ø50 | 2 | Back: power cable. Top: PTFE tube and cable; cut the holes with a Ø50 hole cutter or hole saw |
-
-### 4. Adhesives and seals
+"Wood screws" are metal screws made for driving into wood. Search for names like "countersunk self-tapping wood screw 4×60"; zinc-plated or stainless both work. Hinges and latches usually come with their own screws.
 
 | # | Part | Spec | Qty | Use |
 |---|---|---|---|---|
-| G1 | Single-sided EVA foam tape | 3×10 mm | 20 m | Door seal about 2.5 m + panel gaskets about 13.5 m |
-| G2 | Neutral-cure clear silicone | 300 ml + gun | 1 | Only for corner and bottom-edge gaps |
-| G3 | PVA wood glue | Small bottle | 1 | All wood-to-wood joints |
-| G4 | Two-part epoxy | 5-minute | 1 | A dab in each magnet pocket and screw hole |
-| G6 | Aluminium foil tape | 48 mm × 10 m | 1 roll | Seals the open ends of the twin-wall sheet, about 6.7 m in all (see section 4) |
+| H1 | Butt hinge (screws included) | 2 in (50 mm) | 3 | Door left side, with the screws supplied |
+| H2 | Toggle latch (screws included) | Small flat latch, about 40–60 mm long | 2 | Door right side, with the screws supplied |
+| H3 | Pan-head wood screw | 4×25 | 100 | Panels (80 holes plus spares) |
+| H4 | M6 large flat washer | 6.4×18×1.6 (18 mm OD) | 100 | With H3; spreads the load so the hollow sheet is not crushed |
+| H5 | Countersunk wood screw | 4×60 | 50 | Frame corners 16 + posts 16 + door frame 8; one size for all |
+| H6 | Countersunk wood screw | 4×40 | 16 | Frame to base, from below |
 
-### 5. Optional
+### 4. Glue
+
+| # | Part | Spec | Qty | Use |
+|---|---|---|---|---|
+| G1 | PVA wood glue | Small bottle | 1 | All wood-to-wood joints |
+
+### 5. Optional (works without them)
 
 | # | Part | Spec | Qty | Use |
 |---|---|---|---|---|
@@ -163,44 +154,52 @@ When ordering:
 | O2 | Thermo-hygrometer | Digital | 1 | Above 35 °C inside, run the fan or open the door |
 | O3 | Activated carbon filter | 120×120 | 1 | On the fan outlet |
 | O4 | LED strip | 5 V, 1 m | 1 | Inside the top frame |
+| O6 | L bracket | 40×40, screws included | 8 | Inside the post-to-frame joints for a stiffer frame |
+| O7 | Single-sided EVA foam tape | 3×10 mm | 20 m | Door seal + panel gaskets; keeps dust out better |
+| O8 | Aluminium foil tape | 48 mm × 10 m | 1 roll | Seals the twin-wall cut ends |
+| O9 | Neutral-cure clear silicone | 300 ml + gun | 1 | Fills corner and bottom-edge gaps |
+| O10 | Brush grommet | Ø50 | 2 | Neat edge on the cable holes |
+| O12 | Handle | Small, screws included | 1 | Optional; you can open the door by its edge |
+| O13 | Rubber foot | Ø30 | 4 | Under the base corners |
 
-Compared with the original BOM: strips go from 4.8 m to about 10 m (bottom frame and door frame added); the M3×10 hinge bolts are no longer needed; the surface magnetic catches become flush magnets; handle, brackets, grommets, epoxy and silicone are new.
+Tools: drill, Ø3 and Ø6 bits, Ø50 hole cutter (cable holes), Phillips screwdriver, tape measure and square, 2 F-clamps.
+
+Compared with the original BOM: strips go from 4.8 m to about 10 m (bottom frame and door frame added). The hardware is now 6 items plus PVA glue; magnets, epoxy, brackets, foam, tape, silicone, grommets, handle and feet are all optional.
 
 ---
 
 ## 4. How everything is fixed: where screws and glue go
 
-The plain-strip version has no grooves, so everything is held by screws. Glue is used only on wood-to-wood joints and the magnets; **the clear panels are not glued**.
+The plain-strip version has no grooves, so everything is held by screws. Glue is used only on wood-to-wood joints; **the twin-wall panels are not glued**.
 
 | Joint | Fixed with | Notes |
 |---|---|---|
-| Frame joints (frame and door corners) | PVA glue + wood screws 4×50 / 4×60 | Glue every joint, then two screws; pre-drill Ø3 |
-| Posts to top/bottom frames | 4×60 wood screws + L brackets | Screws through the rail into the post end, bracket on the inside; glue the contact faces too |
-| Bottom frame → base | 4×40 wood screws | From below, 3–4 per side |
-| Clear panels → frame | ST4×25 screws + M6 large flat washers on 3 mm foam tape | **No glue.** The Ø6 hole is 2 mm larger than the screw to allow for expansion; stop when the washer seats |
-| Panel corner and bottom gaps | Neutral-cure clear silicone (optional) | Fills gaps only, carries no load |
-| Hinges | Countersunk wood screws 3.5×30 | Through the side panel into the post |
-| Door magnets | Pocket + 3×12 screw + a dab of epoxy | See the end of this section |
-| Door seal | Self-adhesive foam tape | On the front face of the frame |
+| Frame joints (corners, posts, door corners) | PVA glue + 4×60 countersunk wood screws | Glue every joint, then two screws; pre-drill Ø3 |
+| Bottom frame → base | 4×40 countersunk wood screws | From below, 3–4 per side |
+| Twin-wall panels → frame | 4×25 pan-head screws + M6 large washers | **No glue.** The Ø6 hole is 2 mm larger than the screw to allow for expansion; stop when the washer seats |
+| Hinges (door left side) | Screws supplied with the hinges | Through the side panel into the post |
+| Latches (door right side) | Screws supplied with the latches | See the end of this section |
+| Optional: door seal, panel gaskets | Self-adhesive foam tape 3×10 | Keeps dust out better |
+| Optional: cut ends, gaps | Foil tape; neutral-cure clear silicone | Seals and fills only, carries no load |
 
 ### Why the panels are not glued
 
-**Use screws with large flat washers to hold the panels and foam tape to seal them. Use glue only to fill gaps. Do not glue a panel flat onto the frame.** PC expands about 10× more than wood, so a glued panel warps or cracks at the glue line and the holes.
+**Screws with large washers hold the panels; glue is used only on wood-to-wood joints. Do not glue a panel flat onto the frame.** PC expands about 10× more than wood, so a glued panel warps or cracks at the glue line and the holes.
 
 **Twin-wall sheet is hollow, so three things matter:**
 1. **Large washers, and do not overtighten.** Stop as soon as the washer seats, then back off a quarter turn. Overtightening crushes the top skin and the collapsed channel shows as a wrinkle.
 2. **Channels run the way the table says.** Loads then go along the tubes and the sheet does not buckle.
-3. **Seal the cut ends.** The two cut edges across the channels are open. Tape them with aluminium foil tape before fitting so dust and insects stay out: the top and bottom edges of the side, back and door panels and the front and back edges of the top panel, about 6.7 m in all. The channels exposed inside drilled holes can be left; the box is dry.
+3. **(Optional) seal the cut ends.** The two cut edges across the channels are open. Tape them with aluminium foil tape before fitting so dust and insects stay out: the top and bottom edges of the side, back and door panels and the front and back edges of the top panel, about 6.7 m in all. The channels exposed inside drilled holes can be left; the box is dry.
 
 | Option | Verdict | How |
 |---|---|---|
-| Single-sided EVA foam tape, 3×10 | ✅ Use | Stick it on the outer faces of the frame as a gasket, press the panel on and fix with ST4×25 and large flat washers. Removable, sealed, and it absorbs expansion |
+| Single-sided EVA foam tape, 3×10 | ✅ Optional | Stick it on the outer faces of the frame as a gasket, press the panel on and fix with 4×25 pan-head screws and large washers. Removable, sealed, and it absorbs expansion |
 | Neutral-cure clear silicone | ✅ Use | Only for corner and bottom-edge gaps. It stays flexible and is safe on PC sheet |
 | MS polymer adhesive / VHB foam tape | ⚠️ OK | Helps if you want fewer screws, but keep the screws at the corners and mid-edges |
 | Cyanoacrylate (super glue) | ❌ Avoid | Fogs and stress-cracks PC |
 | Acetoxy (acid-cure) silicone | ❌ Avoid | Releases acetic acid as it cures, which crazes PC |
 | Solvent contact cement | ❌ Avoid | The solvent etches the surface |
-| Rigid epoxy over large areas | ❌ Avoid | Too stiff; cracks the panel as it expands (use it only for the magnets) |
+| Rigid epoxy over large areas | ❌ Avoid | Too stiff; cracks the panel as it expands |
 
 Driving the screws: start at the middle hole of each edge and work outward. Stop when the washer seats, then back every screw off about a quarter turn so the panel can slide in its Ø6 holes.
 
@@ -212,7 +211,7 @@ Most timber yards only cut to length and cannot cut stopped rebates, so the defa
 
 | | Screwed on (default, plain strips) | Rebate + bead (optional, router needed) |
 |---|---|---|
-| How | Panel lies on the outer face of the frame, fixed through Ø6 holes with ST4×25 screws and large flat washers over 3 mm foam tape | A 10 × 4 mm rebate along the inner edge of each opening; the panel sits in it flush with the frame, held by 20×5 wooden beads screwed into the wood |
+| How | Panel lies on the outer face of the frame, fixed through Ø6 holes with 4×25 pan-head screws and large washers (foam tape optional) | A 10 × 4 mm rebate along the inner edge of each opening; the panel sits in it flush with the frame, held by 20×5 wooden beads screwed into the wood |
 | Holes in panels | Yes, 16 per panel | None, so nothing can crack at a hole |
 | Room to expand | Ø6 holes give each screw ±1 mm | 2 mm gap all round; the panel moves freely |
 | Tools | Drill | Router with a rebate bit, or have the timber shop cut the rebates |
@@ -247,14 +246,16 @@ Most timber yards only cut to length and cannot cut stopped rebates, so the defa
 
 The door becomes as wide as the frame (640) because the side panels no longer stand proud of it. Finished size about 650 × 743 (with door) × 710 mm.
 
-### Mounting the door magnets
+### Fitting the latches
 
-Don't just glue magnets onto the wood surface. Every time the door opens it pulls on the magnets, so a glued surface joint eventually lets go. Set them in pockets and use a screw plus glue:
+Two latches go on the door's right side, mounted on the side faces like the hinges (the door's right edge and the right side panel lie in the same plane):
 
-1. **Buy countersunk magnets:** Ø12×3 N52 with an M3 countersunk hole. The countersink fixes the pole on each magnet, so buy N/S pairs: 4 with N facing out and 4 with S facing out.
-2. **Bore flat-bottom pockets:** with a Ø12 Forstner bit, bore four pockets **2.5 mm deep** in the front of the right post and four in the back of the right door stile, lined up with each other. Bore the post first, put a dab of paint in each pocket and close the door to mark the matching spots.
-3. **Fix them:** put a dab of epoxy in the pocket, seat the magnet and drive a 3×12 stainless countersunk wood screw until it is flush. Overtightening cracks the magnet. Use N-facing magnets on the post and S-facing ones on the door.
-4. **Why 2.5 mm deep:** each 3 mm magnet stands 0.5 mm proud, 1 mm for the pair. The 3 mm door seal compresses to about 1.5 mm, so the magnets never touch, but they are close enough to hold the door against the seal.
+1. **Height:** about 260 mm and 420 mm up (centres). These clear the screws on the front edge of the right side panel (at 177.5, 340 and 502.5 mm).
+2. **Body (the half with the lever):** on the outside of the right side panel near its front edge, screwed through the sheet into the front-right post behind it. Drill a clearance hole in the sheet first, then a Ø2.5 pilot hole in the wood.
+3. **Hook:** on the side of the door's right stile (the door's 30 mm right edge). Close the door, hook the lever over it, mark the position, then screw it on.
+4. **Adjust:** when latched the door should press against the frame; if it is loose, move the hook 1–2 mm back.
+
+If the screws supplied with the latch are shorter than 16 mm, use 4×25 countersunk wood screws for the body so they get through the sheet into the post.
 
 ---
 
@@ -263,13 +264,13 @@ Don't just glue magnets onto the wood surface. Every time the door opens it pull
 The Assembly tab in the 3D model shows each step.
 
 1. **Base:** fit a rubber foot at each corner under the 650×705 base board and set it aside. The frame goes on in step 4.
-2. **Bottom frame:** make a rectangle from four 640 strips, front and back rails full width, side rails between them. Glue each corner and drive two 4×50 screws (pre-drill Ø3). Do not fix it to the base yet: the post screws go in from underneath.
-3. **Posts:** set the bottom frame on two battens so its underside is clear. Stand the four 600 posts on the corners, 30 mm faces to the front and back. Drive two 4×60 screws per post up through the frame into the post end, diagonally apart, and add an L bracket on the inside.
+2. **Bottom frame:** make a rectangle from four 640 strips, front and back rails full width, side rails between them. Glue each corner and drive two 4×60 screws (pre-drill Ø3). Do not fix it to the base yet: the post screws go in from underneath.
+3. **Posts:** set the bottom frame on two battens so its underside is clear. Stand the four 600 posts on the corners, 30 mm faces to the front and back. Drive two 4×60 screws per post up through the frame into the post end, diagonally apart. Optional: an L bracket on the inside.
 4. **Top frame:** build it like the bottom frame, set it on the posts and screw down with 4×60. Before tightening, check that the diagonals differ by no more than 2 mm. Then set the whole frame on the base (flush at the front, 5 mm in at the sides and back) and screw it on from below with 4×40, 3–4 per side.
-5. **Side and back panels:** drill the sheets first (see "Drilling the twin-wall sheet yourself" below), then tape the open ends of the twin-wall sheets first, run foam tape around the outer faces of the frame, then fix the panels with ST4×25 and large flat washers, channels vertical. The back panel covers the rear edges of the side panels.
-6. **Top panel:** fix it the same way, covering the top edges of the side and back panels. Fill the corner gaps with neutral-cure silicone.
-7. **Door:** stiles full height, rails between them; glue, screw with 4×60 and check the diagonals. Fix the door panel to the front of the frame with ST4×25 and large flat washers; it also keeps the frame square.
-8. **Hinges, magnets, seal:** fit three butt hinges on the left so both leaves lie on the left side face when the door is closed (pin on the front-left outer corner; the door opens to about 180°). Fit four magnets in the front of the right post and the back of the door; see the end of section 4. Stick the seal on the front frame and fit the handle.
+5. **Side and back panels:** drill the sheets first (see "Drilling the twin-wall sheet yourself" below; optional: foil tape on the cut ends and foam tape on the frame). Line each sheet up, drill pilot holes into the wood through the Ø6 holes and fix with 4×25 pan-head screws and M6 large washers, channels vertical. The back panel covers the rear edges of the side panels. Leave the middle hole on the front edge of the left side panel (about 340 mm up) empty: the middle hinge covers it in step 8.
+6. **Top panel:** fix it the same way, covering the top edges of the side and back panels. Optional: fill the corner gaps with neutral-cure silicone.
+7. **Door:** stiles full height, rails between them; glue, screw with 4×60 and check the diagonals. Fix the door panel to the front of the frame with 4×25 pan-head screws and M6 large washers; it also keeps the frame square.
+8. **Hinges and latches:** three butt hinges on the left, centred 90, 341.5 and 593 mm up, with the screws supplied; both leaves lie on the left side face when the door is closed (pin on the front-left outer corner; the door opens to about 180°), and the middle hinge covers the empty hole on the left side panel's front edge. Two latches on the right, see the end of section 4. Optional: door seal on the front frame and a handle.
 9. **Place the A1 and route cables:** centre the A1 with its front feet at least 90 mm from the inside of the front frame. Run the power cable through the back grommet. Keep the AMS lite outside on the right and bring its PTFE tube and cable in through the top grommet.
 
 Tips:
@@ -283,9 +284,9 @@ The supplier only cuts the sheets; you drill the holes. An ordinary drill with a
 
 1. **Mark:** leave the protective film on and mark the holes on it: centres 15 mm from the edge, no more than 175 mm apart, 5 per edge with the corners shared, 16 in all. The pitch for each panel is on sheet 5 of the drawings (167.5 / 162.5 and so on).
 2. **Drill:** lay the sheet flat on scrap wood and hold or clamp it down. Use the Ø6 bit at low speed with light pressure. Clamping stops the thin walls chattering and cracking. Leave the film on.
-3. **Align:** set the sheet on the foam tape on the frame, then drill a Ø3 pilot hole about 18 mm deep into the wood through each Ø6 hole. The screws are then sure to meet the wood.
-4. **Screw:** ST4×25 with a large washer, from the middle of each edge outward; stop as soon as the washer seats, then back off a quarter turn.
-5. **Grommet holes:** one Ø50 hole each in the back and top panels, with a Ø50 hole cutter or hole saw. Drill a small Ø6 centre hole first as a guide, then fit a brush grommet.
+3. **Align:** set the sheet on the frame (fit the foam tape first if you use it), then drill a Ø3 pilot hole about 18 mm deep into the wood through each Ø6 hole. The screws are then sure to meet the wood.
+4. **Screw:** 4×25 pan-head screw with an M6 large washer, from the middle of each edge outward; stop as soon as the washer seats, then back off a quarter turn.
+5. **Grommet holes:** one Ø50 hole each in the back and top panels, with a Ø50 hole cutter or hole saw. Drill a small Ø6 centre hole first as a guide. Optional: fit a brush grommet.
 6. **Fan hole (optional):** a Ø116 hole is hard to cut by hand; skip the fan or use a jigsaw.
 
 Drill and fit one panel at a time: side and back panels first, then the top and the door.
